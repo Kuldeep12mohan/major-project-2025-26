@@ -8,30 +8,73 @@ const prisma = new PrismaClient();
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
-router.post("/signup", async (req, res) => {
+router.post("/signup/student", async (req, res) => {
   try {
-    const { email, password, name, role } = req.body;
+    const { email, password, name, enrollNo, facultyNo, semester, dept } = req.body;
 
-    // check existing user
+    // check if student already exists
     const existingUser = await prisma.user.findUnique({ where: { email } });
-    if (existingUser) {
-      return res.status(400).json({ error: "Email already registered" });
-    }
+    if (existingUser) return res.status(400).json({ error: "Email already registered" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name,
-        role,
-      },
+      data: { email, password: hashedPassword, name, role: "STUDENT" },
     });
 
-    return res.status(201).json({ message: "User created", user: { id: user.id, email: user.email, role: user.role } });
+    await prisma.studentProfile.create({
+      data: { userId: user.id, enrollNo, facultyNo, semester, dept },
+    });
+
+    return res.status(201).json({ message: "Student registered", user: { id: user.id, email, role: "STUDENT" } });
   } catch (err) {
-    return res.status(500).json({ error: "Signup failed", details: err.message });
+    return res.status(500).json({ error: "Student signup failed", details: err.message });
+  }
+});
+
+router.post("/signup/teacher", async (req, res) => {
+  try {
+    const { email, password, name, employeeId, designation, dept } = req.body;
+
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) return res.status(400).json({ error: "Email already registered" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: { email, password: hashedPassword, name, role: "TEACHER" },
+    });
+
+    await prisma.teacherProfile.create({
+      data: { userId: user.id, employeeId, designation, dept },
+    });
+
+    return res.status(201).json({ message: "Teacher registered", user: { id: user.id, email, role: "TEACHER" } });
+  } catch (err) {
+    return res.status(500).json({ error: "Teacher signup failed", details: err.message });
+  }
+});
+
+router.post("/signup/admin", async (req, res) => {
+  try {
+    const { email, password, name, adminId, position } = req.body;
+
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) return res.status(400).json({ error: "Email already registered" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: { email, password: hashedPassword, name, role: "ADMIN" },
+    });
+
+    await prisma.adminProfile.create({
+      data: { userId: user.id, adminId, position },
+    });
+
+    return res.status(201).json({ message: "Admin registered", user: { id: user.id, email, role: "ADMIN" } });
+  } catch (err) {
+    return res.status(500).json({ error: "Admin signup failed", details: err.message });
   }
 });
 
@@ -52,6 +95,7 @@ router.post("/login", async (req, res) => {
     return res.status(500).json({ error: "Login failed", details: err.message });
   }
 });
+
 
 router.get("/profile", async (req, res) => {
   try {
