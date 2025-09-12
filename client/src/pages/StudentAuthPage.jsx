@@ -19,44 +19,53 @@ export default function StudentAuthPage() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      if (isLogin) {
-        // Student Login
-        const res = await axios.post("http://localhost:5000/api/auth/login", {
-          email: form.email,
-          password: form.password,
-          role: "STUDENT",
-        });
-        console.log("Login response:", res.data);
-        navigate("/dashboard")
+  try {
+    if (isLogin) {
+      // Student Login
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email: form.email,
+        password: form.password,
+        role: "STUDENT",
+      });
+      console.log("Login response:", res.data);
 
-      } else {
-        // Student Signup
-        const res = await axios.post("http://localhost:5000/api/auth/signup/student", {
-          name: form.name,
-          email: form.email,
-          password: form.password,
-          role: "STUDENT",
-          enrollNo: form.enrollNo,
-          facultyNo: form.facultyNo,
-          semester: Number(form.semester),
-          dept: form.dept,
-        });
-        console.log("Signup response:", res.data);
-        navigate("/dashboard")
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.error("API Error:", err.response?.data || err.message);
-      } else {
-        console.error("Unexpected Error:", err);
-      }
+      // ✅ Save token
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      navigate("/dashboard");
+    } else {
+      // Student Signup
+      const res = await axios.post("http://localhost:5000/api/auth/signup/student", {
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        role: "STUDENT",
+        enrollNo: form.enrollNo,
+        facultyNo: form.facultyNo,
+        semester: Number(form.semester),
+        dept: form.dept,
+      });
+      console.log("Signup response:", res.data);
+
+      // ✅ Save token
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      navigate("/dashboard");
     }
-  };
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      console.error("API Error:", err.response?.data || err.message);
+    } else {
+      console.error("Unexpected Error:", err);
+    }
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
@@ -85,7 +94,6 @@ export default function StudentAuthPage() {
         </div>
       </header>
 
-      {/* Auth Card */}
       <div className="flex-grow flex items-center justify-center px-4">
         <div className="bg-white rounded-lg p-8 max-w-md w-full border-t-4 border-[#0f6a36]">
           <h2 className="text-2xl font-bold text-center text-[#7a0c0c] mb-6">
@@ -168,7 +176,6 @@ export default function StudentAuthPage() {
               </>
             )}
 
-            {/* Common fields */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Email
