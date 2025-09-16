@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const StudentDashboard = () => {
   const [profile, setProfile] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
+        if (!token) {
+          navigate("/");
+        }
         const res = await axios.get("http://localhost:5000/api/auth/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -35,13 +40,14 @@ const StudentDashboard = () => {
         <div className="max-w-6xl mx-auto flex justify-between items-center px-4">
           <h1 className="text-lg font-bold">Student Dashboard</h1>
           <nav>
-            <button className="px-3 py-1 rounded text-white hover:bg-white hover:text-[#7a0c0c] transition" onClick={()=>
-              {
+            <button
+              className="px-3 py-1 rounded text-white hover:bg-white hover:text-[#7a0c0c] transition"
+              onClick={() => {
                 localStorage.removeItem("token");
                 window.location.reload();
-                redirect("/")
-              }
-            }>
+                redirect("/");
+              }}
+            >
               Logout
             </button>
           </nav>
@@ -82,11 +88,18 @@ const StudentDashboard = () => {
 
           {/* Quick Links */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] hover:shadow-lg cursor-pointer transition">
+            <div
+              className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] hover:shadow-lg cursor-pointer transition"
+              onClick={() => {
+                navigate("/available-courses");
+              }}
+            >
               <h3 className="text-lg font-semibold text-[#7a0c0c]">
                 📚 Available Courses
               </h3>
-              <p className="text-gray-600">Browse and register for new courses</p>
+              <p className="text-gray-600">
+                Browse and register for new courses
+              </p>
             </div>
 
             <div className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] hover:shadow-lg cursor-pointer transition">
