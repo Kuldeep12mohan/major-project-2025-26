@@ -6,7 +6,9 @@ const AvailableCourse = () => {
   const [loading, setLoading] = useState(true);
 
   const currUser = JSON.parse(localStorage.getItem("user"));
+  console.log("curr",currUser)
   const semester = currUser?.studentProfile?.semester;
+  console.log("sem",semester)
   const dept = currUser?.studentProfile?.dept;
 
   useEffect(() => {

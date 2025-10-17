@@ -26,6 +26,11 @@ enum RegStatus {
   APPROVED
   REJECTED
 }
+enum Mode {
+  A
+  B
+  C
+}
 
 model User {
   id       Int   @id @default(autoincrement())
@@ -72,7 +77,6 @@ model AdminProfile {
   userId   Int   @unique
 
   adminId  String @unique
-  position String?
 
   approvals TempRegistration[] @relation("AdminRelation")
 }
@@ -101,6 +105,7 @@ model TempRegistration {
   course     Course          @relation(fields: [courseId], references: [id])
   courseId   Int
   status     RegStatus       @default(PENDING)
+  mode      Mode @default(A)
 
   verifier   TeacherProfile? @relation("VerifierRelation", fields: [verifierId], references: [id])
   verifierId Int?
@@ -118,6 +123,7 @@ model Registration {
   studentId Int
   course    Course         @relation(fields: [courseId], references: [id])
   courseId  Int
+  mode      Mode @default(A)
   semester  Int
   year      Int
   createdAt DateTime       @default(now())
