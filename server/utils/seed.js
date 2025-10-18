@@ -15,7 +15,7 @@ async function main() {
       type: "CORE",
       credits: 4,
       semester: 3,
-      dept:"CS"
+      dept:"CS",
     },
     {
       code: "COC2070",

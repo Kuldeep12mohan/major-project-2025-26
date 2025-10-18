@@ -5,6 +5,8 @@ import AvailableCourse from './pages/AvailableCourse';
 import HomePage from './pages/HomePage';
 import TeacherAuthPage from './pages/TeacherAuthPage';
 import TeacherDashboard from './pages/TeacherDashboard';
+import AdminLoginPage from './pages/AdminLogin';
+import Admin from './pages/Admin';
 
 function App() {
   
@@ -17,6 +19,8 @@ function App() {
         <Route element={<AvailableCourse/>} path='/available-courses'/>
         <Route element={<TeacherAuthPage/>} path='/auth-teacher'/>
         <Route element={<TeacherDashboard/>} path='/teacher-dashboard'/>
+        <Route path="/admin/login" element={<AdminLoginPage/>} />
+        <Route path="/admin/dashboard" element={<Admin />} />
       </Routes>
     </Router>
   );

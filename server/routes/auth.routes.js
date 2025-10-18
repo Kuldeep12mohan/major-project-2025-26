@@ -111,33 +111,45 @@ router.post("/signup/teacher", async (req, res) => {
   }
 });
 
-router.post("/signup/admin", async (req, res) => {
+router.post("/login/admin", async (req, res) => {
   try {
-    const { email, password, name, adminId, position } = req.body;
+    const { email, password, adminId } = req.body;
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
-    if (existingUser) return res.status(400).json({ error: "Email already registered" });
+    if (!email || !password || !adminId) {
+      return res.status(400).json({ error: "Email, password and Admin ID are required" });
+    }
 
-    const existingAdmin = await prisma.adminProfile.findUnique({ where: { adminId } });
-    if (existingAdmin) return res.status(400).json({ error: "Admin ID already registered" });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await prisma.user.create({
-      data: { email, password: hashedPassword, name, role: "ADMIN" },
+    // Find admin user with matching email and adminId
+    const admin = await prisma.user.findFirst({
+      where: {
+        email,
+        role: "ADMIN",
+        adminProfile: { adminId },
+      },
+      include: { adminProfile: true },
     });
 
-    await prisma.adminProfile.create({ data: { userId: user.id, adminId, position } });
+    if (!admin) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
 
-    const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: "1d" });
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
 
-    return res.status(201).json({
-      message: "Admin registered",
+    const token = jwt.sign({ userId: admin.id, role: admin.role }, JWT_SECRET, { expiresIn: "1d" });
+
+    const { password: _, ...safeAdmin } = admin;
+
+    return res.json({
+      message: "Admin login successful",
       token,
-      user: { id: user.id, email: user.email, role: "ADMIN", name: user.name },
+      user: safeAdmin,
     });
   } catch (err) {
-    return res.status(500).json({ error: "Admin signup failed" });
+    console.error(err);
+    return res.status(500).json({ error: "Admin login failed" });
   }
 });
 
