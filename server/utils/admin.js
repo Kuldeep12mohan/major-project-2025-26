@@ -10,7 +10,6 @@ async function main() {
   const password = "admin123";
   const name = "Super Admin";
   const adminId = "ADM001";
-  const position = "Head Admin";
 
   // Check if admin exists
   const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -26,7 +25,7 @@ async function main() {
   });
 
   await prisma.adminProfile.create({
-    data: { userId: user.id, adminId, position },
+    data: { userId: user.id, adminId },
   });
 
   console.log("✅ Admin seeded successfully!");
