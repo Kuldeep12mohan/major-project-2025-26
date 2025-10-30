@@ -2,26 +2,30 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
+import { verifyToken } from "../middleware/middleware.js"
 
 const router = express.Router();
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
-
 router.post("/signup/student", async (req, res) => {
   try {
-    console.log("first")
     const { email, password, name, enrollNo, facultyNo, semester, dept } = req.body;
 
+    
     const existingUser = await prisma.user.findUnique({ where: { email } });
-    if (existingUser) return res.status(400).json({ error: "Email already registered" });
+    if (existingUser)
+      return res.status(400).json({ error: "Email already registered" });
 
 
     const existingEnroll = await prisma.studentProfile.findUnique({ where: { enrollNo } });
-    if (existingEnroll) return res.status(400).json({ error: "Enrollment No already registered" });
+    if (existingEnroll)
+      return res.status(400).json({ error: "Enrollment No already registered" });
 
     const existingFaculty = await prisma.studentProfile.findUnique({ where: { facultyNo } });
-    if (existingFaculty) return res.status(400).json({ error: "Faculty No already registered" });
+    if (existingFaculty)
+      return res.status(400).json({ error: "Faculty No already registered" });
 
+  
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.create({
@@ -32,42 +36,39 @@ router.post("/signup/student", async (req, res) => {
       data: { userId: user.id, enrollNo, facultyNo, semester, dept },
     });
 
-    const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: "1d" });
-    console.log("signup")
+
+    const token = jwt.sign(
+      { userId: user.id, role: user.role },
+      JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
     return res.status(201).json({
-      message: "Student registered",
+      message: "Student registered successfully",
       token,
-      user: { id: user.id, email: user.email, role: "STUDENT", name: user.name,semester:user?.StudentProfile?.semester },
+      user: { id: user.id, email: user.email, role: user.role, name: user.name },
     });
   } catch (err) {
+    console.error("Signup error:", err);
     return res.status(500).json({ error: "Student signup failed" });
   }
 });
 
-// ---------------------- TEACHER SIGNUP ----------------------
+
 router.post("/signup/teacher", async (req, res) => {
   try {
     const { email, password, name, employeeId, designation, dept } = req.body;
 
-    // Check if email is already taken
     const existingUser = await prisma.user.findUnique({ where: { email } });
-    if (existingUser) {
+    if (existingUser)
       return res.status(400).json({ error: "Email already registered" });
-    }
 
-    // Check if employee ID already exists
-    const existingEmployee = await prisma.teacherProfile.findUnique({
-      where: { employeeId },
-    });
-    if (existingEmployee) {
+    const existingEmployee = await prisma.teacherProfile.findUnique({ where: { employeeId } });
+    if (existingEmployee)
       return res.status(400).json({ error: "Employee ID already registered" });
-    }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user with TEACHER role
     const user = await prisma.user.create({
       data: {
         email,
@@ -77,17 +78,10 @@ router.post("/signup/teacher", async (req, res) => {
       },
     });
 
-    // Create teacher profile
     const teacherProfile = await prisma.teacherProfile.create({
-      data: {
-        userId: user.id,
-        employeeId,
-        designation,
-        dept,
-      },
+      data: { userId: user.id, employeeId, designation, dept },
     });
 
-    // Generate token
     const token = jwt.sign(
       { userId: user.id, role: user.role },
       JWT_SECRET,
@@ -97,16 +91,10 @@ router.post("/signup/teacher", async (req, res) => {
     return res.status(201).json({
       message: "Teacher registered successfully",
       token,
-      user: {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        name: user.name,
-        teacherProfile, // include teacher details
-      },
+      user: { id: user.id, email: user.email, role: user.role, name: user.name, teacherProfile },
     });
   } catch (err) {
-    console.error(err);
+    console.error("Teacher signup error:", err);
     return res.status(500).json({ error: "Teacher signup failed" });
   }
 });
@@ -115,90 +103,49 @@ router.post("/login/admin", async (req, res) => {
   try {
     const { email, password, adminId } = req.body;
 
-    if (!email || !password || !adminId) {
+    if (!email || !password || !adminId)
       return res.status(400).json({ error: "Email, password and Admin ID are required" });
-    }
 
-    // Find admin user with matching email and adminId
     const admin = await prisma.user.findFirst({
-      where: {
-        email,
-        role: "ADMIN",
-        adminProfile: { adminId },
-      },
+      where: { email, role: "ADMIN", adminProfile: { adminId } },
       include: { adminProfile: true },
     });
 
-    if (!admin) {
-      return res.status(400).json({ error: "Invalid credentials" });
-    }
+    if (!admin) return res.status(400).json({ error: "Invalid credentials" });
 
     const isPasswordValid = await bcrypt.compare(password, admin.password);
-    if (!isPasswordValid) {
+    if (!isPasswordValid)
       return res.status(400).json({ error: "Invalid credentials" });
-    }
 
-    const token = jwt.sign({ userId: admin.id, role: admin.role }, JWT_SECRET, { expiresIn: "1d" });
+    const token = jwt.sign(
+      { userId: admin.id, role: admin.role },
+      JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
     const { password: _, ...safeAdmin } = admin;
-
-    return res.json({
-      message: "Admin login successful",
-      token,
-      user: safeAdmin,
-    });
+    return res.json({ message: "Admin login successful", token, user: safeAdmin });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Admin login failed" });
   }
 });
 
-router.get("/profile", async (req, res) => {
-  try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(401).json({ error: "Missing token" });
 
-    const token = authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, JWT_SECRET);
-
-    const user = await prisma.user.findUnique({
-      where: { id: Number(decoded.userId) },
-      include: {
-        studentProfile: true,
-        teacherProfile: true,
-        adminProfile: true,
-      },
-    });
-
-    if (!user) return res.status(404).json({ error: "User not found" });
-
-    const { password, ...safeUser } = user;
-    return res.json({ message: "Profile fetched", user: safeUser });
-  } catch (err) {
-    return res.status(401).json({ error: "Invalid token" });
-  }
-});
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await prisma.user.findUnique({
       where: { email },
-      include: {
-        studentProfile: true,
-        teacherProfile: true,
-        adminProfile: true,
-      },
+      include: { studentProfile: true, teacherProfile: true, adminProfile: true },
     });
 
-    if (!user) {
-      return res.status(400).json({ error: "Invalid email or password" });
-    }
+    if (!user) return res.status(400).json({ error: "Invalid email or password" });
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
+    if (!isPasswordValid)
       return res.status(400).json({ error: "Invalid email or password" });
-    }
 
     const token = jwt.sign(
       { userId: user.id, role: user.role },
@@ -209,9 +156,7 @@ router.post("/login", async (req, res) => {
     const { password: _, ...safeUser } = user;
 
     let extraData = {};
-    if (user.studentProfile) {
-      extraData.semester = user.studentProfile.semester;
-    }
+    if (user.studentProfile) extraData.semester = user.studentProfile.semester;
 
     return res.json({
       message: "Login successful",
@@ -225,5 +170,15 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/profile", verifyToken, async (req, res) => {
+  try {
+    const { user } = req;
+    const { password, ...safeUser } = user;
+    return res.json({ message: "Profile fetched successfully", user: safeUser });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to fetch profile" });
+  }
+});
 
 export default router;

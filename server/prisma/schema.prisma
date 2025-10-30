@@ -26,6 +26,7 @@ enum RegStatus {
   APPROVED
   REJECTED
 }
+
 enum Mode {
   A
   B
@@ -33,8 +34,8 @@ enum Mode {
 }
 
 model User {
-  id       Int   @id @default(autoincrement())
-  email    String   @unique
+  id       Int    @id @default(autoincrement())
+  email    String @unique
   password String
   name     String?
   role     Role
@@ -54,6 +55,9 @@ model StudentProfile {
   semester   Int
   dept       String
 
+  teacher    TeacherProfile?  @relation(fields: [teacherId], references: [id])
+  teacherId  Int?
+
   tempRegistrations TempRegistration[]
   registrations     Registration[]
 }
@@ -67,8 +71,11 @@ model TeacherProfile {
   designation String
   dept        String
 
-  courses       Course[]         @relation("TeacherCourses")
+  courses       Course[]           @relation("TeacherCourses")
   verifications TempRegistration[] @relation("VerifierRelation")
+
+
+  students      StudentProfile[] 
 }
 
 model AdminProfile {
@@ -78,11 +85,11 @@ model AdminProfile {
 
   adminId  String @unique
 
-  approvals TempRegistration[] @relation("AdminRelation")
+  approvals            TempRegistration[]  @relation("AdminRelation")
 }
 
 model Course {
-  id       Int   @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   code      String     @unique
   title     String
   type      CourseType @default(CORE)
@@ -105,7 +112,7 @@ model TempRegistration {
   course     Course          @relation(fields: [courseId], references: [id])
   courseId   Int
   status     RegStatus       @default(PENDING)
-  mode      Mode @default(A)
+  mode       Mode            @default(A)
 
   verifier   TeacherProfile? @relation("VerifierRelation", fields: [verifierId], references: [id])
   verifierId Int?
@@ -119,12 +126,21 @@ model TempRegistration {
 
 model Registration {
   id        Int            @id @default(autoincrement())
-  student   StudentProfile @relation(fields: [studentId], references: [id])
+  student   StudentProfile  @relation(fields: [studentId], references: [id])
   studentId Int
-  course    Course         @relation(fields: [courseId], references: [id])
+  course    Course          @relation(fields: [courseId], references: [id])
   courseId  Int
-  mode      Mode @default(A)
+  mode      Mode            @default(A)
   semester  Int
   year      Int
-  createdAt DateTime       @default(now())
+  createdAt DateTime        @default(now())
+}
+
+model RegistrationStatus {
+  id         Int      @id @default(autoincrement())
+  isOpen     Boolean  @default(false)
+  startDate  DateTime?
+  endDate    DateTime?
+  updatedAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
 }

@@ -7,8 +7,6 @@ const prisma = new PrismaClient();
 router.get("/:semester/:dept", async (req, res) => {
   try {
     const { semester, dept } = req.params;
-
-    // Convert semester to number (if stored as Int in DB)
     const courses = await prisma.course.findMany({
       where: {
         semester: Number(semester),

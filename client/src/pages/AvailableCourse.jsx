@@ -6,6 +6,7 @@ const AvailableCourse = () => {
   const [loading, setLoading] = useState(true);
 
   const currUser = JSON.parse(localStorage.getItem("user"));
+  console.log(currUser)
   const semester = currUser?.studentProfile?.semester;
   const dept = currUser?.studentProfile?.dept;
 
@@ -37,12 +38,12 @@ const AvailableCourse = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors">
+    <div className="min-h-screen flex flex-col bg-gray-50 transition-colors">
       {/* Navbar */}
       <header className="bg-green-800 dark:bg-green-700 text-white flex justify-between items-center px-6 py-3 shadow-md">
         <h1 className="text-lg font-semibold tracking-wide">Available Courses</h1>
         <button
-          className="bg-white text-green-800 px-4 py-1 rounded-md font-medium hover:bg-gray-200 transition"
+          className="bg-white text-green-800 px-4 py-1 rounded-md font-medium hover:bg-gray-200 transition hover:cursor-pointer"
           onClick={() => {
             localStorage.clear();
             window.location.href = "/login";
@@ -54,7 +55,7 @@ const AvailableCourse = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-6 md:p-10">
-        <h2 className="text-2xl font-bold text-center text-green-800 dark:text-green-500 mb-8">
+        <h2 className="text-2xl font-bold text-center mb-8">
           Semester {semester} Courses
         </h2>
 
@@ -76,7 +77,7 @@ const AvailableCourse = () => {
                 <p className="text-gray-700 dark:text-gray-300 mb-1">🎓 Credits: {course.credits}</p>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">📅 Semester: {course.semester}</p>
 
-                <button className="w-full mt-auto bg-green-700 hover:bg-green-800 text-white font-medium py-2 rounded-lg transition">
+                <button className="w-full mt-auto bg-green-700 hover:bg-green-800 text-white font-medium py-2 rounded-lg transition hover:cursor-pointer">
                   Register
                 </button>
               </div>
