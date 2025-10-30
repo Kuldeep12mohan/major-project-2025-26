@@ -12,23 +12,23 @@ const StudentDashboard = () => {
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("token");
         if (!token) {
           navigate("/");
           return;
         }
 
-        // ✅ Fetch user profile
+        // ✅ Fetch student profile
         const profileRes = await axios.get("http://localhost:5000/api/auth/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProfile(profileRes.data);
 
-        // ✅ Fetch current registration status from backend
+        // ✅ Fetch current registration window
         const statusRes = await axios.get("http://localhost:5000/api/admin/registration-status");
         setRegistrationStatus(statusRes.data || { isOpen: false });
       } catch (err) {
@@ -40,7 +40,7 @@ const StudentDashboard = () => {
     };
 
     fetchData();
-  }, [navigate]);
+  }, [navigate, token]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -50,6 +50,15 @@ const StudentDashboard = () => {
   };
 
   const { isOpen, startDate, endDate } = registrationStatus;
+
+  const formatDate = (dateStr) =>
+    dateStr
+      ? new Date(dateStr).toLocaleDateString("en-IN", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })
+      : null;
 
   if (loading) {
     return (
@@ -67,15 +76,6 @@ const StudentDashboard = () => {
     );
   }
 
-  const formatDate = (dateStr) => {
-    if (!dateStr) return null;
-    return new Date(dateStr).toLocaleDateString("en-IN", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
       <Toaster position="top-right" />
@@ -84,26 +84,23 @@ const StudentDashboard = () => {
       <header className="bg-[#7a0c0c] text-white py-3 shadow-md">
         <div className="max-w-6xl mx-auto flex justify-between items-center px-4">
           <h1 className="text-lg font-bold">Student Dashboard</h1>
-          <nav className="flex items-center gap-3">
-            <button
-              className="px-3 py-1 rounded text-white hover:bg-white hover:text-[#7a0c0c] transition"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </nav>
+          <button
+            className="px-3 py-1 rounded text-white hover:bg-white hover:text-[#7a0c0c] transition"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       </header>
 
-      {/* Main content */}
+      {/* Main Content */}
       <main className="flex-grow bg-gray-100 py-10 px-4">
         <div className="max-w-5xl mx-auto">
-          {/* Welcome */}
           <h1 className="text-3xl font-bold text-[#7a0c0c] mb-8">
             Welcome, {profile.user.name} 👋
           </h1>
 
-          {/* Registration Status Banner */}
+          {/* Registration Status */}
           <div
             className={`mb-6 p-4 rounded-md text-center font-medium ${
               isOpen
@@ -126,7 +123,7 @@ const StudentDashboard = () => {
             )}
           </div>
 
-          {/* Profile Card */}
+          {/* Profile */}
           <div className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] mb-10">
             <h2 className="text-xl font-semibold text-[#0f6a36] mb-4">
               My Profile
@@ -159,13 +156,11 @@ const StudentDashboard = () => {
                   ? "bg-white hover:shadow-lg cursor-pointer"
                   : "bg-gray-100 cursor-not-allowed opacity-70"
               }`}
-              onClick={() => {
-                if (isOpen) {
-                  navigate("/available-courses");
-                } else {
-                  toast.error("Registration is closed!");
-                }
-              }}
+              onClick={() =>
+                isOpen
+                  ? navigate("/available-courses")
+                  : toast.error("Registration is closed!")
+              }
             >
               <h3
                 className={`text-lg font-semibold ${
@@ -192,7 +187,7 @@ const StudentDashboard = () => {
               <p className="text-gray-600">Check your registration status</p>
             </div>
 
-            {/* Performance / Analytics */}
+            {/* Performance */}
             <div className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] hover:shadow-lg cursor-pointer transition">
               <h3 className="text-lg font-semibold text-[#7a0c0c]">
                 📈 Performance Insights
@@ -207,7 +202,7 @@ const StudentDashboard = () => {
 
       {/* Footer */}
       <footer className="bg-[#0f6a36] text-white text-center py-2 text-sm">
-        © 2025 Dashboard
+        © 2025 Course Registration Portal
       </footer>
     </div>
   );
