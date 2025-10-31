@@ -5,9 +5,6 @@ import { verifyStudent } from "../middleware/middleware.js";
 const prisma = new PrismaClient();
 const router = express.Router();
 
-/**
- * 🔹 Get all available courses for the student
- */
 router.get("/courses", verifyStudent, async (req, res) => {
   try {
     const student = await prisma.studentProfile.findUnique({
@@ -44,7 +41,6 @@ router.get("/my-registrations", verifyStudent, async (req, res) => {
     const student = await prisma.studentProfile.findUnique({
       where: { userId: req.user.id },
     });
-
     if (!student)
       return res.status(404).json({ error: "Student profile not found" });
 
@@ -74,9 +70,6 @@ router.get("/my-registrations", verifyStudent, async (req, res) => {
   }
 });
 
-/**
- * 🔹 Register for one or multiple courses (temporary)
- */
 router.post("/register", verifyStudent, async (req, res) => {
   try {
     let { courseIds, courseId, mode } = req.body;
@@ -151,6 +144,15 @@ router.get("/temp-registrations", verifyStudent, async (req, res) => {
     const student = await prisma.studentProfile.findUnique({
       where: { userId: req.user.id },
     });
+    const verifierId = student.teacherId
+
+    const verifier = await prisma.teacherProfile.findUnique({
+      where:{id:verifierId},
+    });
+
+    const user = await prisma.user.findUnique({
+      where:{id:verifier.userId}
+    })
 
     if (!student)
       return res.status(404).json({ error: "Student profile not found" });
@@ -177,6 +179,7 @@ router.get("/temp-registrations", verifyStudent, async (req, res) => {
     res.json({
       message: "Fetched student's temporary registrations",
       tempRegistrations: tempRegs,
+      user
     });
   } catch (err) {
     console.error("❌ Error fetching temp registrations:", err);

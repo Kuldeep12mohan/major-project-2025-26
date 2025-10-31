@@ -6,6 +6,7 @@ const MyRegistration = () => {
   const [tempRegs, setTempRegs] = useState([]);
   const [approvedRegs, setApprovedRegs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [verifier,setVerifier] = useState("");
 
   const token = localStorage.getItem("token");
 
@@ -23,6 +24,7 @@ const MyRegistration = () => {
 
         setTempRegs(tempRes.data.tempRegistrations || []);
         setApprovedRegs(approvedRes.data.registrations || []);
+        setVerifier(tempRes.data.user.name)
       } catch (err) {
         console.error("Error fetching registrations:", err);
         toast.error("Failed to load registration data!");
@@ -104,8 +106,8 @@ const MyRegistration = () => {
                         {reg.status}
                       </td>
                       <td className="py-2 px-4 border-b">
-                        {reg.verifier
-                          ? `${reg.verifier.user.name} (${reg.verifier.user.email})`
+                        {verifier
+                          ? `${verifier}`
                           : "—"}
                       </td>
                     </tr>
