@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "./utils.js";
+import { base_url } from "../../utils/utils";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ export default function TeacherDashboard() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const profileRes = await axios.get(`${BASE_URL}/api/auth/profile`, {
+        const profileRes = await axios.get(`${base_url}}/api/auth/profile`, {
           withCredentials: true,
         });
 
@@ -27,7 +27,7 @@ export default function TeacherDashboard() {
         setTeacher(user);
 
         const coursesRes = await axios.get(
-          `${BASE_URL}/api/teacher/my-courses`,
+          `${base_url}/api/teacher/my-courses`,
           { withCredentials: true }
         );
 
@@ -45,7 +45,7 @@ export default function TeacherDashboard() {
   const handleLogout = async () => {
     try {
       await axios.post(
-        `${BASE_URL}/api/auth/logout`,
+        `${base_url}/api/auth/logout`,
         {},
         { withCredentials: true }
       );

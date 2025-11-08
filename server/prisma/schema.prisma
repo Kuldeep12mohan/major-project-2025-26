@@ -33,6 +33,19 @@ enum Mode {
   C
 }
 
+enum Dept {
+  CS
+  ECE
+  AI
+  EE
+  ME
+  AE
+  CE
+  CHE
+  PTK
+  FTB
+}
+
 model User {
   id       Int    @id @default(autoincrement())
   email    String @unique
@@ -53,7 +66,7 @@ model StudentProfile {
   enrollNo   String @unique
   facultyNo  String @unique
   semester   Int
-  dept       String
+  dept       Dept   // ✅ Changed to enum
 
   teacher    TeacherProfile?  @relation(fields: [teacherId], references: [id])
   teacherId  Int?
@@ -69,13 +82,12 @@ model TeacherProfile {
 
   employeeId  String @unique
   designation String
-  dept        String
+  dept        Dept   // ✅ Changed to enum
 
   courses       Course[]           @relation("TeacherCourses")
   verifications TempRegistration[] @relation("VerifierRelation")
 
-
-  students      StudentProfile[] 
+  students      StudentProfile[]
 }
 
 model AdminProfile {
@@ -85,7 +97,7 @@ model AdminProfile {
 
   adminId  String @unique
 
-  approvals            TempRegistration[]  @relation("AdminRelation")
+  approvals TempRegistration[] @relation("AdminRelation")
 }
 
 model Course {
@@ -95,7 +107,7 @@ model Course {
   type      CourseType @default(CORE)
   credits   Int
   semester  Int
-  dept      String
+  dept      Dept       // ✅ Changed to enum
   active    Boolean    @default(true)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt

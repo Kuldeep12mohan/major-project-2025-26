@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import { base_, base_urlurl } from "../../utils/utils.js";
+import { base_url } from "../../utils/utils.js";
 
 const StudentDashboard = () => {
   const [profile, setProfile] = useState(null);
@@ -17,7 +17,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // ✅ Fetch student profile
+
         const profileRes = await axios.get(`${base_url}/api/auth/profile`, {
           withCredentials: true,
         });

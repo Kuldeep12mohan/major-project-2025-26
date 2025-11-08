@@ -205,6 +205,29 @@ router.get("/profile", verifyToken, async (req, res) => {
     return res.status(500).json({ error: "Failed to fetch profile" });
   }
 });
+router.get("/me", verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        studentProfile: true,
+        teacherProfile: true,
+      },
+    });
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.json({
+      message: "User fetched successfully",
+      user,
+    });
+  } catch (err) {
+    console.error("Error fetching /me:", err);
+    res.status(500).json({ error: "Failed to fetch user" });
+  }
+});
 
  // Logout
 

@@ -10,6 +10,9 @@ export default function StudentAuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
 
+  // ✅ Departments from your schema ENUM
+  const DEPARTMENTS = ["CSE", "AI", "ECE", "ME", "EE", "AE", "CHE", "PKB", "FTB"];
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -125,6 +128,7 @@ export default function StudentAuthPage() {
           <form className="space-y-4" onSubmit={handleSubmit}>
             {!isLogin && (
               <>
+                {/* Full Name */}
                 <div>
                   <label className="block text-sm text-gray-700">Full Name</label>
                   <input
@@ -138,6 +142,7 @@ export default function StudentAuthPage() {
                   />
                 </div>
 
+                {/* Enrollment No */}
                 <div>
                   <label className="block text-sm text-gray-700">Enrollment No.</label>
                   <input
@@ -151,6 +156,7 @@ export default function StudentAuthPage() {
                   />
                 </div>
 
+                {/* Faculty No */}
                 <div>
                   <label className="block text-sm text-gray-700">Faculty No.</label>
                   <input
@@ -164,6 +170,7 @@ export default function StudentAuthPage() {
                   />
                 </div>
 
+                {/* Semester */}
                 <div>
                   <label className="block text-sm text-gray-700">Semester</label>
                   <input
@@ -177,21 +184,28 @@ export default function StudentAuthPage() {
                   />
                 </div>
 
+                {/* ✅ Department Dropdown */}
                 <div>
                   <label className="block text-sm text-gray-700">Department</label>
-                  <input
-                    type="text"
+                  <select
                     name="dept"
                     value={form.dept}
                     onChange={handleChange}
                     className="w-full mt-1 p-2 border rounded-md"
-                    placeholder="Enter department"
                     required
-                  />
+                  >
+                    <option value="">Select Department</option>
+                    {DEPARTMENTS.map((d) => (
+                      <option key={d} value={d}>
+                        {d}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </>
             )}
 
+            {/* Email */}
             <div>
               <label className="block text-sm text-gray-700">Email</label>
               <input
@@ -205,6 +219,7 @@ export default function StudentAuthPage() {
               />
             </div>
 
+            {/* Password */}
             <div>
               <label className="block text-sm text-gray-700">Password</label>
               <input
@@ -218,6 +233,7 @@ export default function StudentAuthPage() {
               />
             </div>
 
+            {/* Confirm Password */}
             {!isLogin && (
               <div>
                 <label className="block text-sm text-gray-700">Confirm Password</label>
@@ -233,6 +249,7 @@ export default function StudentAuthPage() {
               </div>
             )}
 
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
