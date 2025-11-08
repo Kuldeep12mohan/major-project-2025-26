@@ -1,40 +1,55 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { base_url } from "../../utils/utils.js"
+import { useNavigate } from "react-router-dom";
 
 const MyRegistration = () => {
   const [tempRegs, setTempRegs] = useState([]);
   const [approvedRegs, setApprovedRegs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [verifier,setVerifier] = useState("");
-
-  const token = localStorage.getItem("token");
+  const [verifier, setVerifier] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
         const [tempRes, approvedRes] = await Promise.all([
-          axios.get("http://localhost:5000/api/student/temp-registrations", {
-            headers: { Authorization: `Bearer ${token}` },
+          axios.get(`${base_url}/api/student/temp-registrations`, {
+            withCredentials: true,
           }),
-          axios.get("http://localhost:5000/api/student/my-registrations", {
-            headers: { Authorization: `Bearer ${token}` },
+          axios.get(`${base_url}/api/student/my-registrations`, {
+            withCredentials: true,
           }),
         ]);
 
         setTempRegs(tempRes.data.tempRegistrations || []);
         setApprovedRegs(approvedRes.data.registrations || []);
-        setVerifier(tempRes.data.user.name)
+
+        const teacherUser = tempRes.data.verifier;
+        setVerifier(teacherUser ? teacherUser.name : "—");
       } catch (err) {
         console.error("Error fetching registrations:", err);
         toast.error("Failed to load registration data!");
+        navigate("/"); // session expired
       } finally {
         setLoading(false);
       }
     };
 
     fetchRegistrations();
-  }, [token]);
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${base_url}/api/auth/logout`, {}, { withCredentials: true });
+      toast.success("Logged out!");
+      setTimeout(() => navigate("/"), 800);
+    } catch (err) {
+      toast.error("Logout failed.");
+      console.error(err);
+    }
+  };
 
   if (loading) {
     return (
@@ -45,18 +60,15 @@ const MyRegistration = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 transition-all">
+    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
       <Toaster position="top-right" />
 
       {/* Navbar */}
       <header className="bg-green-800 text-white py-4 shadow-md px-6 flex justify-between items-center">
         <h1 className="text-lg font-bold">My Registrations</h1>
         <button
+          onClick={handleLogout}
           className="bg-white text-green-800 px-4 py-1 rounded-md font-medium hover:bg-gray-200 transition"
-          onClick={() => {
-            localStorage.clear();
-            window.location.href = "/login";
-          }}
         >
           Logout
         </button>
@@ -64,6 +76,7 @@ const MyRegistration = () => {
 
       {/* Content */}
       <main className="flex-1 max-w-6xl mx-auto w-full p-6 space-y-10">
+
         {/* Temporary Registrations */}
         <section className="bg-white rounded-lg shadow-md border-t-4 border-yellow-600 p-6">
           <h2 className="text-2xl font-semibold text-yellow-700 mb-4">
@@ -106,9 +119,7 @@ const MyRegistration = () => {
                         {reg.status}
                       </td>
                       <td className="py-2 px-4 border-b">
-                        {verifier
-                          ? `${verifier}`
-                          : "—"}
+                        {verifier || "—"}
                       </td>
                     </tr>
                   ))}

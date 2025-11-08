@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
+import { verifyToken } from "../middleware/middleware.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -14,7 +15,6 @@ const accessCookieOptions = {
   maxAge: 24 * 60 * 60 * 1000, // 1 day
 };
 
-//Student Signup
 
 router.post("/signup/student", async (req, res) => {
   try {

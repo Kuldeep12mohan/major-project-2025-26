@@ -30,7 +30,7 @@ export default function HomePage() {
             </h1>
           </div>
 
-          {/* ✅ Navbar Buttons */}
+          {/* Navbar Buttons */}
           <nav className="flex space-x-4">
             <button
               onClick={() => navigate("/auth-student")}
@@ -38,12 +38,14 @@ export default function HomePage() {
             >
               Student Login
             </button>
+
             <button
               onClick={() => navigate("/auth-teacher")}
               className="bg-green-600 hover:bg-green-700 transform hover:scale-105 transition-all duration-200 px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:shadow-xl"
             >
               Teacher Login
             </button>
+
             <button
               onClick={() => navigate("/admin/login")}
               className="bg-yellow-500 hover:bg-yellow-600 transform hover:scale-105 transition-all duration-200 px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:shadow-xl"
@@ -59,14 +61,10 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto">
           {/* Badge */}
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm font-medium mb-8 shadow-sm">
-            <svg
-              className="w-4 h-4 mr-2"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
+            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
-                d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812z"
                 clipRule="evenodd"
               />
             </svg>
@@ -74,20 +72,19 @@ export default function HomePage() {
           </div>
 
           <h2 className="text-6xl font-bold bg-gradient-to-r from-red-800 via-red-700 to-red-900 bg-clip-text text-transparent mb-6 leading-tight">
-            Welcome to the Course
-            <br />
+            Welcome to the Course <br />
             <span className="text-green-700">Registration System</span>
           </h2>
 
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
-            A sophisticated platform designed to streamline course registration
-            for students and empower teachers with comprehensive course
-            management tools and real-time enrollment insights.
+            A modern platform built to simplify course enrollment for students and
+            empower teachers with tools for efficient teaching and real-time
+            monitoring.
           </p>
 
           {/* Feature Cards */}
           <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-4xl mx-auto">
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition border border-gray-100">
               <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
                 <svg
                   className="w-6 h-6 text-green-600"
@@ -107,12 +104,12 @@ export default function HomePage() {
                 For Students
               </h3>
               <p className="text-gray-600 text-sm">
-                Browse courses, manage registrations, and track your academic
-                journey with ease.
+                Browse courses, register easily, and track your academic
+                progress—all in one place.
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition border border-gray-100">
               <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
                 <svg
                   className="w-6 h-6 text-red-700"
@@ -132,13 +129,12 @@ export default function HomePage() {
                 For Teachers
               </h3>
               <p className="text-gray-600 text-sm">
-                Create courses, monitor enrollments, and manage your teaching
-                portfolio effectively.
+                Manage courses, view enrollments, and guide students effortlessly.
               </p>
             </div>
           </div>
 
-          {/* ✅ CTA Buttons */}
+          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <button
               onClick={() => navigate("/auth-student")}
@@ -147,7 +143,7 @@ export default function HomePage() {
               <span className="flex items-center justify-center">
                 I am a Student
                 <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200"
+                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -169,7 +165,7 @@ export default function HomePage() {
               <span className="flex items-center justify-center">
                 I am a Teacher
                 <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200"
+                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -184,7 +180,6 @@ export default function HomePage() {
               </span>
             </button>
 
-            {/* ✅ New Admin Login Button */}
             <button
               onClick={() => navigate("/admin/login")}
               className="group bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold text-lg w-full sm:w-auto"
@@ -192,7 +187,7 @@ export default function HomePage() {
               <span className="flex items-center justify-center">
                 I am an Admin
                 <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200"
+                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

@@ -1,7 +1,7 @@
-// src/pages/TeacherAuthPage.tsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { base_url } from "../../utils/utils.js";
 
 export default function TeacherAuthPage() {
   const navigate = useNavigate();
@@ -35,20 +35,25 @@ export default function TeacherAuthPage() {
       }
 
       if (isLogin) {
-        // Teacher Login
-        const res = await axios.post("http://localhost:5000/api/auth/login", {
-          email: form.email,
-          password: form.password,
-          role: "TEACHER",
-        });
+        const res = await axios.post(
+          `${BASE_URL}/api/auth/login`,
+          {
+            email: form.email,
+            password: form.password,
+          },
+          { withCredentials: true }
+        );
 
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
+        if (res.data.user.role !== "TEACHER") {
+          setError("You are not authorized to login as a teacher.");
+          setLoading(false);
+          return;
+        }
+
         navigate("/teacher-dashboard");
       } else {
-        // Teacher Signup
-        const res = await axios.post(
-          "http://localhost:5000/api/auth/signup/teacher",
+        await axios.post(
+          `${base_url}/api/auth/signup/teacher`,
           {
             email: form.email,
             password: form.password,
@@ -56,12 +61,10 @@ export default function TeacherAuthPage() {
             employeeId: form.employeeId,
             designation: form.designation,
             dept: form.dept,
-            role: "TEACHER",
-          }
+          },
+          { withCredentials: true }
         );
 
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
         navigate("/teacher-dashboard");
       }
     } catch (err) {
@@ -126,6 +129,7 @@ export default function TeacherAuthPage() {
                     className="w-full mt-1 p-2 border rounded-md"
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Employee ID
@@ -140,6 +144,7 @@ export default function TeacherAuthPage() {
                     className="w-full mt-1 p-2 border rounded-md"
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Designation
@@ -154,6 +159,7 @@ export default function TeacherAuthPage() {
                     className="w-full mt-1 p-2 border rounded-md"
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Department
@@ -185,6 +191,7 @@ export default function TeacherAuthPage() {
                 className="w-full mt-1 p-2 border rounded-md"
               />
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Password
@@ -226,7 +233,6 @@ export default function TeacherAuthPage() {
             </button>
           </form>
 
-          {/* Switch link */}
           <p className="text-center text-sm mt-4 text-gray-600">
             {isLogin ? (
               <>

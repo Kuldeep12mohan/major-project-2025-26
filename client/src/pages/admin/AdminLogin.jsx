@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { base_url } from "../../utils/utils.js"
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
@@ -18,9 +19,18 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login/admin", form);
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("admin", JSON.stringify(res.data.user));
+      const res = await axios.post(
+        `${base_url}/api/auth/login/admin`,
+        form,
+        { withCredentials: true }
+      );
+
+      if (res.data.user.role !== "ADMIN") {
+        toast.error("You are not authorized as admin.");
+        setLoading(false);
+        return;
+      }
+
       toast.success("Login successful!");
       navigate("/admin/dashboard");
     } catch (err) {
@@ -52,6 +62,7 @@ export default function AdminLoginPage() {
       {/* Login Card */}
       <main className="flex-grow flex items-center justify-center p-6">
         <div className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-2xl rounded-2xl p-8 w-full max-w-md">
+
           <div className="text-center mb-6">
             <div className="w-16 h-16 mx-auto bg-gradient-to-r from-red-800 to-red-700 rounded-full flex items-center justify-center shadow-lg mb-4">
               <svg
@@ -75,6 +86,7 @@ export default function AdminLoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Email
@@ -90,6 +102,7 @@ export default function AdminLoginPage() {
               />
             </div>
 
+            {/* Admin ID */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Admin ID
@@ -105,6 +118,7 @@ export default function AdminLoginPage() {
               />
             </div>
 
+            {/* Password */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
@@ -120,6 +134,7 @@ export default function AdminLoginPage() {
               />
             </div>
 
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}

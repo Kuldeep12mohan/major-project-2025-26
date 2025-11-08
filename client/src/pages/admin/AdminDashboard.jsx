@@ -2,34 +2,27 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { base_url } from "../utils/utils";
+import { BASE_URL } from "../../utils/utils.js"
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const admin = JSON.parse(localStorage.getItem("admin") || "{}");
 
-  const headers = { Authorization: `Bearer ${token}` };
-
-  // Tabs
+  // States
+  const [admin, setAdmin] = useState(null);
   const [activeTab, setActiveTab] = useState("registrations");
 
-  // Registration
   const [dates, setDates] = useState({ startDate: "", endDate: "" });
   const [status, setStatus] = useState({ isOpen: false });
 
-  // Data
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [mappings, setMappings] = useState([]);
 
-  // Loading States
   const [loadingData, setLoadingData] = useState(false);
   const [loadingStudents, setLoadingStudents] = useState(false);
   const [loadingTeachers, setLoadingTeachers] = useState(false);
   const [loadingMappings, setLoadingMappings] = useState(false);
 
-  // Filters
   const [filters, setFilters] = useState({
     dept: "",
     year: "",
@@ -37,48 +30,58 @@ export default function AdminDashboard() {
     query: "",
   });
 
-  // Selection
   const [selectedTeacher, setSelectedTeacher] = useState("");
   const [selectedStudents, setSelectedStudents] = useState(new Set());
 
-  // ---------------------------
-  // Loader Component
+  // Loader
   const Loader = () => (
     <div className="w-full flex justify-center py-10">
       <div className="animate-spin h-10 w-10 border-4 border-red-800 border-t-transparent rounded-full"></div>
     </div>
   );
 
-  // ---------------------------
-  // FETCH REGISTRATION STATUS
+  // ✅ Load Admin from Server (No LocalStorage)
   useEffect(() => {
     axios
-      .get(`${base_url}/api/admin/registration-status`)
+      .get(`${BASE_URL}/api/auth/me`, { withCredentials: true })
+      .then((res) => {
+        if (res.data.user.role !== "ADMIN") {
+          toast.error("Unauthorized access");
+          navigate("/admin/login");
+        } else {
+          setAdmin(res.data.user);
+        }
+      })
+      .catch(() => {
+        toast.error("Please login again");
+        navigate("/admin/login");
+      });
+  }, []);
+
+  // ✅ Fetch registration status
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/admin/registration-status`, { withCredentials: true })
       .then((res) => setStatus(res.data))
       .catch(() => toast.error("Failed to load status"));
   }, []);
 
-  // ---------------------------
-  // FETCH USERS & MAPPINGS
+  // ✅ Fetch students, teachers, mappings
   const fetchAllData = async () => {
     try {
       setLoadingData(true);
-      setLoadingStudents(true);
-      setLoadingTeachers(true);
-      setLoadingMappings(true);
 
       const [sRes, tRes, mRes] = await Promise.all([
-        axios.get(`${base_url}/api/admin/students`, { headers }),
-        axios.get(`${base_url}/api/admin/teachers`, { headers }),
-        axios.get(`${base_url}/api/admin/mappings`, { headers }),
+        axios.get(`${BASE_URL}/api/admin/students`, { withCredentials: true }),
+        axios.get(`${BASE_URL}/api/admin/teachers`, { withCredentials: true }),
+        axios.get(`${BASE_URL}/api/admin/mappings`, { withCredentials: true }),
       ]);
 
-      setStudents(Array.isArray(sRes.data.students) ? sRes.data.students : []);
-      setTeachers(Array.isArray(tRes.data.teachers) ? tRes.data.teachers : []);
-      setMappings(Array.isArray(mRes.data.mappings) ? mRes.data.mappings : []);
+      setStudents(sRes.data.students || []);
+      setTeachers(tRes.data.teachers || []);
+      setMappings(mRes.data.mappings || []);
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to fetch data");
+      toast.error("Failed to load data");
     } finally {
       setLoadingData(false);
       setLoadingStudents(false);
@@ -91,18 +94,15 @@ export default function AdminDashboard() {
     if (activeTab === "manageUsers") fetchAllData();
   }, [activeTab]);
 
-  // ---------------------------
-  // FILTERED STUDENTS
+  // ✅ Filtering Students
   const filteredStudents = useMemo(() => {
-    if (!Array.isArray(students)) return [];
-
     return students.filter((s) => {
       if (filters.dept && s.dept !== filters.dept) return false;
       if (filters.semester && String(s.semester) !== filters.semester) return false;
 
       if (filters.year) {
-        const derivedYear = Math.ceil((s.semester || 0) / 2);
-        if (String(derivedYear) !== filters.year) return false;
+        const y = Math.ceil(s.semester / 2);
+        if (String(y) !== filters.year) return false;
       }
 
       if (filters.query) {
@@ -113,13 +113,11 @@ export default function AdminDashboard() {
           s.user?.email?.toLowerCase().includes(q)
         );
       }
-
       return true;
     });
   }, [students, filters]);
 
-  // ---------------------------
-  // SELECT / UNSELECT STUDENTS
+  // ✅ Select Students
   const toggleStudent = (id) => {
     setSelectedStudents((prev) => {
       const next = new Set(prev);
@@ -129,44 +127,41 @@ export default function AdminDashboard() {
   };
 
   const toggleSelectAll = () => {
-    const allIds = filteredStudents.map((s) => s.id);
-    const allSelected = allIds.every((id) => selectedStudents.has(id));
-    setSelectedStudents(allSelected ? new Set() : new Set(allIds));
+    const all = filteredStudents.map((s) => s.id);
+    const allSelected = all.every((id) => selectedStudents.has(id));
+    setSelectedStudents(allSelected ? new Set() : new Set(all));
   };
 
-  // ---------------------------
-  // MAPPING ACTIONS
+  // ✅ Map Single
   const mapSingle = async (studentId) => {
-    if (!studentId || !selectedTeacher) return toast.error("Pick student + teacher");
+    if (!selectedTeacher) return toast.error("Select a teacher");
 
     try {
       await axios.post(
-        `${base_url}/api/admin/map-student`,
+        `${BASE_URL}/api/admin/map-student`,
         { studentId, teacherId: Number(selectedTeacher) },
-        { headers }
+        { withCredentials: true }
       );
-      toast.success("Mapped!");
+      toast.success("Mapped successfully");
       fetchAllData();
     } catch {
       toast.error("Mapping failed");
     }
   };
 
+  // ✅ Bulk Mapping: Selected Students
   const mapSelected = async () => {
     if (!selectedTeacher) return toast.error("Select a teacher");
-    if (selectedStudents.size === 0)
-      return toast.error("No students selected");
-
-    const ids = Array.from(selectedStudents);
+    if (selectedStudents.size === 0) return toast.error("Select students");
 
     try {
       await axios.post(
-        `${base_url}/api/admin/map-many`,
-        { studentIds: ids, teacherId: Number(selectedTeacher) },
-        { headers }
+        `${BASE_URL}/api/admin/map-many`,
+        { studentIds: [...selectedStudents], teacherId: Number(selectedTeacher) },
+        { withCredentials: true }
       );
 
-      toast.success(`Mapped ${ids.length} students`);
+      toast.success("Bulk mapping complete");
       setSelectedStudents(new Set());
       fetchAllData();
     } catch {
@@ -174,41 +169,42 @@ export default function AdminDashboard() {
     }
   };
 
+  // ✅ Bulk Mapping: Map All Filtered
   const mapAllFiltered = async () => {
     if (!selectedTeacher) return toast.error("Select a teacher");
-    if (filteredStudents.length === 0)
-      return toast.error("No students in filter");
-
-    const ids = filteredStudents.map((s) => s.id);
+    if (filteredStudents.length === 0) return toast.error("No students found");
 
     try {
       await axios.post(
-        `${base_url}/api/admin/map-many`,
-        { studentIds: ids, teacherId: Number(selectedTeacher) },
-        { headers }
+        `${BASE_URL}/api/admin/map-many`,
+        {
+          studentIds: filteredStudents.map((s) => s.id),
+          teacherId: Number(selectedTeacher),
+        },
+        { withCredentials: true }
       );
-      toast.success(`Mapped ${ids.length} students`);
-      setSelectedStudents(new Set());
+
+      toast.success("Mapped all filtered students");
       fetchAllData();
     } catch {
-      toast.error("Bulk mapping failed");
+      toast.error("Mapping failed");
     }
   };
 
-  // ---------------------------
-  // REGISTRATION CONTROL
+  // ✅ Registration Toggle
   const startReg = async () => {
-    const { startDate, endDate } = dates;
-    if (!startDate || !endDate) return toast.error("Select both dates");
+    if (!dates.startDate || !dates.endDate)
+      return toast.error("Select both dates");
 
     try {
       await axios.post(
-        `${base_url}/api/admin/registration-toggle`,
-        { isOpen: true, startDate, endDate },
-        { headers }
+        `${BASE_URL}/api/admin/registration-toggle`,
+        { isOpen: true, ...dates },
+        { withCredentials: true }
       );
+
+      setStatus({ isOpen: true, ...dates });
       toast.success("Registration opened");
-      setStatus({ isOpen: true, startDate, endDate });
     } catch {
       toast.error("Failed to open registration");
     }
@@ -217,31 +213,33 @@ export default function AdminDashboard() {
   const closeReg = async () => {
     try {
       await axios.post(
-        `${base_url}/api/admin/registraion-toggle`,
+        `${BASE_URL}/api/admin/registration-toggle`,
         { isOpen: false },
-        { headers }
+        { withCredentials: true }
       );
-      toast.success("Registration closed");
+
       setStatus({ isOpen: false });
+      toast.success("Registration closed");
     } catch {
       toast.error("Failed to close registration");
     }
   };
 
-  // ---------------------------
-  // LOGOUT
-  const logout = () => {
-    localStorage.clear();
+  // ✅ Logout
+  const logout = async () => {
+    await axios.post(`${BASE_URL}/api/auth/logout`, {}, { withCredentials: true });
     navigate("/admin/login");
   };
 
-  // ---------------------------
-  // RENDER UI
+  // ----------------------------------------------------------------
+  // RETURN UI
+  // ----------------------------------------------------------------
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Toaster position="top-right" />
 
-      {/* HEADER */}
+      {/* Header */}
       <div className="bg-red-800 text-white p-4 flex justify-between">
         <h1 className="text-xl font-bold">Admin Dashboard</h1>
         <button className="bg-green-700 px-4 py-1 rounded" onClick={logout}>
@@ -249,27 +247,27 @@ export default function AdminDashboard() {
         </button>
       </div>
 
-      {/* TABS */}
+      {/* Tabs */}
       <div className="flex justify-center bg-green-50">
         <button
-          className={`p-3 ${activeTab === "registrations" ? "border-b-4 border-red-700" : ""}`}
+          className={`p-3 ${activeTab === "registrations" && "border-b-4 border-red-700"}`}
           onClick={() => setActiveTab("registrations")}
         >
           Registrations
         </button>
 
         <button
-          className={`p-3 ${activeTab === "manageUsers" ? "border-b-4 border-red-700" : ""}`}
+          className={`p-3 ${activeTab === "manageUsers" && "border-b-4 border-red-700"}`}
           onClick={() => setActiveTab("manageUsers")}
         >
-          Student–Teacher Mappings
+          Student–Teacher Mapping
         </button>
       </div>
 
-      {/* ------------------------ REGISTRATION TAB ------------------------ */}
+      {/* Registration Control */}
       {activeTab === "registrations" && (
         <div className="p-6">
-          <h2 className="text-lg font-semibold mb-4">Registration Control</h2>
+          <h2 className="text-lg font-semibold mb-4">Registration Window</h2>
 
           <div className="flex gap-4 my-4">
             <input
@@ -278,7 +276,6 @@ export default function AdminDashboard() {
               value={dates.startDate}
               onChange={(e) => setDates({ ...dates, startDate: e.target.value })}
             />
-
             <input
               type="date"
               className="border p-2"
@@ -292,7 +289,7 @@ export default function AdminDashboard() {
               </button>
             ) : (
               <button className="bg-red-700 text-white px-4 py-2 rounded" onClick={closeReg}>
-                Close Registration
+                Close
               </button>
             )}
           </div>
@@ -301,22 +298,19 @@ export default function AdminDashboard() {
             Status:{" "}
             {status.isOpen
               ? `Active (${status.startDate} → ${status.endDate})`
-              : "Not Active"}
+              : "Closed"}
           </p>
         </div>
       )}
 
-      {/* ------------------------ MAPPING TAB ------------------------ */}
+      {/* Mapping Section */}
       {activeTab === "manageUsers" && (
         <div className="p-6">
-          {/* Top-level Loader */}
           {loadingData ? (
             <Loader />
           ) : (
             <>
-              <h2 className="text-lg font-semibold mb-4">Student–Teacher Mapping</h2>
-
-              {/* FILTERS */}
+              {/* Filters */}
               <div className="flex gap-4 mb-4">
                 <select
                   value={filters.dept}
@@ -363,7 +357,7 @@ export default function AdminDashboard() {
                 />
               </div>
 
-              {/* TEACHER SELECT */}
+              {/* Teacher Select */}
               <select
                 className="border p-2 mb-4"
                 value={selectedTeacher}
@@ -372,17 +366,14 @@ export default function AdminDashboard() {
                 <option value="">Select Teacher</option>
                 {teachers.map((t) => (
                   <option key={t.id} value={t.id}>
-                    {t.user?.name} ({t.dept})
+                    {t.user.name} ({t.dept})
                   </option>
                 ))}
               </select>
 
-              {/* BULK BUTTONS */}
+              {/* Bulk Actions */}
               <div className="flex gap-4 mb-4">
-                <button
-                  onClick={mapSelected}
-                  className="bg-blue-600 text-white px-4 py-2 rounded"
-                >
+                <button onClick={mapSelected} className="bg-blue-600 text-white px-4 py-2 rounded">
                   Map Selected ({selectedStudents.size})
                 </button>
 
@@ -394,7 +385,7 @@ export default function AdminDashboard() {
                 </button>
               </div>
 
-              {/* STUDENT TABLE */}
+              {/* Student Table */}
               <table className="w-full text-sm border bg-white">
                 <thead className="bg-gray-100">
                   <tr>
@@ -411,23 +402,17 @@ export default function AdminDashboard() {
                     <th className="p-2 border">Name</th>
                     <th className="p-2 border">Enroll</th>
                     <th className="p-2 border">Dept</th>
-                    <th className="p-2 border">Sem</th>
+                    <th className="p-2 border">Semester</th>
                     <th className="p-2 border">Teacher</th>
                     <th className="p-2 border">Action</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  {loadingStudents || loadingTeachers || loadingMappings ? (
+                  {filteredStudents.length === 0 ? (
                     <tr>
-                      <td colSpan="7">
-                        <Loader />
-                      </td>
-                    </tr>
-                  ) : filteredStudents.length === 0 ? (
-                    <tr>
-                      <td colSpan="7" className="text-center py-6 text-gray-500">
-                        No students found for selected filters.
+                      <td colSpan="7" className="text-center py-5 text-gray-500">
+                        No students match filters.
                       </td>
                     </tr>
                   ) : (
@@ -440,13 +425,11 @@ export default function AdminDashboard() {
                             onChange={() => toggleStudent(s.id)}
                           />
                         </td>
-                        <td className="p-2 border">{s.user?.name}</td>
+                        <td className="p-2 border">{s.user.name}</td>
                         <td className="p-2 border">{s.enrollNo}</td>
                         <td className="p-2 border">{s.dept}</td>
                         <td className="p-2 border">{s.semester}</td>
-                        <td className="p-2 border">
-                          {s.teacher?.user?.name || "Unassigned"}
-                        </td>
+                        <td className="p-2 border">{s.teacher?.user?.name || "Unassigned"}</td>
                         <td className="p-2 border">
                           <button
                             className="bg-green-700 text-white px-3 py-1 rounded"

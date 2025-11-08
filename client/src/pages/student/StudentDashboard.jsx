@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { base_, base_urlurl } from "../../utils/utils.js";
 
 const StudentDashboard = () => {
   const [profile, setProfile] = useState(null);
@@ -12,41 +13,47 @@ const StudentDashboard = () => {
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!token) {
-          navigate("/");
-          return;
-        }
-
         // ✅ Fetch student profile
-        const profileRes = await axios.get("http://localhost:5000/api/auth/profile", {
-          headers: { Authorization: `Bearer ${token}` },
+        const profileRes = await axios.get(`${base_url}/api/auth/profile`, {
+          withCredentials: true,
         });
         setProfile(profileRes.data);
 
-        // ✅ Fetch current registration window
-        const statusRes = await axios.get("http://localhost:5000/api/admin/registration-status");
+        // ✅ Fetch registration status
+        const statusRes = await axios.get(
+          `${base_url}/api/admin/registration-status`,
+          { withCredentials: true }
+        );
         setRegistrationStatus(statusRes.data || { isOpen: false });
       } catch (err) {
-        console.error("Error fetching dashboard data", err);
-        toast.error("Failed to load dashboard data!");
+        console.error("Error fetching dashboard data:", err);
+        toast.error("Session expired. Please login again.");
+        navigate("/");
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [navigate, token]);
+  }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    toast.success("Logged out successfully!");
-    setTimeout(() => navigate("/"), 1000);
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${base_url}/api/auth/logout`,
+        {},
+        { withCredentials: true }
+      );
+      toast.success("Logged out successfully!");
+      setTimeout(() => navigate("/"), 1000);
+    } catch (err) {
+      console.error("Logout error:", err);
+      toast.error("Failed to logout.");
+    }
   };
 
   const { isOpen, startDate, endDate } = registrationStatus;
@@ -149,7 +156,6 @@ const StudentDashboard = () => {
 
           {/* Quick Links */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Available Courses */}
             <div
               className={`rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] transition ${
                 isOpen
@@ -176,7 +182,6 @@ const StudentDashboard = () => {
               </p>
             </div>
 
-            {/* My Registrations */}
             <div
               className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] hover:shadow-lg cursor-pointer transition"
               onClick={() => navigate("/my-registrations")}
@@ -187,7 +192,6 @@ const StudentDashboard = () => {
               <p className="text-gray-600">Check your registration status</p>
             </div>
 
-            {/* Performance */}
             <div className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] hover:shadow-lg cursor-pointer transition">
               <h3 className="text-lg font-semibold text-[#7a0c0c]">
                 📈 Performance Insights
@@ -200,7 +204,6 @@ const StudentDashboard = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="bg-[#0f6a36] text-white text-center py-2 text-sm">
         © 2025 Course Registration Portal
       </footer>
