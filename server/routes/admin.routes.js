@@ -1,9 +1,10 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
-import { verifyAdmin } from "../middleware/middleware.js"
+import { verifyAdmin } from "../middleware/middleware.js";
 
 const prisma = new PrismaClient();
 const router = express.Router();
+
 router.post("/registration-toggle", verifyAdmin, async (req, res) => {
   try {
     const { isOpen, startDate, endDate } = req.body;
@@ -43,11 +44,12 @@ router.get("/registration-status", async (req, res) => {
       orderBy: { id: "desc" },
     });
 
-    if (!status)
+    if (!status) {
       return res.json({
         isOpen: false,
         message: "Registration not initialized yet.",
       });
+    }
 
     const now = new Date();
     const isCurrentlyOpen =
@@ -116,45 +118,32 @@ router.get("/teachers", verifyAdmin, async (req, res) => {
   }
 });
 
-
-// POST /api/admin/map-student
 router.post("/map-student", verifyAdmin, async (req, res) => {
   try {
     let { studentId, teacherId } = req.body;
-    studentId = Number.parseInt(studentId)
-    teacherId = Number.parseInt(teacherId)
+
+    studentId = Number(studentId);
+    teacherId = Number(teacherId);
+
     if (!studentId || !teacherId) {
-      return res
-        .status(400)
-        .json({ error: "studentId and teacherId are required" });
+      return res.status(400).json({ error: "studentId and teacherId are required" });
     }
 
-    // Verify both exist
-    const student = await prisma.studentProfile.findUnique({
-      where: { id: studentId },
-    });
-    const teacher = await prisma.teacherProfile.findUnique({
-      where: { id: teacherId },
-    });
+    const student = await prisma.studentProfile.findUnique({ where: { id: studentId } });
+    const teacher = await prisma.teacherProfile.findUnique({ where: { id: teacherId } });
 
     if (!student) return res.status(404).json({ error: "Student not found" });
     if (!teacher) return res.status(404).json({ error: "Teacher not found" });
 
-    // ✅ Update the student profile to assign the teacher
     const updatedStudent = await prisma.studentProfile.update({
       where: { id: studentId },
       data: { teacherId: teacher.id },
-      include: {
-        user: { select: { name: true, email: true } },
-      },
+      include: { user: { select: { name: true, email: true } } },
     });
 
     res.json({
       message: "Student successfully mapped to teacher",
-      mapping: {
-        student: updatedStudent,
-        teacher,
-      },
+      mapping: { student: updatedStudent, teacher },
     });
   } catch (err) {
     console.error("Error mapping student:", err);
@@ -162,16 +151,41 @@ router.post("/map-student", verifyAdmin, async (req, res) => {
   }
 });
 
-// 🔹 Get all student–teacher mappings
+router.post("/map-many", verifyAdmin, async (req, res) => {
+  try {
+    let { studentIds, teacherId } = req.body;
+
+    if (!Array.isArray(studentIds) || studentIds.length === 0) {
+      return res.status(400).json({ error: "studentIds must be a non-empty array" });
+    }
+
+    teacherId = Number(teacherId);
+    const teacher = await prisma.teacherProfile.findUnique({ where: { id: teacherId } });
+
+    if (!teacher) return res.status(404).json({ error: "Teacher not found" });
+
+    const updated = await prisma.studentProfile.updateMany({
+      where: { id: { in: studentIds.map((id) => Number(id)) } },
+      data: { teacherId },
+    });
+
+    res.json({
+      message: `Mapped ${updated.count} students to teacher ${teacherId}`,
+      count: updated.count,
+    });
+  } catch (err) {
+    console.error("Bulk mapping error:", err);
+    res.status(500).json({ error: "Failed to map many students" });
+  }
+});
+
 router.get("/mappings", verifyAdmin, async (req, res) => {
   try {
     const mappings = await prisma.studentProfile.findMany({
       include: {
         user: { select: { id: true, name: true, email: true } },
         teacher: {
-          include: {
-            user: { select: { id: true, name: true, email: true } },
-          },
+          include: { user: { select: { id: true, name: true, email: true } } },
         },
       },
       orderBy: { id: "asc" },
@@ -187,6 +201,5 @@ router.get("/mappings", verifyAdmin, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch student–teacher mappings" });
   }
 });
-
 
 export default router;

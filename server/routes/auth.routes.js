@@ -2,15 +2,20 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
-import { verifyToken } from "../middleware/middleware.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
-/**
- * 🔹 Student Signup
- */
+const accessCookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "strict",
+  maxAge: 24 * 60 * 60 * 1000, // 1 day
+};
+
+//Student Signup
+
 router.post("/signup/student", async (req, res) => {
   try {
     const { email, password, name, enrollNo, facultyNo, semester, dept } = req.body;
@@ -20,16 +25,13 @@ router.post("/signup/student", async (req, res) => {
     }
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
-    if (existingUser)
-      return res.status(400).json({ error: "Email already registered" });
+    if (existingUser) return res.status(400).json({ error: "Email already registered" });
 
     const existingEnroll = await prisma.studentProfile.findUnique({ where: { enrollNo } });
-    if (existingEnroll)
-      return res.status(400).json({ error: "Enrollment No already registered" });
+    if (existingEnroll) return res.status(400).json({ error: "Enrollment No already registered" });
 
     const existingFaculty = await prisma.studentProfile.findUnique({ where: { facultyNo } });
-    if (existingFaculty)
-      return res.status(400).json({ error: "Faculty No already registered" });
+    if (existingFaculty) return res.status(400).json({ error: "Faculty No already registered" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -41,20 +43,19 @@ router.post("/signup/student", async (req, res) => {
       data: { userId: user.id, enrollNo, facultyNo, semester, dept },
     });
 
+    // Create access token
     const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, {
       expiresIn: "1d",
     });
 
+    //Store in HttpOnly secure cookie
+    res.cookie("accessToken", token, accessCookieOptions);
+
+    const { password: _, ...safeUser } = user;
+
     return res.status(201).json({
       message: "Student registered successfully",
-      token,
-      user: {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        name: user.name,
-        studentProfile,
-      },
+      user: { ...safeUser, studentProfile },
     });
   } catch (err) {
     console.error("❌ Signup error:", err);
@@ -62,9 +63,8 @@ router.post("/signup/student", async (req, res) => {
   }
 });
 
-/**
- * 🔹 Teacher Signup
- */
+ // Teacher Signup
+
 router.post("/signup/teacher", async (req, res) => {
   try {
     const { email, password, name, employeeId, designation, dept } = req.body;
@@ -74,8 +74,7 @@ router.post("/signup/teacher", async (req, res) => {
     }
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
-    if (existingUser)
-      return res.status(400).json({ error: "Email already registered" });
+    if (existingUser) return res.status(400).json({ error: "Email already registered" });
 
     const existingEmployee = await prisma.teacherProfile.findUnique({
       where: { employeeId },
@@ -97,16 +96,13 @@ router.post("/signup/teacher", async (req, res) => {
       expiresIn: "1d",
     });
 
+    res.cookie("accessToken", token, accessCookieOptions);
+
+    const { password: _, ...safeUser } = user;
+
     return res.status(201).json({
       message: "Teacher registered successfully",
-      token,
-      user: {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        name: user.name,
-        teacherProfile,
-      },
+      user: { ...safeUser, teacherProfile },
     });
   } catch (err) {
     console.error("❌ Teacher signup error:", err);
@@ -114,17 +110,14 @@ router.post("/signup/teacher", async (req, res) => {
   }
 });
 
-/**
- * 🔹 Admin Login
- */
+
+ // Admin Login
 router.post("/login/admin", async (req, res) => {
   try {
     const { email, password, adminId } = req.body;
 
     if (!email || !password || !adminId)
-      return res
-        .status(400)
-        .json({ error: "Email, password, and Admin ID are required" });
+      return res.status(400).json({ error: "Email, password & Admin ID required" });
 
     const admin = await prisma.user.findFirst({
       where: { email, role: "ADMIN", adminProfile: { adminId } },
@@ -134,17 +127,18 @@ router.post("/login/admin", async (req, res) => {
     if (!admin) return res.status(400).json({ error: "Invalid credentials" });
 
     const isPasswordValid = await bcrypt.compare(password, admin.password);
-    if (!isPasswordValid)
-      return res.status(400).json({ error: "Invalid credentials" });
+    if (!isPasswordValid) return res.status(400).json({ error: "Invalid credentials" });
 
     const token = jwt.sign({ userId: admin.id, role: admin.role }, JWT_SECRET, {
       expiresIn: "1d",
     });
 
+    res.cookie("accessToken", token, accessCookieOptions);
+
     const { password: _, ...safeAdmin } = admin;
+
     return res.json({
       message: "Admin login successful",
-      token,
       user: safeAdmin,
     });
   } catch (err) {
@@ -153,9 +147,8 @@ router.post("/login/admin", async (req, res) => {
   }
 });
 
-/**
- * 🔹 Generic Login (for Student/Teacher)
- */
+ // Login (All Roles)
+
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -182,11 +175,12 @@ router.post("/login", async (req, res) => {
       expiresIn: "1d",
     });
 
+    res.cookie("accessToken", token, accessCookieOptions);
+
     const { password: _, ...safeUser } = user;
 
     return res.json({
       message: "Login successful",
-      token,
       user: safeUser,
     });
   } catch (err) {
@@ -195,9 +189,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-/**
- * 🔹 Fetch Authenticated Profile
- */
+ // Fetch Profile (Protected)
+
 router.get("/profile", verifyToken, async (req, res) => {
   try {
     const { user } = req;
@@ -211,6 +204,13 @@ router.get("/profile", verifyToken, async (req, res) => {
     console.error("❌ Profile fetch error:", err);
     return res.status(500).json({ error: "Failed to fetch profile" });
   }
+});
+
+ // Logout
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("accessToken");
+  return res.json({ message: "Logged out successfully" });
 });
 
 export default router;

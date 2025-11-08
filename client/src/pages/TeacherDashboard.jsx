@@ -1,4 +1,3 @@
-// src/pages/TeacherDashboard.tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
