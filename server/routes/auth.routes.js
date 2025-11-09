@@ -189,7 +189,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
- // Fetch Profile (Protected)
 
 router.get("/profile", verifyToken, async (req, res) => {
   try {
@@ -228,8 +227,6 @@ router.get("/me", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch user" });
   }
 });
-
- // Logout
 
 router.post("/logout", (req, res) => {
   res.clearCookie("accessToken");

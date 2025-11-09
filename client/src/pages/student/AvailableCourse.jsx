@@ -51,24 +51,24 @@ const AvailableCourse = () => {
 
     fetchCourses();
   }, [student]);
-  const handleRegister = async (courseId) => {
-    setRegistering(courseId);
+ const handleRegister = async (courseId) => {
+  setRegistering(courseId);
 
-    try {
-      const res = await axios.post(
-        `${base_url}/api/student/register`,
-        { courseIds: [courseId], mode: "A" },
-        { withCredentials: true }
-      );
+  try {
+    const res = await axios.post(
+      `${base_url}/api/student/register`,
+      { courseId, mode: "A" }, // ✅ send single courseId
+      { withCredentials: true }
+    );
 
-      toast.success(res.data.message || "Registration successful!");
-    } catch (err) {
-      toast.error(err.response?.data?.error || "Registration failed");
-      console.error(err);
-    } finally {
-      setRegistering(null);
-    }
-  };
+    toast.success(res.data.message || "Registration successful!");
+  } catch (err) {
+    toast.error(err.response?.data?.error || "Registration failed");
+    console.error(err);
+  } finally {
+    setRegistering(null);
+  }
+};
 
   const toggleExpand = (id) => {
     setExpandedCourse(expandedCourse === id ? null : id);

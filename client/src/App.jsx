@@ -8,6 +8,7 @@ import TeacherAuthPage from "./pages/teacher/TeacherAuthPage"
 import TeacherDashboard from "./pages/teacher/TeacherDashboard"
 import AdminLoginPage from "./pages/admin/AdminLogin"
 import AdminDashboard from "./pages/admin/AdminDashboard"
+import { PendingRegistration } from './pages/teacher/PendingRegistration';
 function App() {
   
   return(
@@ -22,6 +23,7 @@ function App() {
         <Route path="/admin/login" element={<AdminLoginPage/>} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path='/my-registrations' element={<MyRegistration/>}/>
+        <Route path='/teacher/requests' element={<PendingRegistration/>}/>
       </Routes>
     </Router>
   );

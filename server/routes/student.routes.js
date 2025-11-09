@@ -1,189 +1,138 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, RegStatus } from "@prisma/client";
 import { verifyStudent } from "../middleware/middleware.js";
 
 const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get("/courses", verifyStudent, async (req, res) => {
-  try {
-    const student = await prisma.studentProfile.findUnique({
-      where: { userId: req.user.id },
-    });
-
-    if (!student) {
-      return res.status(404).json({ error: "Student profile not found" });
-    }
-
-    const courses = await prisma.course.findMany({
-      where: {
-        active: true,
-        OR: [{ dept: student.dept }, { type: "OE" }],
-      },
-      orderBy: { semester: "asc" },
-    });
-
-    res.json({ message: "Courses fetched successfully", courses });
-  } catch (err) {
-    console.error("Error fetching courses:", err);
-    res.status(500).json({ error: "Failed to fetch courses" });
-  }
-});
-
-router.get("/my-registrations", verifyStudent, async (req, res) => {
-  try {
-    const student = await prisma.studentProfile.findUnique({
-      where: { userId: req.user.id },
-    });
-
-    if (!student) {
-      return res.status(404).json({ error: "Student profile not found" });
-    }
-
-    const registrations = await prisma.registration.findMany({
-      where: { studentId: student.id },
-      include: {
-        course: {
-          select: {
-            title: true,
-            code: true,
-            credits: true,
-            semester: true,
-            type: true,
-          },
-        },
-      },
-      orderBy: { createdAt: "desc" },
-    });
-
-    res.json({
-      message: "Fetched student's approved registrations",
-      registrations,
-    });
-  } catch (err) {
-    console.error("Error fetching registrations:", err);
-    res.status(500).json({ error: "Failed to fetch student registrations" });
-  }
-});
-
+// --- Create a temp registration for a single course ---
 router.post("/register", verifyStudent, async (req, res) => {
   try {
-    let { courseIds, courseId, mode } = req.body;
+    const { courseId, mode } = req.body;
 
-    if (courseId && !courseIds) courseIds = [courseId];
-
-    if (!Array.isArray(courseIds) || courseIds.length === 0) {
-      return res.status(400).json({ error: "Provide at least one valid courseId" });
+    if (!courseId) {
+      return res.status(400).json({ error: "Provide a courseId" });
     }
 
     const student = await prisma.studentProfile.findUnique({
       where: { userId: req.user.id },
     });
 
-    if (!student) {
-      return res.status(404).json({ error: "Student profile not found" });
+    if (!student) return res.status(404).json({ error: "Student not found" });
+
+    // ✅ Check if student has a verifier assigned
+    if (!student.teacherId) {
+      return res.status(403).json({ error: "No verifier assigned yet. Contact admin." });
     }
 
+    const teacherId = student.teacherId;
+
+    // ✅ Check registration window
     const regStatus = await prisma.registrationStatus.findFirst({
       orderBy: { id: "desc" },
     });
-
     const now = new Date();
     const isOpen =
-      regStatus &&
-      regStatus.isOpen &&
+      regStatus?.isOpen &&
       regStatus.startDate &&
       regStatus.endDate &&
       now >= regStatus.startDate &&
       now <= regStatus.endDate;
 
-    if (!isOpen) {
-      return res.status(403).json({ error: "Registration window is not open" });
-    }
+    if (!isOpen) return res.status(403).json({ error: "Registration is closed" });
 
-    const existingTemp = await prisma.tempRegistration.findMany({
-      where: { studentId: student.id, courseId: { in: courseIds } },
+    // ✅ Check if a temp registration for this course already exists
+    let temp = await prisma.tempRegistration.findFirst({
+      where: { studentId: student.id, courseId },
     });
 
-    if (existingTemp.length > 0) {
-      return res.status(400).json({
-        error: "Some selected courses already have pending registrations",
-      });
+    if (temp) {
+      // Already exists
+      return res.status(400).json({ error: "You have already registered this course" });
     }
 
-    const newRegs = await prisma.tempRegistration.createMany({
-      data: courseIds.map((id) => ({
+    // Create new temp registration
+    temp = await prisma.tempRegistration.create({
+      data: {
         studentId: student.id,
-        courseId: id,
+        courseId,
         mode: mode || "A",
-        status: "PENDING",
-      })),
+        status: RegStatus.PENDING,
+        verifierId: teacherId,
+      },
+      include: { course: true, student: { include: { user: true } } },
     });
 
-    res.status(201).json({
-      message: "Registration requests submitted successfully",
-      count: newRegs.count,
-    });
+    res.status(201).json({ message: "Temp registration saved", temp });
   } catch (err) {
-    console.error("Error creating registration requests:", err);
-    res.status(500).json({ error: "Failed to submit registrations" });
+    console.error(err);
+    res.status(500).json({ error: "Failed to submit registration" });
   }
 });
 
+// --- Get student's temp registrations ---
 router.get("/temp-registrations", verifyStudent, async (req, res) => {
   try {
     const student = await prisma.studentProfile.findUnique({
       where: { userId: req.user.id },
     });
 
-    if (!student) {
-      return res.status(404).json({ error: "Student profile not found" });
-    }
-
-    const teacher = await prisma.teacherProfile.findUnique({
-      where: { id: student.teacherId },
-      include: { user: { select: { name: true, email: true } } },
-    });
+    if (!student) return res.status(404).json({ error: "Student not found" });
 
     const tempRegs = await prisma.tempRegistration.findMany({
       where: { studentId: student.id },
       include: {
-        course: {
-          select: {
-            title: true,
-            code: true,
-            credits: true,
-            semester: true,
-            dept: true,
-          },
-        },
-        verifier: {
-          include: { user: { select: { name: true, email: true } } },
-        },
+        course: true,
+        verifier: { include: { user: true } },
       },
       orderBy: { createdAt: "desc" },
     });
 
-    res.json({
-      message: "Fetched student's temporary registrations",
-      tempRegistrations: tempRegs,
-      verifier: teacher?.user || null,
-    });
+    res.json({ message: "Temp registrations fetched", tempRegs });
   } catch (err) {
-    console.error("Error fetching temp registrations:", err);
+    console.error(err);
     res.status(500).json({ error: "Failed to fetch temp registrations" });
   }
 });
+
+// --- Get all verified/approved registrations for the student ---
+router.get("/registration", verifyStudent, async (req, res) => {
+  try {
+    const student = await prisma.studentProfile.findUnique({
+      where: { userId: req.user.id },
+    });
+
+    if (!student) return res.status(404).json({ error: "Student not found" });
+
+    // Fetch temp registrations that have been verified (APPROVED or REJECTED)
+    const verifiedRegs = await prisma.tempRegistration.findMany({
+      where: {
+        studentId: student.id,
+        status: RegStatus.APPROVED, // or include rejected if needed: { in: [RegStatus.APPROVED, RegStatus.REJECTED] }
+      },
+      include: {
+        course: true,
+        verifier: { include: { user: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.json({ message: "Verified registrations fetched", registrations: verifiedRegs });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch verified registrations" });
+  }
+});
+
+
+// --- Fetch courses by semester and department ---
 
 router.get("/:semester/:dept", async (req, res) => {
   try {
     const { semester, dept } = req.params;
 
     const courses = await prisma.course.findMany({
-      where: {
-        semester: Number(semester),
-        dept,
-      },
+      where: { semester: Number(semester), dept },
       orderBy: { title: "asc" },
     });
 
@@ -193,12 +142,9 @@ router.get("/:semester/:dept", async (req, res) => {
       });
     }
 
-    res.json({
-      message: `Courses for semester ${semester} in ${dept}`,
-      courses,
-    });
+    res.json({ message: `Courses for semester ${semester} in ${dept}`, courses });
   } catch (err) {
-    console.error("Error fetching courses by dept/sem:", err);
+    console.error(err);
     res.status(500).json({ error: "Failed to fetch courses" });
   }
 });

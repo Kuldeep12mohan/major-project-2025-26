@@ -66,7 +66,7 @@ model StudentProfile {
   enrollNo   String @unique
   facultyNo  String @unique
   semester   Int
-  dept       Dept   // ✅ Changed to enum
+  dept       Dept  
 
   teacher    TeacherProfile?  @relation(fields: [teacherId], references: [id])
   teacherId  Int?

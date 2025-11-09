@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { base_url } from "../../utils/utils.js"
+import { base_url } from "../../utils/utils.js";
 import { useNavigate } from "react-router-dom";
 
 const MyRegistration = () => {
   const [tempRegs, setTempRegs] = useState([]);
   const [approvedRegs, setApprovedRegs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [verifier, setVerifier] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,16 +17,13 @@ const MyRegistration = () => {
           axios.get(`${base_url}/api/student/temp-registrations`, {
             withCredentials: true,
           }),
-          axios.get(`${base_url}/api/student/my-registrations`, {
+          axios.get(`${base_url}/api/student/registration`, { // updated route for verified/approved
             withCredentials: true,
           }),
         ]);
 
-        setTempRegs(tempRes.data.tempRegistrations || []);
+        setTempRegs(tempRes.data.tempRegs || []); // array of temp registrations
         setApprovedRegs(approvedRes.data.registrations || []);
-
-        const teacherUser = tempRes.data.verifier;
-        setVerifier(teacherUser ? teacherUser.name : "—");
       } catch (err) {
         console.error("Error fetching registrations:", err);
         toast.error("Failed to load registration data!");
@@ -119,7 +115,7 @@ const MyRegistration = () => {
                         {reg.status}
                       </td>
                       <td className="py-2 px-4 border-b">
-                        {verifier || "—"}
+                        {reg.verifier?.user?.name || "—"}
                       </td>
                     </tr>
                   ))}
@@ -129,14 +125,14 @@ const MyRegistration = () => {
           )}
         </section>
 
-        {/* Approved Registrations */}
+        {/* Approved / Verified Registrations */}
         <section className="bg-white rounded-lg shadow-md border-t-4 border-green-700 p-6">
           <h2 className="text-2xl font-semibold text-green-800 mb-4">
-            Approved / Current Registrations
+            Verified / Approved Registrations
           </h2>
 
           {approvedRegs.length === 0 ? (
-            <p className="text-gray-600">No approved registrations yet.</p>
+            <p className="text-gray-600">No verified registrations yet.</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left border border-gray-200 rounded-md">
