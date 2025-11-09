@@ -3,6 +3,7 @@ import authRoutes from "./routes/auth.routes.js"
 import cors from "cors"
 import adminRoutes from "./routes/admin.routes.js"
 import studentRoutes from "./routes/student.routes.js"
+import teacherRoutes from "./routes/teacher.routes.js"
 import cookieParser from "cookie-parser";
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/admin",adminRoutes)
 app.use("/api/student",studentRoutes)
+app.use("/api/teacher",teacherRoutes)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

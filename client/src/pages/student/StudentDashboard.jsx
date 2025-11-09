@@ -138,7 +138,7 @@ const StudentDashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
               <p>
                 <span className="font-medium">Enrollment No:</span>{" "}
-                {profile.user.studentProfile.enrollNo}
+                {/* {profile.user.studentProfile.enrollNo} */}
               </p>
               <p>
                 <span className="font-medium">Department:</span>{" "}

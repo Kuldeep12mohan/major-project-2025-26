@@ -11,7 +11,7 @@ export default function StudentAuthPage() {
   const [loading, setLoading] = useState(false);
 
   // ✅ Departments from your schema ENUM
-  const DEPARTMENTS = ["CSE", "AI", "ECE", "ME", "EE", "AE", "CHE", "PKB", "FTB"];
+  const DEPARTMENTS = ["CS", "AI", "ECE", "ME", "EE", "AE", "CHE", "PKB", "FTB"];
 
   const [form, setForm] = useState({
     name: "",

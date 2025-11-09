@@ -119,36 +119,45 @@ export default function AdminDashboard() {
   };
 
   // ✅ Registration Control
-  const startReg = async () => {
-    if (!dates.startDate || !dates.endDate)
-      return toast.error("Select both dates");
+ const startReg = async () => {
+  if (!dates.startDate || !dates.endDate)
+    return toast.error("Select both dates");
 
-    try {
-      await axios.post(
-        `${base_url}/api/admin/registration-toggle`,
-        { isOpen: true, ...dates },
-        { withCredentials: true }
-      );
-      setStatus({ isOpen: true, ...dates });
-      toast.success("Registration opened");
-    } catch {
-      toast.error("Failed to open registration");
-    }
-  };
+  try {
+    await axios.post(
+      `${base_url}/api/admin/registration-toggle`,
+      { isOpen: true, ...dates },
+      { withCredentials: true }
+    );
 
-  const closeReg = async () => {
-    try {
-      await axios.post(
-        `${base_url}/api/admin/registration-toggle`,
-        { isOpen: false },
-        { withCredentials: true }
-      );
-      setStatus({ isOpen: false });
-      toast.success("Registration closed");
-    } catch {
-      toast.error("Failed to close registration");
-    }
-  };
+    // ✅ Fetch real updated status
+    const res = await axios.get(`${base_url}/api/admin/registration-status`, { withCredentials: true });
+    setStatus(res.data);
+
+    toast.success("Registration opened");
+  } catch {
+    toast.error("Failed to open registration");
+  }
+};
+
+const closeReg = async () => {
+  try {
+    await axios.post(
+      `${base_url}/api/admin/registration-toggle`,
+      { isOpen: false },
+      { withCredentials: true }
+    );
+
+    // ✅ Fetch real updated status
+    const res = await axios.get(`${base_url}/api/admin/registration-status`, { withCredentials: true });
+    setStatus(res.data);
+
+    toast.success("Registration closed");
+  } catch {
+    toast.error("Failed to close registration");
+  }
+};
+
 
   // ✅ Logout
   const logout = async () => {

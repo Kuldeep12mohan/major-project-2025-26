@@ -12,19 +12,24 @@ router.post("/registration-toggle", verifyAdmin, async (req, res) => {
     if (typeof isOpen !== "boolean") {
       return res.status(400).json({ error: "isOpen must be a boolean" });
     }
+    let fixedStart = null;
+    let fixedEnd = null;
+
+    if (startDate) fixedStart = new Date(`${startDate}T00:00:00.000Z`);
+    if (endDate) fixedEnd = new Date(`${endDate}T23:59:59.999Z`);
 
     const updated = await prisma.registrationStatus.upsert({
       where: { id: 1 },
       update: {
         isOpen,
-        startDate: startDate ? new Date(startDate) : null,
-        endDate: endDate ? new Date(endDate) : null,
+        startDate: fixedStart,
+        endDate: fixedEnd,
       },
       create: {
         id: 1,
         isOpen,
-        startDate: startDate ? new Date(startDate) : null,
-        endDate: endDate ? new Date(endDate) : null,
+        startDate: fixedStart,
+        endDate: fixedEnd,
       },
     });
 
@@ -52,12 +57,14 @@ router.get("/registration-status", async (req, res) => {
     }
 
     const now = new Date();
+
+    // ✅ Fix: use expanded date range
     const isCurrentlyOpen =
       status.isOpen &&
       status.startDate &&
       status.endDate &&
-      now >= status.startDate &&
-      now <= status.endDate;
+      now >= new Date(status.startDate) &&
+      now <= new Date(status.endDate);
 
     res.json({
       ...status,
@@ -71,6 +78,7 @@ router.get("/registration-status", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch registration status" });
   }
 });
+
 
 router.get("/students", verifyAdmin, async (req, res) => {
   try {

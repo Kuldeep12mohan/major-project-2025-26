@@ -36,7 +36,7 @@ export default function TeacherAuthPage() {
 
       if (isLogin) {
         const res = await axios.post(
-          `${BASE_URL}/api/auth/login`,
+          `${base_url}/api/auth/login`,
           {
             email: form.email,
             password: form.password,
