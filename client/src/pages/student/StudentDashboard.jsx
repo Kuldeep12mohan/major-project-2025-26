@@ -61,10 +61,10 @@ const StudentDashboard = () => {
   const formatDate = (dateStr) =>
     dateStr
       ? new Date(dateStr).toLocaleDateString("en-IN", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        })
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
       : null;
 
   if (loading) {
@@ -109,11 +109,10 @@ const StudentDashboard = () => {
 
           {/* Registration Status */}
           <div
-            className={`mb-6 p-4 rounded-md text-center font-medium ${
-              isOpen
+            className={`mb-6 p-4 rounded-md text-center font-medium ${isOpen
                 ? "bg-green-100 text-green-800 border border-green-400"
                 : "bg-red-100 text-red-800 border border-red-400"
-            }`}
+              }`}
           >
             {isOpen ? (
               <>
@@ -132,9 +131,17 @@ const StudentDashboard = () => {
 
           {/* Profile */}
           <div className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] mb-10">
-            <h2 className="text-xl font-semibold text-[#0f6a36] mb-4">
-              My Profile
-            </h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-[#0f6a36]">
+                My Profile
+              </h2>
+              <button
+                onClick={() => navigate("/student/profile/edit")}
+                className="bg-[#0f6a36] text-white px-4 py-1 rounded-md text-sm hover:bg-[#0a4d26] transition"
+              >
+                Edit Profile
+              </button>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
               <p>
                 <span className="font-medium">Enrollment No:</span>{" "}
@@ -157,11 +164,10 @@ const StudentDashboard = () => {
           {/* Quick Links */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div
-              className={`rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] transition ${
-                isOpen
+              className={`rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] transition ${isOpen
                   ? "bg-white hover:shadow-lg cursor-pointer"
                   : "bg-gray-100 cursor-not-allowed opacity-70"
-              }`}
+                }`}
               onClick={() =>
                 isOpen
                   ? navigate("/available-courses")
@@ -169,9 +175,8 @@ const StudentDashboard = () => {
               }
             >
               <h3
-                className={`text-lg font-semibold ${
-                  isOpen ? "text-[#7a0c0c]" : "text-gray-500"
-                }`}
+                className={`text-lg font-semibold ${isOpen ? "text-[#7a0c0c]" : "text-gray-500"
+                  }`}
               >
                 📚 Available Courses
               </h3>

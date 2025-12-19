@@ -210,4 +210,82 @@ router.get("/mappings", verifyAdmin, async (req, res) => {
   }
 });
 
+
+router.get("/verifications", verifyAdmin, async (req, res) => {
+  try {
+    const verifications = await prisma.tempRegistration.findMany({
+      where: { status: "VERIFIED" },
+      include: {
+        student: {
+          include: { user: { select: { name: true, email: true } } },
+        },
+        course: {
+          select: { code: true, title: true, semester: true, credits: true },
+        },
+        verifier: {
+          include: { user: { select: { name: true } } },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.json({
+      message: "Pending verifications fetched",
+      count: verifications.length,
+      verifications,
+    });
+  } catch (err) {
+    console.error("Error fetching verifications:", err);
+    res.status(500).json({ error: "Failed to fetch verifications" });
+  }
+});
+
+router.post("/verify", verifyAdmin, async (req, res) => {
+  try {
+    const { registrationId, status } = req.body;
+
+    if (!["APPROVED", "REJECTED"].includes(status)) {
+      return res.status(400).json({ error: "Invalid status. Use APPROVED or REJECTED" });
+    }
+
+    const registration = await prisma.tempRegistration.findUnique({
+      where: { id: Number(registrationId) },
+    });
+
+    if (!registration) {
+      return res.status(404).json({ error: "Registration not found" });
+    }
+
+    // Update status
+    const updated = await prisma.tempRegistration.update({
+      where: { id: Number(registrationId) },
+      data: {
+        status,
+        adminId: req.user.adminProfile?.id, // Assuming verifyAdmin attaches user with adminProfile
+      },
+    });
+
+    // If approved, create the final Registration record
+    if (status === "APPROVED") {
+      await prisma.registration.create({
+        data: {
+          studentId: registration.studentId,
+          courseId: registration.courseId,
+          mode: registration.mode,
+          semester: 0, // You might want to fetch this from student or course, or pass it in
+          year: new Date().getFullYear(),
+        },
+      });
+    }
+
+    res.json({
+      message: `Registration ${status.toLowerCase()} successfully`,
+      registration: updated,
+    });
+  } catch (err) {
+    console.error("Error processing verification:", err);
+    res.status(500).json({ error: "Failed to process verification" });
+  }
+});
+
 export default router;

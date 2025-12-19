@@ -16,6 +16,7 @@ export default function AdminDashboard() {
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [mappings, setMappings] = useState([]);
+  const [verifications, setVerifications] = useState([]);
   const [loadingData, setLoadingData] = useState(false);
 
   const [filters, setFilters] = useState({
@@ -84,7 +85,36 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (activeTab === "manageUsers") fetchAllData();
+    if (activeTab === "verifications") fetchVerifications();
   }, [activeTab]);
+
+  // ✅ Fetch Verifications
+  const fetchVerifications = async () => {
+    try {
+      setLoadingData(true);
+      const res = await axios.get(`${base_url}/api/admin/verifications`, { withCredentials: true });
+      setVerifications(res.data.verifications || []);
+    } catch {
+      toast.error("Failed to load verifications");
+    } finally {
+      setLoadingData(false);
+    }
+  };
+
+  // ✅ Handle Verification Action
+  const handleVerification = async (registrationId, status) => {
+    try {
+      await axios.post(
+        `${base_url}/api/admin/verify`,
+        { registrationId, status },
+        { withCredentials: true }
+      );
+      toast.success(`Registration ${status.toLowerCase()} successfully`);
+      fetchVerifications(); // Refresh list
+    } catch {
+      toast.error("Action failed");
+    }
+  };
 
   // ✅ Filter Students
   const filteredStudents = useMemo(() => {
@@ -119,44 +149,44 @@ export default function AdminDashboard() {
   };
 
   // ✅ Registration Control
- const startReg = async () => {
-  if (!dates.startDate || !dates.endDate)
-    return toast.error("Select both dates");
+  const startReg = async () => {
+    if (!dates.startDate || !dates.endDate)
+      return toast.error("Select both dates");
 
-  try {
-    await axios.post(
-      `${base_url}/api/admin/registration-toggle`,
-      { isOpen: true, ...dates },
-      { withCredentials: true }
-    );
+    try {
+      await axios.post(
+        `${base_url}/api/admin/registration-toggle`,
+        { isOpen: true, ...dates },
+        { withCredentials: true }
+      );
 
-    // ✅ Fetch real updated status
-    const res = await axios.get(`${base_url}/api/admin/registration-status`, { withCredentials: true });
-    setStatus(res.data);
+      // ✅ Fetch real updated status
+      const res = await axios.get(`${base_url}/api/admin/registration-status`, { withCredentials: true });
+      setStatus(res.data);
 
-    toast.success("Registration opened");
-  } catch {
-    toast.error("Failed to open registration");
-  }
-};
+      toast.success("Registration opened");
+    } catch {
+      toast.error("Failed to open registration");
+    }
+  };
 
-const closeReg = async () => {
-  try {
-    await axios.post(
-      `${base_url}/api/admin/registration-toggle`,
-      { isOpen: false },
-      { withCredentials: true }
-    );
+  const closeReg = async () => {
+    try {
+      await axios.post(
+        `${base_url}/api/admin/registration-toggle`,
+        { isOpen: false },
+        { withCredentials: true }
+      );
 
-    // ✅ Fetch real updated status
-    const res = await axios.get(`${base_url}/api/admin/registration-status`, { withCredentials: true });
-    setStatus(res.data);
+      // ✅ Fetch real updated status
+      const res = await axios.get(`${base_url}/api/admin/registration-status`, { withCredentials: true });
+      setStatus(res.data);
 
-    toast.success("Registration closed");
-  } catch {
-    toast.error("Failed to close registration");
-  }
-};
+      toast.success("Registration closed");
+    } catch {
+      toast.error("Failed to close registration");
+    }
+  };
 
 
   // ✅ Logout
@@ -195,6 +225,13 @@ const closeReg = async () => {
           onClick={() => setActiveTab("manageUsers")}
         >
           Student–Teacher Mapping
+        </button>
+
+        <button
+          className={`p-3 px-6 font-medium ${activeTab === "verifications" && "border-b-4 border-red-700"}`}
+          onClick={() => setActiveTab("verifications")}
+        >
+          Verifications
         </button>
       </div>
 
@@ -336,6 +373,65 @@ const closeReg = async () => {
                 })}
               </div>
             </>
+          )}
+        </div>
+      )}
+
+      {/* ✅ VERIFICATIONS SECTION */}
+      {activeTab === "verifications" && (
+        <div className="p-6 flex flex-col items-center w-full">
+          <h2 className="text-xl font-semibold mb-6">Pending Course Approvals</h2>
+
+          {loadingData ? (
+            <Loader />
+          ) : verifications.length === 0 ? (
+            <p className="text-gray-600">No pending verifications.</p>
+          ) : (
+            <div className="w-full max-w-4xl overflow-x-auto bg-white shadow-md rounded-lg">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                    <th className="py-3 px-6">Student</th>
+                    <th className="py-3 px-6">Course</th>
+                    <th className="py-3 px-6">Verified By</th>
+                    <th className="py-3 px-6 text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-600 text-sm font-light">
+                  {verifications.map((v) => (
+                    <tr key={v.id} className="border-b border-gray-200 hover:bg-gray-100">
+                      <td className="py-3 px-6">
+                        <div className="font-medium">{v.student.user.name}</div>
+                        <div className="text-xs text-gray-500">{v.student.enrollNo}</div>
+                      </td>
+                      <td className="py-3 px-6">
+                        <div className="font-medium">{v.course.code}</div>
+                        <div className="text-xs text-gray-500">{v.course.title}</div>
+                      </td>
+                      <td className="py-3 px-6">
+                        {v.verifier?.user?.name || "Unknown"}
+                      </td>
+                      <td className="py-3 px-6 text-center">
+                        <div className="flex item-center justify-center gap-2">
+                          <button
+                            onClick={() => handleVerification(v.id, "APPROVED")}
+                            className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() => handleVerification(v.id, "REJECTED")}
+                            className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       )}

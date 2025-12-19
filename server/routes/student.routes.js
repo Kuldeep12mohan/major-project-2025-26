@@ -149,4 +149,43 @@ router.get("/:semester/:dept", async (req, res) => {
   }
 });
 
+
+// --- Update Student Profile ---
+router.put("/profile", verifyStudent, async (req, res) => {
+  try {
+    const { name, semester, dept } = req.body;
+
+    if (!name || !semester || !dept) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const student = await prisma.studentProfile.findUnique({
+      where: { userId: req.user.id },
+    });
+
+    if (!student) return res.status(404).json({ error: "Student not found" });
+
+    // Update User model for name
+    await prisma.user.update({
+      where: { id: req.user.id },
+      data: { name },
+    });
+
+    // Update StudentProfile model for semester and dept
+    const updatedProfile = await prisma.studentProfile.update({
+      where: { id: student.id },
+      data: {
+        semester: Number(semester),
+        dept,
+      },
+      include: { user: true },
+    });
+
+    res.json({ message: "Profile updated successfully", profile: updatedProfile });
+  } catch (err) {
+    console.error("Profile update error:", err);
+    res.status(500).json({ error: "Failed to update profile" });
+  }
+});
+
 export default router;
