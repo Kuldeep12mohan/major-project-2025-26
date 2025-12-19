@@ -10,8 +10,6 @@ async function main() {
   const password = "admin123";
   const name = "Super Admin";
   const adminId = "ADM001";
-
-  // Check if admin exists
   const existingUser = await prisma.user.findUnique({ where: { email } });
   if (existingUser) {
     console.log("Admin already exists");

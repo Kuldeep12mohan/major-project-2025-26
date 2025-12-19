@@ -15,8 +15,8 @@ router.post("/registration-toggle", verifyAdmin, async (req, res) => {
     let fixedStart = null;
     let fixedEnd = null;
 
-    if (startDate) fixedStart = new Date(`${startDate}T00:00:00.000Z`);
-    if (endDate) fixedEnd = new Date(`${endDate}T23:59:59.999Z`);
+    if (startDate) fixedStart = new Date(`${startDate}T00:00:00.000`); // Local time
+    if (endDate) fixedEnd = new Date(`${endDate}T23:59:59.999`); // Local time
 
     const updated = await prisma.registrationStatus.upsert({
       where: { id: 1 },
@@ -34,7 +34,7 @@ router.post("/registration-toggle", verifyAdmin, async (req, res) => {
     });
 
     res.status(200).json({
-      message: `Registration has been ${isOpen ? "opened" : "closed"}.`,
+      message: `Registration ${isOpen ? "opened" : "closed"}.`,
       registration: updated,
     });
   } catch (err) {
@@ -52,7 +52,7 @@ router.get("/registration-status", async (req, res) => {
     if (!status) {
       return res.json({
         isOpen: false,
-        message: "Registration not initialized yet.",
+        message: "Not Initialized",
       });
     }
 
@@ -68,10 +68,13 @@ router.get("/registration-status", async (req, res) => {
 
     res.json({
       ...status,
-      isOpen: isCurrentlyOpen,
+      isOpen: status.isOpen,
+      isActive: isCurrentlyOpen,
       message: isCurrentlyOpen
-        ? `Registration is open from ${status.startDate.toDateString()} to ${status.endDate.toDateString()}`
-        : "Registration is currently closed.",
+        ? `Active (${status.startDate.toLocaleDateString()} - ${status.endDate.toLocaleDateString()})`
+        : status.isOpen
+          ? "Scheduled (Inactive)"
+          : "Closed",
     });
   } catch (err) {
     console.error("Error fetching registration status:", err);
@@ -256,16 +259,14 @@ router.post("/verify", verifyAdmin, async (req, res) => {
       return res.status(404).json({ error: "Registration not found" });
     }
 
-    // Update status
     const updated = await prisma.tempRegistration.update({
       where: { id: Number(registrationId) },
       data: {
         status,
-        adminId: req.user.adminProfile?.id, // Assuming verifyAdmin attaches user with adminProfile
+        adminId: req.user.adminProfile?.id,
       },
     });
 
-    // If approved, create the final Registration record
     if (status === "APPROVED") {
       await prisma.registration.create({
         data: {

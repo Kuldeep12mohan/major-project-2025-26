@@ -12,7 +12,7 @@ const accessCookieOptions = {
   httpOnly: true,
   secure: true,
   sameSite: "strict",
-  maxAge: 24 * 60 * 60 * 1000, // 1 day
+  maxAge: 24 * 60 * 60 * 1000,
 };
 
 
@@ -43,12 +43,9 @@ router.post("/signup/student", async (req, res) => {
       data: { userId: user.id, enrollNo, facultyNo, semester, dept },
     });
 
-    // Create access token
     const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, {
       expiresIn: "1d",
     });
-
-    //Store in HttpOnly secure cookie
     res.cookie("accessToken", token, accessCookieOptions);
 
     const { password: _, ...safeUser } = user;
@@ -62,8 +59,6 @@ router.post("/signup/student", async (req, res) => {
     return res.status(500).json({ error: "Student signup failed" });
   }
 });
-
- // Teacher Signup
 
 router.post("/signup/teacher", async (req, res) => {
   try {
@@ -110,8 +105,6 @@ router.post("/signup/teacher", async (req, res) => {
   }
 });
 
-
- // Admin Login
 router.post("/login/admin", async (req, res) => {
   try {
     const { email, password, adminId } = req.body;
@@ -146,8 +139,6 @@ router.post("/login/admin", async (req, res) => {
     return res.status(500).json({ error: "Admin login failed" });
   }
 });
-
- // Login (All Roles)
 
 router.post("/login", async (req, res) => {
   try {

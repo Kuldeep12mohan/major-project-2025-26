@@ -265,9 +265,11 @@ export default function AdminDashboard() {
             )}
           </div>
 
-          <p className="text-gray-700">
+          <p className="text-gray-700 mt-2">
             Status:{" "}
-            {status.isOpen ? `Active (${status.startDate} → ${status.endDate})` : "Closed"}
+            <span className={status.isActive ? "text-green-600 font-bold" : "text-orange-600 font-bold"}>
+              {status.message}
+            </span>
           </p>
         </div>
       )}

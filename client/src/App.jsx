@@ -10,6 +10,7 @@ import AdminLoginPage from "./pages/admin/AdminLogin"
 import AdminDashboard from "./pages/admin/AdminDashboard"
 import { PendingRegistration } from './pages/teacher/PendingRegistration';
 import EditProfile from './pages/student/EditProfile';
+import NotFound from './pages/NotFound';
 function App() {
 
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/my-registrations' element={<MyRegistration />} />
         <Route path='/student/profile/edit' element={<EditProfile />} />
         <Route path='/teacher/requests' element={<PendingRegistration />} />
+        <Route path='*' element={<NotFound/>}/>
       </Routes>
     </Router>
   );

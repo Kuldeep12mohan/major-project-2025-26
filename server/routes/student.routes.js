@@ -5,7 +5,6 @@ import { verifyStudent } from "../middleware/middleware.js";
 const prisma = new PrismaClient();
 const router = express.Router();
 
-// --- Create a temp registration for a single course ---
 router.post("/register", verifyStudent, async (req, res) => {
   try {
     const { courseId, mode } = req.body;
@@ -19,15 +18,12 @@ router.post("/register", verifyStudent, async (req, res) => {
     });
 
     if (!student) return res.status(404).json({ error: "Student not found" });
-
-    // ✅ Check if student has a verifier assigned
     if (!student.teacherId) {
       return res.status(403).json({ error: "No verifier assigned yet. Contact admin." });
     }
 
     const teacherId = student.teacherId;
 
-    // ✅ Check registration window
     const regStatus = await prisma.registrationStatus.findFirst({
       orderBy: { id: "desc" },
     });
@@ -41,17 +37,14 @@ router.post("/register", verifyStudent, async (req, res) => {
 
     if (!isOpen) return res.status(403).json({ error: "Registration is closed" });
 
-    // ✅ Check if a temp registration for this course already exists
     let temp = await prisma.tempRegistration.findFirst({
       where: { studentId: student.id, courseId },
     });
 
     if (temp) {
-      // Already exists
       return res.status(400).json({ error: "You have already registered this course" });
     }
 
-    // Create new temp registration
     temp = await prisma.tempRegistration.create({
       data: {
         studentId: student.id,
@@ -70,7 +63,6 @@ router.post("/register", verifyStudent, async (req, res) => {
   }
 });
 
-// --- Get student's temp registrations ---
 router.get("/temp-registrations", verifyStudent, async (req, res) => {
   try {
     const student = await prisma.studentProfile.findUnique({
@@ -95,7 +87,6 @@ router.get("/temp-registrations", verifyStudent, async (req, res) => {
   }
 });
 
-// --- Get all verified/approved registrations for the student ---
 router.get("/registration", verifyStudent, async (req, res) => {
   try {
     const student = await prisma.studentProfile.findUnique({
@@ -104,11 +95,10 @@ router.get("/registration", verifyStudent, async (req, res) => {
 
     if (!student) return res.status(404).json({ error: "Student not found" });
 
-    // Fetch temp registrations that have been verified (APPROVED or REJECTED)
     const verifiedRegs = await prisma.tempRegistration.findMany({
       where: {
         studentId: student.id,
-        status: RegStatus.APPROVED, // or include rejected if needed: { in: [RegStatus.APPROVED, RegStatus.REJECTED] }
+        status: RegStatus.APPROVED,
       },
       include: {
         course: true,
@@ -123,9 +113,6 @@ router.get("/registration", verifyStudent, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch verified registrations" });
   }
 });
-
-
-// --- Fetch courses by semester and department ---
 
 router.get("/:semester/:dept", async (req, res) => {
   try {
@@ -149,8 +136,6 @@ router.get("/:semester/:dept", async (req, res) => {
   }
 });
 
-
-// --- Update Student Profile ---
 router.put("/profile", verifyStudent, async (req, res) => {
   try {
     const { name, semester, dept } = req.body;
@@ -165,13 +150,10 @@ router.put("/profile", verifyStudent, async (req, res) => {
 
     if (!student) return res.status(404).json({ error: "Student not found" });
 
-    // Update User model for name
     await prisma.user.update({
       where: { id: req.user.id },
       data: { name },
     });
-
-    // Update StudentProfile model for semester and dept
     const updatedProfile = await prisma.studentProfile.update({
       where: { id: student.id },
       data: {
