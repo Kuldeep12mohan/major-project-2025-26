@@ -35,7 +35,6 @@ export default function AdminDashboard() {
     </div>
   );
 
-  // ✅ Load Admin
   useEffect(() => {
     axios
       .get(`${base_url}/api/auth/me`, { withCredentials: true })
@@ -53,7 +52,7 @@ export default function AdminDashboard() {
       });
   }, []);
 
-  // ✅ Registration Status
+
   useEffect(() => {
     axios
       .get(`${base_url}/api/admin/registration-status`, { withCredentials: true })
@@ -61,7 +60,6 @@ export default function AdminDashboard() {
       .catch(() => toast.error("Failed to load status"));
   }, []);
 
-  // ✅ Fetch Students + Teachers + Mappings
   const fetchAllData = async () => {
     try {
       setLoadingData(true);
@@ -88,7 +86,6 @@ export default function AdminDashboard() {
     if (activeTab === "verifications") fetchVerifications();
   }, [activeTab]);
 
-  // ✅ Fetch Verifications
   const fetchVerifications = async () => {
     try {
       setLoadingData(true);
@@ -101,7 +98,6 @@ export default function AdminDashboard() {
     }
   };
 
-  // ✅ Handle Verification Action
   const handleVerification = async (registrationId, status) => {
     try {
       await axios.post(
@@ -110,13 +106,12 @@ export default function AdminDashboard() {
         { withCredentials: true }
       );
       toast.success(`Registration ${status.toLowerCase()} successfully`);
-      fetchVerifications(); // Refresh list
+      fetchVerifications();
     } catch {
       toast.error("Action failed");
     }
   };
 
-  // ✅ Filter Students
   const filteredStudents = useMemo(() => {
     return students.filter((s) => {
       if (filters.dept && s.dept !== filters.dept) return false;
@@ -125,7 +120,6 @@ export default function AdminDashboard() {
     });
   }, [students, filters]);
 
-  // ✅ Map all filtered
   const mapAllFiltered = async () => {
     if (!selectedTeacher) return toast.error("Select a teacher");
     if (filteredStudents.length === 0) return toast.error("No students found");
@@ -148,7 +142,6 @@ export default function AdminDashboard() {
     }
   };
 
-  // ✅ Registration Control
   const startReg = async () => {
     if (!dates.startDate || !dates.endDate)
       return toast.error("Select both dates");
@@ -160,7 +153,7 @@ export default function AdminDashboard() {
         { withCredentials: true }
       );
 
-      // ✅ Fetch real updated status
+  
       const res = await axios.get(`${base_url}/api/admin/registration-status`, { withCredentials: true });
       setStatus(res.data);
 
@@ -178,7 +171,7 @@ export default function AdminDashboard() {
         { withCredentials: true }
       );
 
-      // ✅ Fetch real updated status
+
       const res = await axios.get(`${base_url}/api/admin/registration-status`, { withCredentials: true });
       setStatus(res.data);
 
@@ -188,16 +181,11 @@ export default function AdminDashboard() {
     }
   };
 
-
-  // ✅ Logout
   const logout = async () => {
     await axios.post(`${base_url}/api/auth/logout`, {}, { withCredentials: true });
     navigate("/admin/login");
   };
 
-  // ---------------------------------------------------------
-  // ✅ UI STARTS
-  // ---------------------------------------------------------
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -234,8 +222,6 @@ export default function AdminDashboard() {
           Verifications
         </button>
       </div>
-
-      {/* ✅ REGISTRATION SECTION */}
       {activeTab === "registrations" && (
         <div className="p-6 flex flex-col items-center">
           <h2 className="text-lg font-semibold mb-4">Registration Window</h2>
@@ -274,7 +260,6 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      {/* ✅ MAPPING SECTION */}
       {activeTab === "manageUsers" && (
         <div className="p-6 flex flex-col items-center">
           {loadingData ? (
@@ -283,7 +268,6 @@ export default function AdminDashboard() {
             <>
               <h2 className="text-xl font-semibold mb-6">Map Students to a Teacher</h2>
 
-              {/* Filters */}
               <div className="flex flex-col gap-4 w-full max-w-md">
 
                 <select
@@ -322,12 +306,12 @@ export default function AdminDashboard() {
                 </select>
               </div>
 
-              {/* Count */}
+             
               <p className="mt-4 text-gray-700">
                 <strong>{filteredStudents.length}</strong> students found.
               </p>
 
-              {/* Button */}
+             
               <button
                 onClick={mapAllFiltered}
                 className="mt-6 bg-blue-600 hover:bg-blue-700 transition text-white px-8 py-3 rounded-lg shadow-lg"
@@ -335,7 +319,7 @@ export default function AdminDashboard() {
                 Map All Students
               </button>
 
-              {/* ✅ MAPPING OVERVIEW */}
+             
               <h3 className="text-lg font-semibold mt-10 mb-4">Current Mapping Overview</h3>
 
               <div className="w-full max-w-xl bg-white shadow-md rounded-lg p-4">
@@ -356,7 +340,7 @@ export default function AdminDashboard() {
                         <span className="text-gray-600">{mapped.length} students</span>
                       </div>
 
-                      {/* Expand List */}
+                      
                       {expandedTeacher === teacher.id && mapped.length > 0 && (
                         <div className="mt-2 ml-4 text-sm text-gray-700">
                           {mapped.map((stud) => (
@@ -379,7 +363,7 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      {/* ✅ VERIFICATIONS SECTION */}
+     
       {activeTab === "verifications" && (
         <div className="p-6 flex flex-col items-center w-full">
           <h2 className="text-xl font-semibold mb-6">Pending Course Approvals</h2>

@@ -10,7 +10,6 @@ export default function StudentAuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  // ✅ Departments from your schema ENUM
   const DEPARTMENTS = ["CS", "AI", "ECE", "ME", "EE", "AE", "CHE", "PKB", "FTB"];
 
   const [form, setForm] = useState({
@@ -92,7 +91,6 @@ export default function StudentAuthPage() {
     <div className="min-h-screen bg-gray-100 flex flex-col relative">
       <Toaster position="top-right" />
 
-      {/* Navbar */}
       <header className="bg-[#7a0c0c] text-white py-3 shadow-md">
         <div className="max-w-6xl mx-auto flex justify-between items-center px-4">
           <h1 className="text-xl font-bold">Student Portal</h1>
@@ -118,7 +116,6 @@ export default function StudentAuthPage() {
         </div>
       </header>
 
-      {/* Auth Card */}
       <div className="flex-grow flex items-center justify-center px-4">
         <div className="bg-white rounded-lg p-8 max-w-md w-full border-t-4 border-[#0f6a36] shadow-lg">
           <h2 className="text-2xl font-bold text-center text-[#7a0c0c] mb-6">
@@ -128,7 +125,6 @@ export default function StudentAuthPage() {
           <form className="space-y-4" onSubmit={handleSubmit}>
             {!isLogin && (
               <>
-                {/* Full Name */}
                 <div>
                   <label className="block text-sm text-gray-700">Full Name</label>
                   <input
@@ -142,7 +138,6 @@ export default function StudentAuthPage() {
                   />
                 </div>
 
-                {/* Enrollment No */}
                 <div>
                   <label className="block text-sm text-gray-700">Enrollment No.</label>
                   <input
@@ -156,7 +151,6 @@ export default function StudentAuthPage() {
                   />
                 </div>
 
-                {/* Faculty No */}
                 <div>
                   <label className="block text-sm text-gray-700">Faculty No.</label>
                   <input
@@ -169,8 +163,6 @@ export default function StudentAuthPage() {
                     required
                   />
                 </div>
-
-                {/* Semester */}
                 <div>
                   <label className="block text-sm text-gray-700">Semester</label>
                   <input
@@ -183,8 +175,6 @@ export default function StudentAuthPage() {
                     required
                   />
                 </div>
-
-                {/* ✅ Department Dropdown */}
                 <div>
                   <label className="block text-sm text-gray-700">Department</label>
                   <select
@@ -205,7 +195,7 @@ export default function StudentAuthPage() {
               </>
             )}
 
-            {/* Email */}
+         
             <div>
               <label className="block text-sm text-gray-700">Email</label>
               <input
@@ -219,7 +209,7 @@ export default function StudentAuthPage() {
               />
             </div>
 
-            {/* Password */}
+            
             <div>
               <label className="block text-sm text-gray-700">Password</label>
               <input
@@ -233,7 +223,7 @@ export default function StudentAuthPage() {
               />
             </div>
 
-            {/* Confirm Password */}
+            
             {!isLogin && (
               <div>
                 <label className="block text-sm text-gray-700">Confirm Password</label>
@@ -249,7 +239,7 @@ export default function StudentAuthPage() {
               </div>
             )}
 
-            {/* Submit Button */}
+          
             <button
               type="submit"
               disabled={loading}

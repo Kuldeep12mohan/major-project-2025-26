@@ -57,7 +57,7 @@ const AvailableCourse = () => {
   try {
     const res = await axios.post(
       `${base_url}/api/student/register`,
-      { courseId, mode: "A" }, // ✅ send single courseId
+      { courseId, mode: "A" },
       { withCredentials: true }
     );
 

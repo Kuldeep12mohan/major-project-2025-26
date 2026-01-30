@@ -17,17 +17,17 @@ const MyRegistration = () => {
           axios.get(`${base_url}/api/student/temp-registrations`, {
             withCredentials: true,
           }),
-          axios.get(`${base_url}/api/student/registration`, { // updated route for verified/approved
+          axios.get(`${base_url}/api/student/registration`, { 
             withCredentials: true,
           }),
         ]);
 
-        setTempRegs(tempRes.data.tempRegs || []); // array of temp registrations
+        setTempRegs(tempRes.data.tempRegs || []);
         setApprovedRegs(approvedRes.data.registrations || []);
       } catch (err) {
         console.error("Error fetching registrations:", err);
         toast.error("Failed to load registration data!");
-        navigate("/"); // session expired
+        navigate("/"); 
       } finally {
         setLoading(false);
       }
@@ -59,7 +59,6 @@ const MyRegistration = () => {
     <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
       <Toaster position="top-right" />
 
-      {/* Navbar */}
       <header className="bg-green-800 text-white py-4 shadow-md px-6 flex justify-between items-center">
         <h1 className="text-lg font-bold">My Registrations</h1>
         <button
@@ -70,10 +69,7 @@ const MyRegistration = () => {
         </button>
       </header>
 
-      {/* Content */}
       <main className="flex-1 max-w-6xl mx-auto w-full p-6 space-y-10">
-
-        {/* Temporary Registrations */}
         <section className="bg-white rounded-lg shadow-md border-t-4 border-yellow-600 p-6">
           <h2 className="text-2xl font-semibold text-yellow-700 mb-4">
             Pending / Temporary Registrations
@@ -125,7 +121,6 @@ const MyRegistration = () => {
           )}
         </section>
 
-        {/* Approved / Verified Registrations */}
         <section className="bg-white rounded-lg shadow-md border-t-4 border-green-700 p-6">
           <h2 className="text-2xl font-semibold text-green-800 mb-4">
             Verified / Approved Registrations

@@ -23,7 +23,7 @@ const StudentDashboard = () => {
         });
         setProfile(profileRes.data);
 
-        // ✅ Fetch registration status
+        
         const statusRes = await axios.get(
           `${base_url}/api/admin/registration-status`,
           { withCredentials: true }
@@ -87,7 +87,7 @@ const StudentDashboard = () => {
     <div className="min-h-screen flex flex-col">
       <Toaster position="top-right" />
 
-      {/* Navbar */}
+
       <header className="bg-[#7a0c0c] text-white py-3 shadow-md">
         <div className="max-w-6xl mx-auto flex justify-between items-center px-4">
           <h1 className="text-lg font-bold">Student Dashboard</h1>
@@ -100,14 +100,14 @@ const StudentDashboard = () => {
         </div>
       </header>
 
-      {/* Main Content */}
+     
       <main className="flex-grow bg-gray-100 py-10 px-4">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-3xl font-bold text-[#7a0c0c] mb-8">
             Welcome, {profile.user.name} 👋
           </h1>
 
-          {/* Registration Status */}
+    
           <div
             className={`mb-6 p-4 rounded-md text-center font-medium ${isOpen
                 ? "bg-green-100 text-green-800 border border-green-400"
@@ -145,7 +145,7 @@ const StudentDashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
               <p>
                 <span className="font-medium">Enrollment No:</span>{" "}
-                {/* {profile.user.studentProfile.enrollNo} */}
+    
               </p>
               <p>
                 <span className="font-medium">Department:</span>{" "}
@@ -161,7 +161,7 @@ const StudentDashboard = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+       
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div
               className={`rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] transition ${isOpen

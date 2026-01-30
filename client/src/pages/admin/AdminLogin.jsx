@@ -43,8 +43,6 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
       <Toaster position="top-right" />
-
-      {/* Navbar */}
       <header className="bg-gradient-to-r from-red-900 via-red-800 to-red-900 text-white py-5 px-6 shadow-md">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-xl md:text-2xl font-bold tracking-tight">
@@ -59,7 +57,6 @@ export default function AdminLoginPage() {
         </div>
       </header>
 
-      {/* Login Card */}
       <main className="flex-grow flex items-center justify-center p-6">
         <div className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-2xl rounded-2xl p-8 w-full max-w-md">
 
@@ -86,7 +83,6 @@ export default function AdminLoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Email
@@ -102,7 +98,6 @@ export default function AdminLoginPage() {
               />
             </div>
 
-            {/* Admin ID */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Admin ID
@@ -118,7 +113,6 @@ export default function AdminLoginPage() {
               />
             </div>
 
-            {/* Password */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
@@ -133,8 +127,6 @@ export default function AdminLoginPage() {
                 required
               />
             </div>
-
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
@@ -159,8 +151,6 @@ export default function AdminLoginPage() {
           </p>
         </div>
       </main>
-
-      {/* Footer */}
       <footer className="bg-[#0f6a36] text-white text-center py-2 text-sm">
         © 2025 Course Registration Portal
       </footer>
