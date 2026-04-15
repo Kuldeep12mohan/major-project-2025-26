@@ -7,6 +7,104 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  email          String          @unique
+  password       String
+  name           String?
+  role           Role
+  id             Int             @id @default(autoincrement())
+  adminProfile   AdminProfile?
+  studentProfile StudentProfile?
+  teacherProfile TeacherProfile?
+}
+
+model StudentProfile {
+  enrollNo          String             @unique
+  facultyNo         String             @unique
+  semester          Int
+  id                Int                @id @default(autoincrement())
+  userId            Int                @unique
+  teacherId         Int?
+  dept              Dept
+  registrations     Registration[]
+  teacher           TeacherProfile?    @relation(fields: [teacherId], references: [id])
+  user              User               @relation(fields: [userId], references: [id])
+  tempRegistrations TempRegistration[]
+}
+
+model TeacherProfile {
+  employeeId    String             @unique
+  designation   String
+  id            Int                @id @default(autoincrement())
+  userId        Int                @unique
+  dept          Dept
+  students      StudentProfile[]
+  user          User               @relation(fields: [userId], references: [id])
+  verifications TempRegistration[] @relation("VerifierRelation")
+  courses       Course[]           @relation("TeacherCourses")
+}
+
+model AdminProfile {
+  adminId   String             @unique
+  id        Int                @id @default(autoincrement())
+  userId    Int                @unique
+  user      User               @relation(fields: [userId], references: [id])
+  approvals TempRegistration[] @relation("AdminRelation")
+}
+
+model Course {
+  code              String             @unique
+  title             String
+  type              CourseType         @default(CORE)
+  semester          Int
+  active            Boolean            @default(true)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  credits           Int
+  id                Int                @id @default(autoincrement())
+  dept              Dept
+  registrations     Registration[]
+  tempRegistrations TempRegistration[]
+  teachers          TeacherProfile[]   @relation("TeacherCourses")
+}
+
+model TempRegistration {
+  status     RegStatus       @default(PENDING)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  id         Int             @id @default(autoincrement())
+  studentId  Int
+  courseId   Int
+  verifierId Int?
+  adminId    Int?
+  mode       Mode            @default(A)
+  admin      AdminProfile?   @relation("AdminRelation", fields: [adminId], references: [id])
+  course     Course          @relation(fields: [courseId], references: [id])
+  student    StudentProfile  @relation(fields: [studentId], references: [id])
+  verifier   TeacherProfile? @relation("VerifierRelation", fields: [verifierId], references: [id])
+}
+
+model Registration {
+  semester  Int
+  year      Int
+  createdAt DateTime       @default(now())
+  id        Int            @id @default(autoincrement())
+  studentId Int
+  courseId  Int
+  mode      Mode           @default(A)
+  course    Course         @relation(fields: [courseId], references: [id])
+  student   StudentProfile @relation(fields: [studentId], references: [id])
+}
+
+model RegistrationStatus {
+  id        Int       @id @default(autoincrement())
+  isOpen    Boolean   @default(false)
+  startDate DateTime?
+  endDate   DateTime?
+  updatedAt DateTime  @updatedAt
+  createdAt DateTime  @default(now())
+}
+
 enum Role {
   ADMIN
   TEACHER
@@ -44,115 +142,4 @@ enum Dept {
   CHE
   PTK
   FTB
-}
-
-model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  name     String?
-  role     Role
-
-  studentProfile StudentProfile?
-  teacherProfile TeacherProfile?
-  adminProfile   AdminProfile?
-}
-
-model StudentProfile {
-  id       Int   @id @default(autoincrement())
-  user     User  @relation(fields: [userId], references: [id])
-  userId   Int   @unique
-
-  enrollNo   String @unique
-  facultyNo  String @unique
-  semester   Int
-  dept       Dept  
-
-  teacher    TeacherProfile?  @relation(fields: [teacherId], references: [id])
-  teacherId  Int?
-
-  tempRegistrations TempRegistration[]
-  registrations     Registration[]
-}
-
-model TeacherProfile {
-  id       Int   @id @default(autoincrement())
-  user     User  @relation(fields: [userId], references: [id])
-  userId   Int   @unique
-
-  employeeId  String @unique
-  designation String
-  dept        Dept   // ✅ Changed to enum
-
-  courses       Course[]           @relation("TeacherCourses")
-  verifications TempRegistration[] @relation("VerifierRelation")
-
-  students      StudentProfile[]
-}
-
-model AdminProfile {
-  id       Int   @id @default(autoincrement())
-  user     User  @relation(fields: [userId], references: [id])
-  userId   Int   @unique
-
-  adminId  String @unique
-
-  approvals TempRegistration[] @relation("AdminRelation")
-}
-
-model Course {
-  id        Int       @id @default(autoincrement())
-  code      String     @unique
-  title     String
-  type      CourseType @default(CORE)
-  credits   Int
-  semester  Int
-  dept      Dept       // ✅ Changed to enum
-  active    Boolean    @default(true)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-
-  tempRegistrations TempRegistration[]
-  registrations     Registration[]
-  teachers          TeacherProfile[] @relation("TeacherCourses")
-}
-
-model TempRegistration {
-  id         Int             @id @default(autoincrement())
-  student    StudentProfile  @relation(fields: [studentId], references: [id])
-  studentId  Int
-  course     Course          @relation(fields: [courseId], references: [id])
-  courseId   Int
-  status     RegStatus       @default(PENDING)
-  mode       Mode            @default(A)
-
-  verifier   TeacherProfile? @relation("VerifierRelation", fields: [verifierId], references: [id])
-  verifierId Int?
-
-  admin      AdminProfile?   @relation("AdminRelation", fields: [adminId], references: [id])
-  adminId    Int?
-
-  createdAt  DateTime        @default(now())
-  updatedAt  DateTime        @updatedAt
-}
-
-model Registration {
-  id        Int            @id @default(autoincrement())
-  student   StudentProfile  @relation(fields: [studentId], references: [id])
-  studentId Int
-  course    Course          @relation(fields: [courseId], references: [id])
-  courseId  Int
-  mode      Mode            @default(A)
-  semester  Int
-  year      Int
-  createdAt DateTime        @default(now())
-}
-
-model RegistrationStatus {
-  id         Int      @id @default(autoincrement())
-  isOpen     Boolean  @default(false)
-  startDate  DateTime?
-  endDate    DateTime?
-  updatedAt  DateTime @updatedAt
-  createdAt  DateTime @default(now())
 }

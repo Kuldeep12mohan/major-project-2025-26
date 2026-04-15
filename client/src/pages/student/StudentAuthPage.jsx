@@ -10,7 +10,7 @@ export default function StudentAuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const DEPARTMENTS = ["CS", "AI", "ECE", "ME", "EE", "AE", "CHE", "PKB", "FTB"];
+  const DEPARTMENTS = ["CS", "AI", "ECE", "ME", "EE", "AE", "CE", "CHE", "PTK", "FTB"];
 
   const [form, setForm] = useState({
     name: "",
@@ -97,18 +97,16 @@ export default function StudentAuthPage() {
           <nav>
             <button
               onClick={() => setIsLogin(true)}
-              className={`px-3 py-1 rounded transition ${
-                isLogin ? "bg-white text-[#7a0c0c]" : "text-white"
-              }`}
+              className={`px-3 py-1 rounded transition ${isLogin ? "bg-white text-[#7a0c0c]" : "text-white"
+                }`}
             >
               Login
             </button>
 
             <button
               onClick={() => setIsLogin(false)}
-              className={`ml-2 px-3 py-1 rounded transition ${
-                !isLogin ? "bg-white text-[#7a0c0c]" : "text-white"
-              }`}
+              className={`ml-2 px-3 py-1 rounded transition ${!isLogin ? "bg-white text-[#7a0c0c]" : "text-white"
+                }`}
             >
               Register
             </button>
@@ -195,7 +193,7 @@ export default function StudentAuthPage() {
               </>
             )}
 
-         
+
             <div>
               <label className="block text-sm text-gray-700">Email</label>
               <input
@@ -209,7 +207,7 @@ export default function StudentAuthPage() {
               />
             </div>
 
-            
+
             <div>
               <label className="block text-sm text-gray-700">Password</label>
               <input
@@ -223,7 +221,7 @@ export default function StudentAuthPage() {
               />
             </div>
 
-            
+
             {!isLogin && (
               <div>
                 <label className="block text-sm text-gray-700">Confirm Password</label>
@@ -239,13 +237,12 @@ export default function StudentAuthPage() {
               </div>
             )}
 
-          
+
             <button
               type="submit"
               disabled={loading}
-              className={`w-full bg-[#0f6a36] text-white py-2 rounded-lg font-semibold hover:bg-green-800 transition ${
-                loading ? "opacity-70 cursor-not-allowed" : ""
-              }`}
+              className={`w-full bg-[#0f6a36] text-white py-2 rounded-lg font-semibold hover:bg-green-800 transition ${loading ? "opacity-70 cursor-not-allowed" : ""
+                }`}
             >
               {loading ? "Processing..." : isLogin ? "Login" : "Register"}
             </button>

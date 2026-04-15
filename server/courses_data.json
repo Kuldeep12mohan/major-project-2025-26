@@ -1,0 +1,2810 @@
+[
+  {
+    "code": "AMS2612",
+    "title": "Higher Mathematics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CS"
+  },
+  {
+    "code": "COC2032",
+    "title": "Object Oriented Programming",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CS"
+  },
+  {
+    "code": "COC2062",
+    "title": "Data Structure and Algorithm",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CS"
+  },
+  {
+    "code": "COC2072",
+    "title": "Digital Logic and System Design",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CS"
+  },
+  {
+    "code": "COC2122",
+    "title": "Database Management System",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CS"
+  },
+  {
+    "code": "COC2932",
+    "title": "C & C++ Programming Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 3,
+    "dept": "CS"
+  },
+  {
+    "code": "ELA2112",
+    "title": "Electronic Devices & Circuits",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CS"
+  },
+  {
+    "code": "AMS2622",
+    "title": "Numerical Analysis, Transforms and Probability",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "CS"
+  },
+  {
+    "code": "AMS2632",
+    "title": "Discrete Structures",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CS"
+  },
+  {
+    "code": "COC2082",
+    "title": "Computer Architecture",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CS"
+  },
+  {
+    "code": "COC2142",
+    "title": "Design & Analysis of Algorithm",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CS"
+  },
+  {
+    "code": "COC2922",
+    "title": "Digital Design & Simulation Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 4,
+    "dept": "CS"
+  },
+  {
+    "code": "COC2942",
+    "title": "Data Structure Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 4,
+    "dept": "CS"
+  },
+  {
+    "code": "ELA2412",
+    "title": "Fundamentals of Digital Signal Processing",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CS"
+  },
+  {
+    "code": "ELA2902",
+    "title": "Electronics Laboratory",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 4,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3092",
+    "title": "Microprocessor Theory & Applications",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3102",
+    "title": "Operating Systems",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3162",
+    "title": "Software Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3932",
+    "title": "Algorithms & Operating Systems Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 5,
+    "dept": "CS"
+  },
+  {
+    "code": "COP3802",
+    "title": "Colloquium",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 5,
+    "dept": "CS"
+  },
+  {
+    "code": "ELA3402",
+    "title": "Communication Systems",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "CS"
+  },
+  {
+    "code": "MEH3452",
+    "title": "Engineering Economy & Management",
+    "type": "HM",
+    "credits": 3,
+    "semester": 5,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3082",
+    "title": "Digital Electronics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 6,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3112",
+    "title": "Theory of Computation",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3132",
+    "title": "Computer Networks",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3152",
+    "title": "Computer Graphics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 6,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3962",
+    "title": "Advanced Computing Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 6,
+    "dept": "CS"
+  },
+  {
+    "code": "COC3972",
+    "title": "Microprocessor & Embedded Systems Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 6,
+    "dept": "CS"
+  },
+  {
+    "code": "COP3952",
+    "title": "Minor Project",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 6,
+    "dept": "CS"
+  },
+  {
+    "code": "COC4010",
+    "title": "Information Security",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COC4060",
+    "title": "Compiler Design",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COC4980",
+    "title": "B.Tech Project Part-I",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COC4950",
+    "title": "Network & Embedded System Lab",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COC4990",
+    "title": "B.Tech Project Part-II",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4030",
+    "title": "Design of Programming Languages",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4300",
+    "title": "Artificial Intelligence & Neural Network",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4310",
+    "title": "Internet Tools",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4320",
+    "title": "Image Processing",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4360",
+    "title": "Information Technology",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4380",
+    "title": "Selected Topics in Computer Application",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4390",
+    "title": "Advance Microprocessor System & Design",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4410",
+    "title": "Pattern Recognition & Computer Vision",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4420",
+    "title": "VLSI Design Tools & Techniques",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4440",
+    "title": "Soft Computing",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4450",
+    "title": "Network Security",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4480",
+    "title": "Embedded Systems",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4490",
+    "title": "Internet Protocol",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4500",
+    "title": "Multimedia Technologies",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4510",
+    "title": "Computer Network Design",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4520",
+    "title": "Mobile Computing",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4530",
+    "title": "Artificial Intelligence and Soft Computing",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4540",
+    "title": "Software Testing",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4550",
+    "title": "Real Time Systems",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4560",
+    "title": "Big Data Analytics",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4570",
+    "title": "Internet of Things",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4580",
+    "title": "Cloud Computing",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4590",
+    "title": "Distributed & Parallel Systems",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4600",
+    "title": "Principles of Cyber Physical Systems",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4610",
+    "title": "Principles of Machine Learning",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4620",
+    "title": "Bioinformatics",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4630",
+    "title": "Human Centric Computing",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COE4640",
+    "title": "Scientometrics",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COO4460",
+    "title": "Selected Topics in Computer Engineering-I",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COO4470",
+    "title": "Selected Topics in Computer Engineering-II",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COO4330",
+    "title": "Smart Grids",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "COA3600",
+    "title": "Data Structures & Programming",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CS"
+  },
+  {
+    "code": "AMS2112",
+    "title": "Applied Mathematics - III",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "CE"
+  },
+  {
+    "code": "CEA2142",
+    "title": "Engineering Geology",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "CE"
+  },
+  {
+    "code": "CEA2932",
+    "title": "Engineering Geology Lab & Camp",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 3,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2122",
+    "title": "Soil Mechanics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2252",
+    "title": "Construction Materials & Practices",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2912",
+    "title": "Civil Engineering Material Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 3,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2922",
+    "title": "Soil Mechanics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 3,
+    "dept": "CE"
+  },
+  {
+    "code": "CEH2132",
+    "title": "Quantity Survey, Drawing & Management",
+    "type": "HM",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CE"
+  },
+  {
+    "code": "CEU2162",
+    "title": "Disaster Preparedness and Mitigation",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "CE"
+  },
+  {
+    "code": "AMS2122",
+    "title": "Applied Mathematics-IV",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "CE"
+  },
+  {
+    "code": "CEA2162",
+    "title": "Environmental Engineering",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2132",
+    "title": "Fluid Mechanics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2182",
+    "title": "Surveying",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2192",
+    "title": "Hydrology",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2202",
+    "title": "Structural Mechanics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2942",
+    "title": "Structural Mechanics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 4,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2952",
+    "title": "Surveying Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 4,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC2962",
+    "title": "Fluid Mechanics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 4,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3112",
+    "title": "Design of Concrete Structures-I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3132",
+    "title": "Engineering Hydraulics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3152",
+    "title": "Structural Analysis-I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3222",
+    "title": "Waste Management",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3242",
+    "title": "Foundation Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3922",
+    "title": "Environmental Engineering Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 5,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3932",
+    "title": "Hydraulics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 5,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3942",
+    "title": "Structure Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 5,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3162",
+    "title": "Design of Concrete Structure-II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3172",
+    "title": "Transportation Engineering",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3182",
+    "title": "Design of Steel Structures",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3202",
+    "title": "Structural Analysis-II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3392",
+    "title": "Open Channel Hydraulics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3812",
+    "title": "Survey Camp",
+    "type": "CORE",
+    "credits": 1,
+    "semester": 6,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3952",
+    "title": "CAD Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 6,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC3962",
+    "title": "Transportation Engineering Lab",
+    "type": "CORE",
+    "credits": 1,
+    "semester": 6,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC4132",
+    "title": "Irrigation Engineering",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CE"
+  },
+  {
+    "code": "CEC4222",
+    "title": "Elements of Earthquake & Wind Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 7,
+    "dept": "CE"
+  },
+  {
+    "code": "CEH4112",
+    "title": "Construction Planning & Management",
+    "type": "HM",
+    "credits": 3,
+    "semester": 7,
+    "dept": "CE"
+  },
+  {
+    "code": "CEP4982",
+    "title": "Project Phase I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CE"
+  },
+  {
+    "code": "CEP4802",
+    "title": "Industrial Training/Internship",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 8,
+    "dept": "CE"
+  },
+  {
+    "code": "CEP4992",
+    "title": "Project Phase II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 8,
+    "dept": "CE"
+  },
+  {
+    "code": "AMS1112",
+    "title": "Applied Mathematics-I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 1,
+    "dept": "CHE"
+  },
+  {
+    "code": "APS1112",
+    "title": "Applied Physics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 1,
+    "dept": "CHE"
+  },
+  {
+    "code": "ELA1112",
+    "title": "Principles of Electronics Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 1,
+    "dept": "CHE"
+  },
+  {
+    "code": "MEA1122",
+    "title": "Engineering Mechanics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 1,
+    "dept": "CHE"
+  },
+  {
+    "code": "EZH1112",
+    "title": "English",
+    "type": "HM",
+    "credits": 3,
+    "semester": 1,
+    "dept": "CHE"
+  },
+  {
+    "code": "APS1912",
+    "title": "Applied Physics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 1,
+    "dept": "CHE"
+  },
+  {
+    "code": "MEA1922",
+    "title": "Engineering Workshop",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 1,
+    "dept": "CHE"
+  },
+  {
+    "code": "EZH1912",
+    "title": "Communication Skills Lab",
+    "type": "HM",
+    "credits": 2,
+    "semester": 1,
+    "dept": "CHE"
+  },
+  {
+    "code": "AMS1122",
+    "title": "Applied Mathematics-II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 2,
+    "dept": "CHE"
+  },
+  {
+    "code": "ACS1112",
+    "title": "Applied Chemistry",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 2,
+    "dept": "CHE"
+  },
+  {
+    "code": "EEA1112",
+    "title": "Principles of Electrical Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 2,
+    "dept": "CHE"
+  },
+  {
+    "code": "CEU1112",
+    "title": "Environmental Studies (Audit Course)",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 2,
+    "dept": "CHE"
+  },
+  {
+    "code": "MEA1112",
+    "title": "Thermal Sciences",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 2,
+    "dept": "CHE"
+  },
+  {
+    "code": "ACS1912",
+    "title": "Applied Chemistry Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 2,
+    "dept": "CHE"
+  },
+  {
+    "code": "COA1912",
+    "title": "Computer Programming Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 2,
+    "dept": "CHE"
+  },
+  {
+    "code": "MEA1912",
+    "title": "Engineering Graphics Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 2,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2012",
+    "title": "Basic Principles of Chemical Engineering",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2032",
+    "title": "Fluid Mechanics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2042",
+    "title": "Fluid Particle Operations",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2052",
+    "title": "Chemical Engineering Thermodynamics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2062",
+    "title": "Heat Transfer Operations",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2072",
+    "title": "Numerical Methods in Chemical Engg.",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2902",
+    "title": "Computer Applications Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 3,
+    "dept": "CHE"
+  },
+  {
+    "code": "ACS2022",
+    "title": "Engineering Chemistry",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2002",
+    "title": "Process Instrumentation",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2022",
+    "title": "Chemical Reaction Engineering",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2082",
+    "title": "Mass Transfer Operations",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2092",
+    "title": "Equilibrium Stage Processes",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2922",
+    "title": "Fluid Mechanics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 4,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2932",
+    "title": "Mechanical Operations Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 4,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC2942",
+    "title": "Heat Transfer lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 4,
+    "dept": "CHE"
+  },
+  {
+    "code": "ACA3112",
+    "title": "Engineering Materials",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "CHE"
+  },
+  {
+    "code": "AMS3412",
+    "title": "Advanced Engineering Mathematics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHA3012",
+    "title": "Biology for Engineers",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3122",
+    "title": "Process Equipment Design",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3912",
+    "title": "Computer Programming Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 5,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3952",
+    "title": "Reaction Engg. & Thermodynamics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 5,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3962",
+    "title": "Mass Transfer Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 5,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHP3812",
+    "title": "Seminar and Report Writing",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 5,
+    "dept": "CHE"
+  },
+  {
+    "code": "MEH3452",
+    "title": "Engineering Economy & Management",
+    "type": "HM",
+    "credits": 3,
+    "semester": 5,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3132",
+    "title": "Chemical Process Industries",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3162",
+    "title": "Energy Engineering and Management",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 6,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3182",
+    "title": "Transport Phenomena",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3192",
+    "title": "Plant Design and Economics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3922",
+    "title": "CAD/Simulation Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 6,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC3972",
+    "title": "Chemical Engineering Design & Drawing",
+    "type": "CORE",
+    "credits": 1,
+    "semester": 6,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHP3932",
+    "title": "Plant Design Project A",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 6,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC4112",
+    "title": "Industrial Pollution Control & Waste Minimization",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 7,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC4122",
+    "title": "Process Dynamics and Control",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC4232",
+    "title": "Process Safety and Risk Analysis",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 7,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC4922",
+    "title": "Process Dynamics and Control lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 7,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC4932",
+    "title": "Technology Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 7,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHP4982",
+    "title": "Plant Design Project B",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 7,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHP4992",
+    "title": "Project (Experimental/Computational)",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 7,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHC4952",
+    "title": "Industrial Lectures",
+    "type": "CORE",
+    "credits": 1,
+    "semester": 8,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHP4802",
+    "title": "Industrial Training/Internship",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 8,
+    "dept": "CHE"
+  },
+  {
+    "code": "CHP4812",
+    "title": "Social Internship",
+    "type": "CORE",
+    "credits": 1,
+    "semester": 8,
+    "dept": "CHE"
+  },
+  {
+    "code": "AMS1110",
+    "title": "Applied Mathematics-I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 1,
+    "dept": "EE"
+  },
+  {
+    "code": "ACS1110",
+    "title": "Applied Chemistry",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 1,
+    "dept": "EE"
+  },
+  {
+    "code": "EEA1110",
+    "title": "Principles of Electrical Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 1,
+    "dept": "EE"
+  },
+  {
+    "code": "CEA1110",
+    "title": "Environmental Studies",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 1,
+    "dept": "EE"
+  },
+  {
+    "code": "MEA1110",
+    "title": "Engineering Thermodynamics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 1,
+    "dept": "EE"
+  },
+  {
+    "code": "ACS1910",
+    "title": "Applied Chemistry Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 1,
+    "dept": "EE"
+  },
+  {
+    "code": "COA1910",
+    "title": "Computer Programming Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 1,
+    "dept": "EE"
+  },
+  {
+    "code": "MEA1910",
+    "title": "Engineering Graphics Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 1,
+    "dept": "EE"
+  },
+  {
+    "code": "AMS1120",
+    "title": "Applied Mathematics-II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 2,
+    "dept": "EE"
+  },
+  {
+    "code": "APS1110",
+    "title": "Applied Physics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 2,
+    "dept": "EE"
+  },
+  {
+    "code": "ELA1110",
+    "title": "Principles of Electronics Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 2,
+    "dept": "EE"
+  },
+  {
+    "code": "CEA1120",
+    "title": "Strength of Materials",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 2,
+    "dept": "EE"
+  },
+  {
+    "code": "MEA1120",
+    "title": "Engineering Mechanics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 2,
+    "dept": "EE"
+  },
+  {
+    "code": "EZH1110",
+    "title": "English",
+    "type": "HM",
+    "credits": 3,
+    "semester": 2,
+    "dept": "EE"
+  },
+  {
+    "code": "APS1910",
+    "title": "Applied Physics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 2,
+    "dept": "EE"
+  },
+  {
+    "code": "MEA1920",
+    "title": "Manufacturing Process Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 2,
+    "dept": "EE"
+  },
+  {
+    "code": "AMS2230",
+    "title": "Higher Mathematics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "EE"
+  },
+  {
+    "code": "APS2050",
+    "title": "Electrical Engineering Materials",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2110",
+    "title": "Electrical Machines-I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2710",
+    "title": "Circuit Theory",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2720",
+    "title": "Electromagnetic Field Theory",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2730",
+    "title": "Signals & Systems",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "EE"
+  },
+  {
+    "code": "EZH2910",
+    "title": "Communication Skills Lab",
+    "type": "HM",
+    "credits": 2,
+    "semester": 3,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2910",
+    "title": "Electrical Machines Lab I",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 3,
+    "dept": "EE"
+  },
+  {
+    "code": "ELA2010",
+    "title": "Logic & Digital Circuit",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "EE"
+  },
+  {
+    "code": "MEH2450",
+    "title": "Engineering Economy & Management",
+    "type": "HM",
+    "credits": 4,
+    "semester": 4,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2120",
+    "title": "Electrical Machines II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2210",
+    "title": "Power Electronics-I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2310",
+    "title": "Power System Engineering",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2510",
+    "title": "Electrical Measurement",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2920",
+    "title": "Electrical Machines Lab II",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 4,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC2930",
+    "title": "Circuits and Measurements Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 4,
+    "dept": "EE"
+  },
+  {
+    "code": "ELA3020",
+    "title": "Fundamentals of Communication Engineerin",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3210",
+    "title": "Power Electronics-II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3310",
+    "title": "Power System Analysis",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3510",
+    "title": "Electrical & Electronic Instr.",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3610",
+    "title": "High Voltage Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "EE"
+  },
+  {
+    "code": "ELA3910",
+    "title": "Electronics Engg. Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 5,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3910",
+    "title": "Power Electronics Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 5,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3110",
+    "title": "Electrical Drives",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3220",
+    "title": "New and Renewable Energy Sources",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3320",
+    "title": "Electrical Power Gen. & Utilization",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3410",
+    "title": "Dynamic System Analysis",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3710",
+    "title": "Microcontroller Systems and Appl.",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3920",
+    "title": "Power System and High Voltage Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 6,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC3930",
+    "title": "Instrumentation Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 6,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC4310",
+    "title": "Power System Protection",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC4410",
+    "title": "Control Systems",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC4910",
+    "title": "Power System Protection Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC4920",
+    "title": "Control Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC4930",
+    "title": "Electric Machine Design",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC4940",
+    "title": "Power System Design",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC4980",
+    "title": "Project Phase-I",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEC4990",
+    "title": "Project Phase-II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 8,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4310",
+    "title": "Power Station Practice",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4110",
+    "title": "Modern Electric Drives",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4230",
+    "title": "Solar Photovoltaic Systems",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4320",
+    "title": "Power Quality",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4220",
+    "title": "Modelling and Control of Electronics converters",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4120",
+    "title": "Electric Vehicles & Traction",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4420",
+    "title": "Embedded Systems",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4710",
+    "title": "Numerical Computational Methods in Electrical Engg.",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4350",
+    "title": "HVDC and FACTS Technology",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4720",
+    "title": "Machine Learning",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4520",
+    "title": "Process Instrumentation & Control",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4740",
+    "title": "Digital Signal Processing",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4360",
+    "title": "Smart Grid",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4130",
+    "title": "Generalized Theory of Electrical Machines",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4330",
+    "title": "Digital Simulation of Power System",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4340",
+    "title": "Power System Reliability",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4440",
+    "title": "Mechatronics",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4430",
+    "title": "Nonlinear Control System",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4730",
+    "title": "Artificial Neural Networks",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "EEE4510",
+    "title": "Measurement and Data Acquisition",
+    "type": "DE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "EE"
+  },
+  {
+    "code": "AMS2512",
+    "title": "Higher Mathematics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "ECE"
+  },
+  {
+    "code": "AMS2522",
+    "title": "Numerical Methods and Optimization",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2112",
+    "title": "Electronic Devices & Circuits",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2122",
+    "title": "Circuit Theory",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2312",
+    "title": "Logic Circuits",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2412",
+    "title": "Signals and Systems",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2942",
+    "title": "Electronic Circuits Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 3,
+    "dept": "ECE"
+  },
+  {
+    "code": "COA2602",
+    "title": "Data Structures and Programming",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2142",
+    "title": "Physics of Semiconductor Devices",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELA2432",
+    "title": "Representation and Analysis of random Signals",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2512",
+    "title": "Electromagnetics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2132",
+    "title": "Digital Electronics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2152",
+    "title": "Analog Electronics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2952",
+    "title": "Digital Electronics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 4,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC2962",
+    "title": "Circuit Simulation Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 4,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3212",
+    "title": "Control Systems",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3332",
+    "title": "Embedded System",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3442",
+    "title": "Principle of Communication Systems",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3632",
+    "title": "Analog IC Design",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3642",
+    "title": "DIgital IC Design",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3622",
+    "title": "Digital System Design",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 5,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3972",
+    "title": "Digital System Design Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 5,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3912",
+    "title": "Circuit Design Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 5,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3122",
+    "title": "Analog Signal Processing",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "ECE"
+  },
+  {
+    "code": "MEH3452",
+    "title": "Engineering Economy & Management",
+    "type": "HM",
+    "credits": 3,
+    "semester": 6,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3652",
+    "title": "RF IC Design",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 6,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3432",
+    "title": "Digital Signal Processing",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELP3992",
+    "title": "Mini Project",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 6,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3982",
+    "title": "DSP Systems Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 6,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC3962",
+    "title": "Embedded System Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 6,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELA4342",
+    "title": "Computer Architecture",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 7,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC4612",
+    "title": "IC Fabrication & Technology",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELC4932",
+    "title": "IC Design Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELP4982",
+    "title": "Project Phase - 1",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELP4902",
+    "title": "Industrial Training/Internship",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 8,
+    "dept": "ECE"
+  },
+  {
+    "code": "ELP4992",
+    "title": "Project Phase - 2",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 8,
+    "dept": "ECE"
+  },
+  {
+    "code": "EAMS1122",
+    "title": "Higher Mathematics-II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 1,
+    "dept": "ME"
+  },
+  {
+    "code": "EACS1112",
+    "title": "Applied Chemistry",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 1,
+    "dept": "ME"
+  },
+  {
+    "code": "EEEA1112",
+    "title": "Principles of Electrical Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 1,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEA1112",
+    "title": "Thermal Sciences",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 1,
+    "dept": "ME"
+  },
+  {
+    "code": "EACS1912",
+    "title": "Applied Chemistry Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 1,
+    "dept": "ME"
+  },
+  {
+    "code": "ECOA1912",
+    "title": "Computer Programming Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 1,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEA1912",
+    "title": "Engineering Graphics Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 1,
+    "dept": "ME"
+  },
+  {
+    "code": "ECEU1112",
+    "title": "Environmental Studies (Audit Course)",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 1,
+    "dept": "ME"
+  },
+  {
+    "code": "EAMS1112",
+    "title": "Applied Mathematics-I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 2,
+    "dept": "ME"
+  },
+  {
+    "code": "EAPS1112",
+    "title": "Applied Physics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 2,
+    "dept": "ME"
+  },
+  {
+    "code": "EELA1112",
+    "title": "Principles of Electronics Engineering",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 2,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEA1122",
+    "title": "Engineering Mechanics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 2,
+    "dept": "ME"
+  },
+  {
+    "code": "EEZH1112",
+    "title": "English",
+    "type": "HM",
+    "credits": 3,
+    "semester": 2,
+    "dept": "ME"
+  },
+  {
+    "code": "EAPS1912",
+    "title": "Applied Physics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 2,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEA1922",
+    "title": "Engineering Workshop",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 2,
+    "dept": "ME"
+  },
+  {
+    "code": "EEZH1912",
+    "title": "Communication Skills Lab",
+    "type": "HM",
+    "credits": 2,
+    "semester": 2,
+    "dept": "ME"
+  },
+  {
+    "code": "EAMS2312",
+    "title": "Higher Mathematics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEA2422",
+    "title": "Experimental Methods & Analysis",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2112",
+    "title": "Mechanics of Solids",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2122",
+    "title": "Kinematics of Machines",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2312",
+    "title": "Fluid Mechanics-I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2432",
+    "title": "Material Science",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 3,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2912",
+    "title": "Machine Drawing",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 3,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2922",
+    "title": "Fluids Mechanics Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 3,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2932",
+    "title": "Manufacturing Technology Lab-I",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 3,
+    "dept": "ME"
+  },
+  {
+    "code": "EAMS2322",
+    "title": "Numerical Methods & Optimization",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "ME"
+  },
+  {
+    "code": "EEEA2022",
+    "title": "Electrical Technology & Control",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2132",
+    "title": "Machine Design I",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2212",
+    "title": "Applied Thermodynamics",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 4,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2412",
+    "title": "Manufacturing Technology-I",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "ME"
+  },
+  {
+    "code": "EEEA2972",
+    "title": "Electrical Technology Lab",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 4,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC2942",
+    "title": "Thermodynamics Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 4,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC4112",
+    "title": "Mechanical Vibrations",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC4932",
+    "title": "Manufacturing Technology Lab-III",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 7,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC4942",
+    "title": "Vibrations Lab.",
+    "type": "CORE",
+    "credits": 1.5,
+    "semester": 7,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEC4952",
+    "title": "Energy Conversion Systems Lab",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEP4812",
+    "title": "Colloquium",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "ME"
+  },
+  {
+    "code": "EMEP4912",
+    "title": "Project (Phase I)",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 7,
+    "dept": "ME"
+  },
+  {
+    "code": "PKC2010",
+    "title": "Basic Principles of Chemical Engineering",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC2030",
+    "title": "Chemistry of Hydrocarbons",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC2050",
+    "title": "Fluid Mechanics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC2070",
+    "title": "Reaction Kinetics and Reactor Design",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC2090",
+    "title": "Fluid-Particle Operations",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "PTK"
+  },
+  {
+    "code": "AMS2410",
+    "title": "Higher Mathematics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "PTK"
+  },
+  {
+    "code": "MEA2940",
+    "title": "Machine Drawing and Computer Graphics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 3,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC2020",
+    "title": "Chemical Engineering Thermodynamics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC2040",
+    "title": "Separation Processes in Hydrocarbon Industries",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKH2060",
+    "title": "Health, Safety and Environment management",
+    "type": "HM",
+    "credits": 3,
+    "semester": 4,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC2080",
+    "title": "Alternate Fuels and Energy Resources",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "PTK"
+  },
+  {
+    "code": "AMS2420",
+    "title": "Applied Numerical Methods",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 4,
+    "dept": "PTK"
+  },
+  {
+    "code": "CHA2920",
+    "title": "Unit Operations Laboratory-I",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 4,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC2920",
+    "title": "Petroleum Testing Laboratory",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 4,
+    "dept": "PTK"
+  },
+  {
+    "code": "EZH2910",
+    "title": "Communication Skills Laboratory",
+    "type": "HM",
+    "credits": 2,
+    "semester": 4,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3010",
+    "title": "Petroleum Refining Processes",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3030",
+    "title": "Heat Transfer Operations",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3050",
+    "title": "Mass Transfer Operations",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3070",
+    "title": "Refinery Engineering Calculations",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "PTK"
+  },
+  {
+    "code": "MEH3400",
+    "title": "Economics and Management",
+    "type": "HM",
+    "credits": 4,
+    "semester": 5,
+    "dept": "PTK"
+  },
+  {
+    "code": "ACA3110",
+    "title": "Engineering Materials",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 5,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3910",
+    "title": "Computer ApplicationsLaboratory",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 5,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3020",
+    "title": "Petrochemical Technology-I",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 6,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3040",
+    "title": "Transport Phenomena",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3060",
+    "title": "Process Engineering and Equipment Design",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3080",
+    "title": "Natural Gas Processing",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "PTK"
+  },
+  {
+    "code": "CHA3930",
+    "title": "Unit Operation Laboratory-II",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 6,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3920",
+    "title": "Reaction Engg. Laboratory",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 6,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC3940",
+    "title": "Process Equipment Design",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 6,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4010",
+    "title": "Process Dynamics and Control",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4030",
+    "title": "Plant Design & Economics",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4050",
+    "title": "Petrochemical Technology\u2013II",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4070",
+    "title": "Polymer Science and Technology",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4970",
+    "title": "Project Phase I - 3",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4810",
+    "title": "Seminar",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4020",
+    "title": "Process Utilities and Energy Management",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4980",
+    "title": "Project Phase II",
+    "type": "CORE",
+    "credits": 3,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4920",
+    "title": "Instrumentation and Process Control Laboratory",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4940",
+    "title": "Polymer Laboratory",
+    "type": "CORE",
+    "credits": 2,
+    "semester": 7,
+    "dept": "PTK"
+  },
+  {
+    "code": "PKC4820",
+    "title": "Industrial Visit/Training",
+    "type": "CORE",
+    "credits": 4,
+    "semester": 7,
+    "dept": "PTK"
+  }
+]
