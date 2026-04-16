@@ -31,7 +31,7 @@ export default function AdminDashboard() {
 
   const Loader = () => (
     <div className="w-full flex justify-center py-10">
-      <div className="animate-spin h-10 w-10 border-4 border-red-800 border-t-transparent rounded-full"></div>
+      <div className="animate-spin h-10 w-10 border-4 border-amber-700 border-t-transparent rounded-full"></div>
     </div>
   );
 
@@ -188,35 +188,35 @@ export default function AdminDashboard() {
 
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-stone-50">
       <Toaster position="top-right" />
 
       {/* Header */}
-      <div className="bg-red-800 text-white p-4 flex justify-between items-center">
+      <div className="bg-amber-900 text-white p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold">Admin Dashboard</h1>
-        <button className="bg-green-700 px-4 py-1 rounded" onClick={logout}>
+        <button className="bg-amber-700 px-4 py-1 rounded" onClick={logout}>
           Logout
         </button>
       </div>
 
       {/* Tabs */}
-      <div className="flex justify-center bg-green-50 mt-1">
+      <div className="flex justify-center bg-amber-50 mt-1">
         <button
-          className={`p-3 px-6 font-medium ${activeTab === "registrations" && "border-b-4 border-red-700"}`}
+          className={`p-3 px-6 font-medium ${activeTab === "registrations" && "border-b-4 border-amber-700"}`}
           onClick={() => setActiveTab("registrations")}
         >
           Registrations
         </button>
 
         <button
-          className={`p-3 px-6 font-medium ${activeTab === "manageUsers" && "border-b-4 border-red-700"}`}
+          className={`p-3 px-6 font-medium ${activeTab === "manageUsers" && "border-b-4 border-amber-700"}`}
           onClick={() => setActiveTab("manageUsers")}
         >
           Student–Teacher Mapping
         </button>
 
         <button
-          className={`p-3 px-6 font-medium ${activeTab === "verifications" && "border-b-4 border-red-700"}`}
+          className={`p-3 px-6 font-medium ${activeTab === "verifications" && "border-b-4 border-amber-700"}`}
           onClick={() => setActiveTab("verifications")}
         >
           Verifications
@@ -241,11 +241,11 @@ export default function AdminDashboard() {
             />
 
             {!status.isOpen ? (
-              <button className="bg-green-700 text-white px-4 py-2 rounded" onClick={startReg}>
+              <button className="bg-amber-700 text-white px-4 py-2 rounded" onClick={startReg}>
                 Open
               </button>
             ) : (
-              <button className="bg-red-700 text-white px-4 py-2 rounded" onClick={closeReg}>
+              <button className="bg-amber-900 text-white px-4 py-2 rounded" onClick={closeReg}>
                 Close
               </button>
             )}
@@ -253,7 +253,7 @@ export default function AdminDashboard() {
 
           <p className="text-gray-700 mt-2">
             Status:{" "}
-            <span className={status.isActive ? "text-green-600 font-bold" : "text-orange-600 font-bold"}>
+            <span className={status.isActive ? "text-amber-700 font-bold" : "text-stone-700 font-bold"}>
               {status.message}
             </span>
           </p>
@@ -314,7 +314,7 @@ export default function AdminDashboard() {
              
               <button
                 onClick={mapAllFiltered}
-                className="mt-6 bg-blue-600 hover:bg-blue-700 transition text-white px-8 py-3 rounded-lg shadow-lg"
+                className="mt-6 bg-amber-700 hover:bg-amber-800 transition text-white px-8 py-3 rounded-lg shadow-lg"
               >
                 Map All Students
               </button>
@@ -401,13 +401,13 @@ export default function AdminDashboard() {
                         <div className="flex item-center justify-center gap-2">
                           <button
                             onClick={() => handleVerification(v.id, "APPROVED")}
-                            className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition"
+                            className="bg-amber-700 text-white px-3 py-1 rounded hover:bg-amber-800 transition"
                           >
                             Approve
                           </button>
                           <button
                             onClick={() => handleVerification(v.id, "REJECTED")}
-                            className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                            className="bg-amber-500 text-white px-3 py-1 rounded hover:bg-amber-600 transition"
                           >
                             Reject
                           </button>

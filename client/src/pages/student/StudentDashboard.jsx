@@ -84,15 +84,20 @@ const StudentDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-stone-50 via-amber-50 to-stone-100">
       <Toaster position="top-right" />
 
-
-      <header className="bg-[#7a0c0c] text-white py-3 shadow-md">
-        <div className="max-w-6xl mx-auto flex justify-between items-center px-4">
-          <h1 className="text-lg font-bold">Student Dashboard</h1>
+      {/* Header */}
+      <header className="bg-amber-900 text-white shadow-lg sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+              <span className="text-amber-900 font-bold text-lg">🎓</span>
+            </div>
+            <h1 className="text-xl font-bold">Student Dashboard</h1>
+          </div>
           <button
-            className="px-3 py-1 rounded text-white hover:bg-white hover:text-[#7a0c0c] transition"
+            className="px-6 py-2 bg-white text-amber-900 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
             onClick={handleLogout}
           >
             Logout
@@ -100,117 +105,136 @@ const StudentDashboard = () => {
         </div>
       </header>
 
-     
-      <main className="flex-grow bg-gray-100 py-10 px-4">
-        <div className="max-w-5xl mx-auto">
-          <h1 className="text-3xl font-bold text-[#7a0c0c] mb-8">
-            Welcome, {profile.user.name} 👋
-          </h1>
+      {/* Main Content */}
+      <main className="flex-grow py-8 px-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Welcome Section */}
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
+              Welcome back, <span className="text-amber-800">{profile.user.name}!</span> 👋
+            </h1>
+            <p className="text-gray-600">Here's your course registration dashboard</p>
+          </div>
 
-    
+          {/* Registration Status Card */}
           <div
-            className={`mb-6 p-4 rounded-md text-center font-medium ${isOpen
-                ? "bg-green-100 text-green-800 border border-green-400"
-                : "bg-red-100 text-red-800 border border-red-400"
-              }`}
+            className={`mb-8 rounded-xl p-6 shadow-lg border-l-4 transition-all transform ${
+              isOpen
+                ? "bg-gradient-to-br from-amber-50 to-amber-100 border-l-amber-500 text-amber-900"
+                : "bg-gradient-to-br from-slate-100 to-slate-50 border-l-slate-300 text-slate-700"
+            }`}
           >
-            {isOpen ? (
-              <>
-                ✅ Registration is currently <strong>OPEN</strong>.
-                {startDate && endDate && (
-                  <p className="text-sm mt-1">
-                    Open from <strong>{formatDate(startDate)}</strong> to{" "}
-                    <strong>{formatDate(endDate)}</strong>.
-                  </p>
-                )}
-              </>
-            ) : (
-              "❌ Registration is currently CLOSED by the Admin."
+            <div className="flex items-center space-x-3 mb-2">
+              <span className="text-3xl">{isOpen ? "✅" : "❌"}</span>
+              <h2 className="text-xl font-bold">
+                Registration is currently <strong>{isOpen ? "OPEN" : "CLOSED"}</strong>
+              </h2>
+            </div>
+            {isOpen && startDate && endDate && (
+              <p className="text-sm ml-12 mt-2 opacity-90">
+                📅 Registration window: <strong>{formatDate(startDate)}</strong> to <strong>{formatDate(endDate)}</strong>
+              </p>
             )}
           </div>
 
-          {/* Profile */}
-          <div className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] mb-10">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-[#0f6a36]">
-                My Profile
-              </h2>
+          {/* Profile Card */}
+          <div className="bg-white rounded-xl shadow-lg border border-stone-200 p-6 mb-8">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">My Profile</h2>
               <button
                 onClick={() => navigate("/student/profile/edit")}
-                className="bg-[#0f6a36] text-white px-4 py-1 rounded-md text-sm hover:bg-[#0a4d26] transition"
+                className="bg-gradient-to-r from-amber-700 to-amber-800 text-white px-6 py-2 rounded-lg hover:from-amber-800 hover:to-amber-900 font-semibold transition transform hover:scale-105 shadow-md"
               >
-                Edit Profile
+                ✏️ Edit Profile
               </button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
-              <p>
-                <span className="font-medium">Enrollment No:</span>{" "}
-    
-              </p>
-              <p>
-                <span className="font-medium">Department:</span>{" "}
-                {profile.user.studentProfile.dept}
-              </p>
-              <p>
-                <span className="font-medium">Semester:</span>{" "}
-                {profile.user.studentProfile.semester}
-              </p>
-              <p>
-                <span className="font-medium">Email:</span> {profile.user.email}
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-stone-50 rounded-lg p-4 border border-stone-200">
+                <p className="text-sm text-gray-600 mb-1">Enrollment No.</p>
+                <p className="text-lg font-bold text-stone-900">{profile.user.studentProfile.enrollNo || "N/A"}</p>
+              </div>
+              <div className="bg-stone-50 rounded-lg p-4 border border-stone-200">
+                <p className="text-sm text-gray-600 mb-1">Department</p>
+                <p className="text-lg font-bold text-stone-900">{profile.user.studentProfile.dept}</p>
+              </div>
+              <div className="bg-stone-50 rounded-lg p-4 border border-stone-200">
+                <p className="text-sm text-gray-600 mb-1">Semester</p>
+                <p className="text-lg font-bold text-stone-900">{profile.user.studentProfile.semester}</p>
+              </div>
+              <div className="bg-stone-50 rounded-lg p-4 border border-stone-200">
+                <p className="text-sm text-gray-600 mb-1">Email</p>
+                <p className="text-lg font-bold text-stone-900 break-all text-sm">{profile.user.email}</p>
+              </div>
             </div>
           </div>
 
-       
+          {/* Quick Actions */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Available Courses Card */}
             <div
-              className={`rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] transition ${isOpen
-                  ? "bg-white hover:shadow-lg cursor-pointer"
-                  : "bg-gray-100 cursor-not-allowed opacity-70"
-                }`}
+              className={`rounded-xl shadow-lg border-2 transition-all transform cursor-pointer ${
+                isOpen
+                  ? "bg-white border-stone-200 hover:shadow-xl hover:-translate-y-1 hover:border-stone-400"
+                  : "bg-gray-100 border-gray-300 cursor-not-allowed opacity-60"
+              }`}
               onClick={() =>
                 isOpen
                   ? navigate("/available-courses")
                   : toast.error("Registration is closed!")
               }
             >
-              <h3
-                className={`text-lg font-semibold ${isOpen ? "text-[#7a0c0c]" : "text-gray-500"
-                  }`}
-              >
-                📚 Available Courses
-              </h3>
-              <p className="text-gray-600">
-                {isOpen
-                  ? "Browse and register for new courses"
-                  : "You cannot register for courses right now"}
-              </p>
+              <div className="h-1 bg-gradient-to-r from-amber-300 to-amber-500"></div>
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className={`text-lg font-bold ${isOpen ? "text-stone-900" : "text-gray-500"}`}>
+                    📚 Available Courses
+                  </h3>
+                  <span className="text-2xl">{isOpen ? "→" : "🔒"}</span>
+                </div>
+                <p className={`text-sm ${isOpen ? "text-gray-600" : "text-gray-500"}`}>
+                  {isOpen
+                    ? "Browse and register for new courses"
+                    : "Registration is currently closed"}
+                </p>
+              </div>
             </div>
 
+            {/* My Registrations Card */}
             <div
-              className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] hover:shadow-lg cursor-pointer transition"
+              className="bg-white rounded-xl shadow-lg border-2 border-stone-200 hover:shadow-xl hover:-translate-y-1 hover:border-stone-400 transition-all transform cursor-pointer p-6"
               onClick={() => navigate("/my-registrations")}
             >
-              <h3 className="text-lg font-semibold text-[#7a0c0c]">
-                📝 My Registrations
-              </h3>
-              <p className="text-gray-600">Check your registration status</p>
+              <div className="h-1 bg-gradient-to-r from-amber-300 to-amber-500 rounded-t-lg mb-4 -mx-6 -mt-6 w-full"></div>
+              <div className="pt-2">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-bold text-gray-800">📝 My Registrations</h3>
+                  <span className="text-2xl">→</span>
+                </div>
+                <p className="text-sm text-gray-600">Check your registration status and pending approvals</p>
+              </div>
             </div>
 
-            <div className="bg-white rounded-lg p-6 shadow-md border-t-4 border-[#0f6a36] hover:shadow-lg cursor-pointer transition">
-              <h3 className="text-lg font-semibold text-[#7a0c0c]">
-                📈 Performance Insights
-              </h3>
-              <p className="text-gray-600">
-                View analytics and personalized recommendations
-              </p>
+            {/* Profile Settings Card */}
+            <div
+              className="bg-white rounded-xl shadow-lg border-2 border-stone-200 hover:shadow-xl hover:-translate-y-1 hover:border-stone-400 transition-all transform cursor-pointer p-6"
+              onClick={() => navigate("/student/profile/edit")}
+            >
+              <div className="h-1 bg-gradient-to-r from-amber-300 to-amber-500 rounded-t-lg mb-4 -mx-6 -mt-6 w-full"></div>
+              <div className="pt-2">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-bold text-gray-800">⚙️ Profile Settings</h3>
+                  <span className="text-2xl">→</span>
+                </div>
+                <p className="text-sm text-gray-600">Update your personal information and preferences</p>
+              </div>
             </div>
           </div>
         </div>
       </main>
 
-      <footer className="bg-[#0f6a36] text-white text-center py-2 text-sm">
-        © 2025 Course Registration Portal
+      {/* Footer */}
+      <footer className="bg-stone-900 text-white text-center py-4 mt-auto">
+        <p className="font-medium">© 2025 Course Registration Portal • Designed for Excellence</p>
       </footer>
     </div>
   );

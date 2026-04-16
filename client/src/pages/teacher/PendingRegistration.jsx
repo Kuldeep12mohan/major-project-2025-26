@@ -70,8 +70,8 @@ export const PendingRegistration = () => {
       <Toaster position="top-right" />
 
       {/* Title Box - Matches Screenshot */}
-      <div className="border-l-4 border-green-700 bg-white px-4 py-3 rounded shadow mb-6">
-        <h1 className="text-xl font-bold text-red-900">
+      <div className="border-l-4 border-amber-500 bg-white px-4 py-3 rounded shadow mb-6">
+        <h1 className="text-xl font-bold text-amber-900">
           Pending Student Registrations
         </h1>
         <p className="text-sm text-gray-600">
@@ -86,15 +86,15 @@ export const PendingRegistration = () => {
           {Object.values(groupedByStudent).map(({ student, registrations }) => (
             <div
               key={student.id}
-              className="rounded-lg shadow bg-white border border-green-800/20"
+              className="rounded-lg shadow bg-white border border-amber-800/20"
             >
               {/* Header - Similar to Profile Card */}
               <div
                 onClick={() => toggleStudent(student.id)}
-                className="cursor-pointer flex justify-between items-center px-4 py-3 bg-green-50 border-b border-green-800/20 hover:bg-green-100 transition"
+                className="cursor-pointer flex justify-between items-center px-4 py-3 bg-amber-50 border-b border-amber-800/20 hover:bg-amber-100 transition"
               >
                 <div>
-                  <p className="font-semibold text-red-900">
+                  <p className="font-semibold text-amber-900">
                     {student.user.name}
                   </p>
                   <p className="text-sm text-gray-600">
@@ -127,13 +127,13 @@ export const PendingRegistration = () => {
                         <td className="py-2 px-4 border-b text-center space-x-2">
                           <button
                             onClick={() => handleAction(reg.id, "APPROVED")}
-                            className="bg-green-700 text-white px-3 py-1 rounded hover:bg-green-800 transition"
+                            className="bg-amber-700 text-white px-3 py-1 rounded hover:bg-amber-800 transition"
                           >
                             Approve
                           </button>
                           <button
                             onClick={() => handleAction(reg.id, "REJECTED")}
-                            className="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 transition"
+                            className="bg-amber-500 text-white px-3 py-1 rounded hover:bg-amber-600 transition"
                           >
                             Reject
                           </button>

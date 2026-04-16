@@ -48,11 +48,11 @@ export default function TeacherDashboard() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen bg-stone-50">
       <Toaster position="top-right" />
 
       {/* Header */}
-      <header className="bg-red-800 text-white py-3 px-6 flex justify-between items-center">
+      <header className="bg-amber-900 text-white py-3 px-6 flex justify-between items-center">
         <h1 className="text-lg font-bold">Teacher Dashboard</h1>
         <button onClick={handleLogout} className="hover:underline">Logout</button>
       </header>
@@ -61,8 +61,8 @@ export default function TeacherDashboard() {
         {teacher && <h2 className="text-2xl font-bold mb-6">Welcome, {teacher.user.name} 👋</h2>}
 
         {/* Profile */}
-        <div className="bg-white shadow rounded-lg p-6 border-t-4 border-green-700">
-          <h3 className="font-bold text-green-800 mb-3">My Profile</h3>
+        <div className="bg-white shadow rounded-lg p-6 border-t-4 border-amber-700">
+          <h3 className="font-bold text-amber-900 mb-3">My Profile</h3>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <p><strong>Employee ID:</strong> {teacher.employeeId}</p>
             <p><strong>Designation:</strong> {teacher.designation}</p>
@@ -74,24 +74,24 @@ export default function TeacherDashboard() {
         {/* Navigation Cards */}
         <div className="grid md:grid-cols-2 gap-6">
           <div
-            className="bg-white shadow rounded-lg p-6 border-t-4 border-green-700 hover:shadow-lg transition cursor-pointer"
+            className="bg-white shadow rounded-lg p-6 border-t-4 border-amber-700 hover:shadow-lg transition cursor-pointer"
             onClick={() => navigate("/teacher/courses")}
           >
-            <h3 className="font-bold text-red-800 mb-2">📘 My Courses</h3>
+            <h3 className="font-bold text-amber-900 mb-2">📘 My Courses</h3>
             <p className="text-gray-600">View courses assigned to you</p>
           </div>
 
           <div
-            className="bg-white shadow rounded-lg p-6 border-t-4 border-yellow-600 hover:shadow-lg transition cursor-pointer"
+            className="bg-white shadow rounded-lg p-6 border-t-4 border-amber-500 hover:shadow-lg transition cursor-pointer"
             onClick={() => navigate("/teacher/requests")}
           >
-            <h3 className="font-bold text-red-800 mb-2">📝 Pending Student Registrations</h3>
+            <h3 className="font-bold text-amber-900 mb-2">📝 Pending Student Registrations</h3>
             <p className="text-gray-600">View and verify student registrations</p>
           </div>
         </div>
       </main>
 
-      <footer className="bg-green-800 text-white text-center py-2 text-sm">
+      <footer className="bg-stone-900 text-white text-center py-2 text-sm">
         © 2025 Teacher Dashboard
       </footer>
     </div>

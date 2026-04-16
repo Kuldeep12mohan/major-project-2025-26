@@ -41,16 +41,16 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-stone-50 via-stone-100 to-stone-200">
       <Toaster position="top-right" />
-      <header className="bg-gradient-to-r from-red-900 via-red-800 to-red-900 text-white py-5 px-6 shadow-md">
+      <header className="bg-amber-900 text-white py-5 px-6 shadow-md">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-xl md:text-2xl font-bold tracking-tight">
             Course Registration Portal
           </h1>
           <button
             onClick={() => navigate("/")}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-300"
+            className="bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-300"
           >
             ⬅ Back to Home
           </button>
@@ -61,7 +61,7 @@ export default function AdminLoginPage() {
         <div className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-2xl rounded-2xl p-8 w-full max-w-md">
 
           <div className="text-center mb-6">
-            <div className="w-16 h-16 mx-auto bg-gradient-to-r from-red-800 to-red-700 rounded-full flex items-center justify-center shadow-lg mb-4">
+            <div className="w-16 h-16 mx-auto bg-gradient-to-r from-amber-700 to-amber-600 rounded-full flex items-center justify-center shadow-lg mb-4">
               <svg
                 className="w-8 h-8 text-white"
                 fill="none"
@@ -76,7 +76,7 @@ export default function AdminLoginPage() {
                 />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold text-red-800 mb-1">Admin Login</h2>
+            <h2 className="text-3xl font-bold text-amber-900 mb-1">Admin Login</h2>
             <p className="text-gray-600 text-sm">
               Sign in to manage registration cycles and courses
             </p>
@@ -92,7 +92,7 @@ export default function AdminLoginPage() {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                className="w-full border border-gray-300 focus:ring-2 focus:ring-red-700 focus:border-red-700 rounded-lg p-3 text-gray-800 outline-none transition"
+                className="w-full border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 rounded-lg p-3 text-gray-800 outline-none transition"
                 placeholder="Enter your email"
                 required
               />
@@ -107,7 +107,7 @@ export default function AdminLoginPage() {
                 name="adminId"
                 value={form.adminId}
                 onChange={handleChange}
-                className="w-full border border-gray-300 focus:ring-2 focus:ring-red-700 focus:border-red-700 rounded-lg p-3 text-gray-800 outline-none transition"
+                className="w-full border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 rounded-lg p-3 text-gray-800 outline-none transition"
                 placeholder="Enter your admin ID"
                 required
               />
@@ -122,7 +122,7 @@ export default function AdminLoginPage() {
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                className="w-full border border-gray-300 focus:ring-2 focus:ring-red-700 focus:border-red-700 rounded-lg p-3 text-gray-800 outline-none transition"
+                className="w-full border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 rounded-lg p-3 text-gray-800 outline-none transition"
                 placeholder="Enter password"
                 required
               />
@@ -132,8 +132,8 @@ export default function AdminLoginPage() {
               disabled={loading}
               className={`w-full py-3 rounded-xl font-semibold text-white text-lg transition-all duration-300 shadow-md hover:shadow-xl ${
                 loading
-                  ? "bg-red-500 opacity-80 cursor-not-allowed"
-                  : "bg-gradient-to-r from-red-800 to-red-700 hover:from-red-900 hover:to-red-800"
+                  ? "bg-amber-500 opacity-80 cursor-not-allowed"
+                  : "bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-800 hover:to-amber-700"
               }`}
             >
               {loading ? "Logging in..." : "Login"}
@@ -144,14 +144,14 @@ export default function AdminLoginPage() {
             Not an admin?{" "}
             <span
               onClick={() => navigate("/")}
-              className="text-red-700 font-medium hover:underline cursor-pointer"
+              className="text-amber-900 font-medium hover:underline cursor-pointer"
             >
               Go back to home
             </span>
           </p>
         </div>
       </main>
-      <footer className="bg-[#0f6a36] text-white text-center py-2 text-sm">
+      <footer className="bg-stone-900 text-white text-center py-2 text-sm">
         © 2025 Course Registration Portal
       </footer>
     </div>

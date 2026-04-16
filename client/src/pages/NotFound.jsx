@@ -1,7 +1,7 @@
 const NotFound = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6">
-      <h1 className="text-8xl font-extrabold tracking-widest text-indigo-500">
+      <h1 className="text-8xl font-extrabold tracking-widest text-amber-800">
         404
       </h1>
 
@@ -15,7 +15,7 @@ const NotFound = () => {
 
       <button
         onClick={() => window.history.back()}
-        className="mt-8 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition-all duration-200 text-white font-medium shadow-lg"
+        className="mt-8 px-6 py-3 rounded-xl bg-amber-700 hover:bg-amber-600 transition-all duration-200 text-white font-medium shadow-lg"
       >
         Go Back
       </button>

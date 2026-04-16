@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 const AvailableCourse = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [expandedCourse, setExpandedCourse] = useState(null);
   const [registering, setRegistering] = useState(null);
 
   const navigate = useNavigate();
@@ -40,7 +39,18 @@ const AvailableCourse = () => {
           { withCredentials: true }
         );
 
-        setCourses(res.data.courses || []);
+        // Remove duplicate courses by title
+        const coursesArray = res.data.courses || [];
+        const uniqueCourses = Array.from(
+          new Map(
+            coursesArray.map((course) => [
+              course.title?.trim().toLowerCase() || course.id,
+              course,
+            ])
+          ).values()
+        );
+
+        setCourses(uniqueCourses);
       } catch (err) {
         toast.error("Failed to fetch courses");
         console.error(err);
@@ -51,27 +61,23 @@ const AvailableCourse = () => {
 
     fetchCourses();
   }, [student]);
- const handleRegister = async (courseId) => {
-  setRegistering(courseId);
+  const handleRegister = async (courseId) => {
+    setRegistering(courseId);
 
-  try {
-    const res = await axios.post(
-      `${base_url}/api/student/register`,
-      { courseId, mode: "A" },
-      { withCredentials: true }
-    );
+    try {
+      const res = await axios.post(
+        `${base_url}/api/student/register`,
+        { courseId, mode: "A" },
+        { withCredentials: true }
+      );
 
-    toast.success(res.data.message || "Registration successful!");
-  } catch (err) {
-    toast.error(err.response?.data?.error || "Registration failed");
-    console.error(err);
-  } finally {
-    setRegistering(null);
-  }
-};
-
-  const toggleExpand = (id) => {
-    setExpandedCourse(expandedCourse === id ? null : id);
+      toast.success(res.data.message || "Registration successful!");
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Registration failed");
+      console.error(err);
+    } finally {
+      setRegistering(null);
+    }
   };
 
   const logout = async () => {
@@ -88,87 +94,102 @@ const AvailableCourse = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-800">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-stone-50 via-amber-50 to-stone-100 text-gray-800">
       <Toaster position="top-right" />
-      <header className="bg-green-800 text-white flex justify-between items-center px-6 py-3 shadow-md">
-        <h1 className="text-lg font-semibold">Available Courses</h1>
-        <button
-          onClick={logout}
-          className="bg-white text-green-800 px-4 py-1 rounded-md hover:bg-gray-200 transition"
-        >
-          Logout
-        </button>
-      </header>
-      <main className="flex-1 p-6 md:p-10">
-        <h2 className="text-2xl font-bold text-center mb-8">
-          Semester {student.semester} Courses ({student.dept})
-        </h2>
-
-        {courses.length === 0 ? (
-          <p className="text-center text-gray-600 text-lg">
-            No courses available for this semester.
-          </p>
-        ) : (
-          <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {courses.map((course) => (
-              <div
-                key={course.id}
-                className="bg-white border-t-4 border-green-700 rounded-2xl shadow-md hover:shadow-xl transition p-6 flex flex-col justify-between"
-              >
-                <div>
-                  <h3 className="text-xl font-semibold text-green-800 mb-2">
-                    {course.title}
-                  </h3>
-                  <p className="text-gray-700 mb-1">📘 Code: {course.code}</p>
-                  <p className="text-gray-700 mb-1">
-                    🎓 Credits: {course.credits}
-                  </p>
-                  <p className="text-gray-700 mb-3">
-                    🏛️ Type: {course.type} | Semester: {course.semester}
-                  </p>
-
-                  <button
-                    onClick={() => toggleExpand(course.id)}
-                    className="text-green-700 underline text-sm hover:text-green-900 transition"
-                  >
-                    {expandedCourse === course.id
-                      ? "Hide Details ▲"
-                      : "View Details ▼"}
-                  </button>
-
-                  {expandedCourse === course.id && (
-                    <div className="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm text-gray-700">
-                      <p><strong>Department:</strong> {course.dept}</p>
-                      <p><strong>Active:</strong> {course.active ? "✅ Yes" : "❌ No"}</p>
-                      <p>
-                        <strong>Created:</strong>{" "}
-                        {new Date(course.createdAt).toLocaleDateString("en-IN")}
-                      </p>
-                      <p>
-                        <strong>Updated:</strong>{" "}
-                        {new Date(course.updatedAt).toLocaleDateString("en-IN")}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                <button
-                  onClick={() => handleRegister(course.id)}
-                  disabled={registering === course.id}
-                  className={`w-full mt-5 bg-green-700 hover:bg-green-800 text-white font-medium py-2 rounded-lg transition ${
-                    registering === course.id ? "opacity-60 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {registering === course.id ? "Registering..." : "Register"}
-                </button>
-              </div>
-            ))}
+      <header className="bg-amber-900 text-white shadow-lg sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+              <span className="text-amber-900 font-bold text-lg">📚</span>
+            </div>
+            <h1 className="text-xl font-bold">Available Courses</h1>
           </div>
-        )}
+          <button
+            onClick={logout}
+            className="bg-white text-amber-900 px-6 py-2 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
+          >
+            Logout
+          </button>
+        </div>
+      </header>
+
+      <main className="flex-1 p-6 md:p-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-2 text-stone-900">
+              Semester {student.semester} Courses
+            </h2>
+            <p className="text-center text-gray-600 font-medium">
+              Department: <span className="text-amber-800 font-semibold">{student.dept}</span>
+            </p>
+          </div>
+
+          {courses.length === 0 ? (
+            <div className="flex items-center justify-center py-16">
+              <div className="text-center">
+                <p className="text-xl text-gray-500 mb-2">📭 No courses available</p>
+                <p className="text-gray-400">Please check back later or contact your administrator.</p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {courses.map((course) => (
+                <div
+                  key={course.id}
+                  className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-stone-200 hover:border-stone-300 group flex flex-col justify-between transform hover:-translate-y-1"
+                >
+                  <div className="h-2 bg-gradient-to-r from-amber-300 to-amber-500"></div>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-lg font-bold text-stone-900 mb-3 line-clamp-2 group-hover:text-stone-800 transition">
+                      {course.title}
+                    </h3>
+                    <div className="space-y-2 mb-4 flex-1">
+                      <div className="flex items-center text-gray-700">
+                        <span className="text-amber-800 font-semibold mr-2 min-w-fit">Code:</span>
+                        <span className="text-gray-800 font-mono bg-amber-50 px-2 py-1 rounded">{course.code}</span>
+                      </div>
+                      <div className="flex items-center text-gray-700">
+                        <span className="text-amber-800 font-semibold mr-2">Credits:</span>
+                        <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-semibold">{course.credits}</span>
+                      </div>
+                      <div className="flex items-center text-gray-700">
+                        <span className="text-amber-800 font-semibold mr-2">Type:</span>
+                        <span className="text-gray-800">{course.type}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="px-6 pb-6">
+                    <button
+                      onClick={() => handleRegister(course.id)}
+                      disabled={registering === course.id}
+                      className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center space-x-2 ${
+                        registering === course.id
+                          ? "bg-amber-300 text-white cursor-not-allowed"
+                          : "bg-gradient-to-r from-amber-700 to-amber-800 text-white hover:from-amber-800 hover:to-amber-900 transform hover:scale-105 shadow-md hover:shadow-lg"
+                      }`}
+                    >
+                      {registering === course.id ? (
+                        <>
+                          <span className="animate-spin">⏳</span>
+                          <span>Registering...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>✓</span>
+                          <span>Register</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </main>
 
-      <footer className="bg-green-800 text-white text-center py-3 mt-auto">
-        © 2025 Student Portal
+      <footer className="bg-stone-900 text-white text-center py-4 mt-auto">
+        <p className="font-medium">© 2025 Course Registration Portal • Designed for Excellence</p>
       </footer>
     </div>
   );

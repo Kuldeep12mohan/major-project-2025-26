@@ -1,56 +1,45 @@
-// src/pages/HomePage.tsx
+// src/pages/HomePage.jsx
 import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-amber-50 to-amber-100">
       {/* Navbar */}
-      <header className="bg-gradient-to-r from-red-900 via-red-800 to-red-900 text-white py-6 px-8 shadow-xl">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <header className="bg-gradient-to-r from-amber-300 via-amber-200 to-slate-100 text-slate-900 shadow-lg sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center shadow-lg">
-              <svg
-                className="w-6 h-6 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                />
-              </svg>
+            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-lg transform hover:scale-110 transition">
+              <span className="text-amber-700 text-2xl font-bold">📚</span>
             </div>
-            <h1 className="text-3xl font-bold tracking-tight">
-              Course Registration Portal
-            </h1>
+            <div>
+              <h1 className="text-2xl font-bold">Course Portal</h1>
+              <p className="text-slate-500 text-xs">Registration System</p>
+            </div>
           </div>
 
           {/* Navbar Buttons */}
-          <nav className="flex space-x-4">
+          <nav className="flex space-x-3">
             <button
               onClick={() => navigate("/auth-student")}
-              className="bg-green-600 hover:bg-green-700 transform hover:scale-105 transition-all duration-200 px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:shadow-xl"
+              className="bg-white text-slate-700 hover:bg-amber-50 px-6 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 shadow-md hover:shadow-lg"
             >
-              Student Login
+              👨‍🎓 Student
             </button>
 
             <button
               onClick={() => navigate("/auth-teacher")}
-              className="bg-green-600 hover:bg-green-700 transform hover:scale-105 transition-all duration-200 px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:shadow-xl"
+              className="bg-white text-slate-700 hover:bg-amber-50 px-6 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 shadow-md hover:shadow-lg"
             >
-              Teacher Login
+              👨‍🏫 Teacher
             </button>
 
             <button
               onClick={() => navigate("/admin/login")}
-              className="bg-yellow-500 hover:bg-yellow-600 transform hover:scale-105 transition-all duration-200 px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:shadow-xl"
+              className="bg-slate-300 hover:bg-slate-400 text-slate-900 px-6 py-2.5 rounded-lg font-semibold transition transform hover:scale-105 shadow-md hover:shadow-lg"
             >
-              Admin Login
+              ⚙️ Admin
             </button>
           </nav>
         </div>
@@ -58,157 +47,166 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <main className="flex-grow flex flex-col justify-center items-center text-center p-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm font-medium mb-8 shadow-sm">
-            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812z"
-                clipRule="evenodd"
-              />
-            </svg>
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-amber-100 text-amber-900 text-sm font-semibold mb-8 shadow-sm border border-amber-200">
+            <span className="mr-2">✨</span>
             Streamlined Course Management
           </div>
 
-          <h2 className="text-6xl font-bold bg-gradient-to-r from-red-800 via-red-700 to-red-900 bg-clip-text text-transparent mb-6 leading-tight">
-            Welcome to the Course <br />
-            <span className="text-green-700">Registration System</span>
+          {/* Main Heading */}
+          <h2 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-800 bg-clip-text text-transparent">
+              Smart Course
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-slate-800 to-slate-900 bg-clip-text text-transparent">
+              Registration System
+            </span>
           </h2>
 
+          {/* Subtitle */}
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
-            A modern platform built to simplify course enrollment for students and
-            empower teachers with tools for efficient teaching and real-time
-            monitoring.
+            Simplify your academic journey with our intelligent course registration platform designed for students, teachers, and administrators.
           </p>
 
           {/* Feature Cards */}
-          <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-4xl mx-auto">
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition border border-gray-100">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                <svg
-                  className="w-6 h-6 text-green-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                  />
-                </svg>
+          <div className="grid md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
+            {/* Students Card */}
+            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition border border-amber-100 group">
+              <div className="w-16 h-16 bg-amber-100 rounded-xl flex items-center justify-center mb-4 mx-auto group-hover:bg-amber-200 transition">
+                <span className="text-4xl">👨‍🎓</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                For Students
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Browse courses, register easily, and track your academic
-                progress—all in one place.
+              <h3 className="text-lg font-bold text-slate-900 mb-2">For Students</h3>
+              <p className="text-gray-600 text-sm mb-4">
+                Access your course dashboard and registration tools.
               </p>
+              <div className="h-1 w-12 bg-gradient-to-r from-amber-300 to-slate-400 rounded-full mx-auto"></div>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition border border-gray-100">
-              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                <svg
-                  className="w-6 h-6 text-red-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-6m-2 0H5m2 0v-5a2 2 0 012-2h2a2 2 0 012 2v5m6 0v-3a2 2 0 00-2-2h-2a2 2 0 00-2 2v3"
-                  />
-                </svg>
+            {/* Teachers Card */}
+            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition border border-amber-100 group">
+              <div className="w-16 h-16 bg-amber-100 rounded-xl flex items-center justify-center mb-4 mx-auto group-hover:bg-amber-200 transition">
+                <span className="text-4xl">👨‍🏫</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                For Teachers
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Manage courses, view enrollments, and guide students effortlessly.
+              <h3 className="text-lg font-bold text-slate-900 mb-2">For Teachers</h3>
+              <p className="text-gray-600 text-sm mb-4">
+                Manage courses, review student registrations, and guide academic excellence.
               </p>
+              <div className="h-1 w-12 bg-gradient-to-r from-slate-300 to-slate-400 rounded-full mx-auto"></div>
+            </div>
+
+            {/* Admins Card */}
+            <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition border border-amber-100 group">
+              <div className="w-16 h-16 bg-slate-100 rounded-xl flex items-center justify-center mb-4 mx-auto group-hover:bg-slate-200 transition">
+                <span className="text-4xl">⚙️</span>
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">For Admins</h3>
+              <p className="text-gray-600 text-sm mb-4">
+                Control registration periods, manage users, and oversee the entire system.
+              </p>
+              <div className="h-1 w-12 bg-gradient-to-r from-amber-300 to-slate-400 rounded-full mx-auto"></div>
             </div>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <button
               onClick={() => navigate("/auth-student")}
-              className="group bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold text-lg w-full sm:w-auto"
+              className="group bg-gradient-to-r from-amber-300 to-amber-400 hover:from-amber-400 hover:to-amber-500 text-slate-900 px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-bold text-lg w-full sm:w-auto"
             >
               <span className="flex items-center justify-center">
-                I am a Student
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
+                Get Started as Student
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </span>
             </button>
 
             <button
               onClick={() => navigate("/auth-teacher")}
-              className="group bg-gradient-to-r from-red-800 to-red-700 hover:from-red-900 hover:to-red-800 text-white px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold text-lg w-full sm:w-auto"
+              className="group bg-gradient-to-r from-amber-200 to-amber-300 hover:from-amber-300 hover:to-amber-400 text-slate-900 px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-bold text-lg w-full sm:w-auto"
             >
               <span className="flex items-center justify-center">
-                I am a Teacher
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
+                Get Started as Teacher
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </span>
             </button>
 
             <button
               onClick={() => navigate("/admin/login")}
-              className="group bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-semibold text-lg w-full sm:w-auto"
+              className="group bg-gradient-to-r from-slate-300 to-slate-400 hover:from-slate-400 hover:to-slate-500 text-slate-900 px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-bold text-lg w-full sm:w-auto"
             >
               <span className="flex items-center justify-center">
-                I am an Admin
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
+                Admin Portal
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </span>
             </button>
+          </div>
+
+          {/* Features List */}
+          <div className="mt-16 grid md:grid-cols-2 gap-6 max-w-3xl mx-auto text-left">
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0">
+                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-amber-500 text-white">
+                  ✓
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900">Easy Course Discovery</h4>
+                <p className="text-sm text-gray-600 mt-1">Find and register for courses in just a few clicks</p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0">
+                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-amber-500 text-white">
+                  ✓
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900">Real-Time Updates</h4>
+                <p className="text-sm text-gray-600 mt-1">Instant notifications for registration status changes</p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0">
+                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-amber-500 text-white">
+                  ✓
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900">Secure Access</h4>
+                <p className="text-sm text-gray-600 mt-1">Protected accounts with role-based access control</p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0">
+                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-amber-500 text-white">
+                  ✓
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900">Smart Analytics</h4>
+                <p className="text-sm text-gray-600 mt-1">Comprehensive dashboards for admins and teachers</p>
+              </div>
+            </div>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#0f6a36] text-white text-center py-2 text-sm">
-        © 2025 Course Registration Portal
+      <footer className="bg-gradient-to-r from-amber-200 to-slate-200 text-slate-900 text-center py-6 mt-auto border-t-4 border-amber-300">
+        <p className="font-semibold">© 2025 Course Registration Portal</p>
+        <p className="text-slate-600 text-sm mt-2">Designed for Excellence • Empowering Education</p>
       </footer>
     </div>
   );
 }
+

@@ -75,16 +75,16 @@ export default function TeacherAuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-stone-50 flex flex-col">
       {/* Navbar */}
-      <header className="bg-[#7a0c0c] text-white py-3">
+      <header className="bg-amber-900 text-white py-3">
         <div className="max-w-6xl mx-auto flex justify-between items-center px-4">
           <h1 className="text-xl font-bold">Teacher Portal</h1>
           <nav>
             <button
               onClick={() => setIsLogin(true)}
               className={`px-3 py-1 rounded ${
-                isLogin ? "bg-white text-[#7a0c0c]" : "text-white"
+                isLogin ? "bg-white text-amber-900" : "text-white"
               }`}
             >
               Login
@@ -92,7 +92,7 @@ export default function TeacherAuthPage() {
             <button
               onClick={() => setIsLogin(false)}
               className={`ml-2 px-3 py-1 rounded ${
-                !isLogin ? "bg-white text-[#7a0c0c]" : "text-white"
+                !isLogin ? "bg-white text-amber-900" : "text-white"
               }`}
             >
               Register
@@ -103,13 +103,13 @@ export default function TeacherAuthPage() {
 
       {/* Auth Card */}
       <div className="flex-grow flex items-center justify-center px-4">
-        <div className="bg-white rounded-lg p-8 max-w-md w-full border-t-4 border-[#0f6a36] shadow">
-          <h2 className="text-2xl font-bold text-center text-[#7a0c0c] mb-6">
+        <div className="bg-white rounded-lg p-8 max-w-md w-full border-t-4 border-amber-700 shadow">
+          <h2 className="text-2xl font-bold text-center text-amber-900 mb-6">
             {isLogin ? "Teacher Login" : "Teacher Registration"}
           </h2>
 
           {error && (
-            <p className="text-center text-red-600 text-sm mb-4">{error}</p>
+            <p className="text-center text-amber-700 text-sm mb-4">{error}</p>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -227,7 +227,7 @@ export default function TeacherAuthPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#0f6a36] hover:bg-green-800 text-white py-2 rounded-lg font-semibold"
+              className="w-full bg-amber-700 hover:bg-amber-800 text-white py-2 rounded-lg font-semibold"
             >
               {loading ? "Processing..." : isLogin ? "Login" : "Register"}
             </button>
@@ -238,7 +238,7 @@ export default function TeacherAuthPage() {
               <>
                 Don’t have an account?{" "}
                 <button
-                  className="text-[#7a0c0c] font-semibold"
+                  className="text-amber-900 font-semibold"
                   onClick={() => setIsLogin(false)}
                 >
                   Register
@@ -248,7 +248,7 @@ export default function TeacherAuthPage() {
               <>
                 Already registered?{" "}
                 <button
-                  className="text-[#7a0c0c] font-semibold"
+                  className="text-amber-900 font-semibold"
                   onClick={() => setIsLogin(true)}
                 >
                   Login
@@ -259,7 +259,7 @@ export default function TeacherAuthPage() {
         </div>
       </div>
 
-      <footer className="bg-[#0f6a36] text-white text-center py-2 text-sm">
+      <footer className="bg-stone-900 text-white text-center py-2 text-sm">
         © 2025 Teacher Portal
       </footer>
     </div>
