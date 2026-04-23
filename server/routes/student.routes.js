@@ -117,19 +117,20 @@ router.get("/registration", verifyStudent, async (req, res) => {
 router.get("/:semester/:dept", async (req, res) => {
   try {
     const { semester, dept } = req.params;
+    const semesterNumber = Number(semester);
+    const deptFilter = String(dept || "").trim().toUpperCase();
 
     const courses = await prisma.course.findMany({
-      where: { semester: Number(semester), dept },
+      where: { semester: semesterNumber, dept: deptFilter, type: "CORE" },
       orderBy: { title: "asc" },
     });
 
-    if (!courses || courses.length === 0) {
-      return res.status(404).json({
-        message: `No courses found for semester ${semester} in ${dept}`,
-      });
-    }
-
-    res.json({ message: `Courses for semester ${semester} in ${dept}`, courses });
+    res.json({
+      message: courses.length
+        ? `Core courses for semester ${semesterNumber} in ${deptFilter}`
+        : `No core courses found for semester ${semesterNumber} in ${deptFilter}`,
+      courses,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch courses" });

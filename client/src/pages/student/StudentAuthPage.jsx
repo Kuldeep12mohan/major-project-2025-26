@@ -23,6 +23,8 @@ export default function StudentAuthPage() {
     dept: "",
   });
 
+  const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -30,9 +32,48 @@ export default function StudentAuthPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isLogin && form.password !== form.confirmPassword) {
-      toast.error("Passwords do not match!");
-      return;
+    if (!isLogin) {
+      if (!form.name.trim()) {
+        toast.error("Full name is required.");
+        return;
+      }
+      if (!isValidEmail(form.email)) {
+        toast.error("Enter a valid email address.");
+        return;
+      }
+      if (form.password.length < 8) {
+        toast.error("Password must be at least 8 characters long.");
+        return;
+      }
+      if (form.password !== form.confirmPassword) {
+        toast.error("Passwords do not match!");
+        return;
+      }
+      if (!form.enrollNo.trim()) {
+        toast.error("Enrollment number is required.");
+        return;
+      }
+      if (!form.facultyNo.trim()) {
+        toast.error("Faculty number is required.");
+        return;
+      }
+      if (!form.semester || Number(form.semester) < 1 || Number(form.semester) > 8) {
+        toast.error("Semester must be between 1 and 8.");
+        return;
+      }
+      if (!form.dept) {
+        toast.error("Select a department.");
+        return;
+      }
+    } else {
+      if (!isValidEmail(form.email)) {
+        toast.error("Enter a valid email address.");
+        return;
+      }
+      if (form.password.length < 8) {
+        toast.error("Password must be at least 8 characters long.");
+        return;
+      }
     }
 
     setLoading(true);
@@ -57,6 +98,7 @@ export default function StudentAuthPage() {
         }
 
         toast.success("Login successful!");
+        navigate("/dashboard", { replace: true });
       } else {
         res = await axios.post(
           `${base_url}/api/auth/signup/student`,
@@ -73,9 +115,8 @@ export default function StudentAuthPage() {
         );
 
         toast.success("Registration successful!");
+        navigate("/dashboard", { replace: true });
       }
-
-      setTimeout(() => navigate("/dashboard"), 800);
     } catch (err) {
       const message =
         err.response?.data?.error ||
@@ -259,6 +300,12 @@ export default function StudentAuthPage() {
                     required
                   />
                 </div>
+
+                {isLogin && (
+                  <div className="text-right text-sm text-amber-800 font-semibold hover:text-amber-900 transition">
+                    <button type="button" onClick={() => navigate("/forgot-password")}>Forgot password?</button>
+                  </div>
+                )}
 
                 {/* Confirm Password */}
                 {!isLogin && (

@@ -147,64 +147,11 @@ export default function HomePage() {
               </span>
             </button>
           </div>
-
-          {/* Features List */}
-          <div className="mt-16 grid md:grid-cols-2 gap-6 max-w-3xl mx-auto text-left">
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-amber-500 text-white">
-                  ✓
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">Easy Course Discovery</h4>
-                <p className="text-sm text-gray-600 mt-1">Find and register for courses in just a few clicks</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-amber-500 text-white">
-                  ✓
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">Real-Time Updates</h4>
-                <p className="text-sm text-gray-600 mt-1">Instant notifications for registration status changes</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-amber-500 text-white">
-                  ✓
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">Secure Access</h4>
-                <p className="text-sm text-gray-600 mt-1">Protected accounts with role-based access control</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-8 w-8 rounded-full bg-amber-500 text-white">
-                  ✓
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">Smart Analytics</h4>
-                <p className="text-sm text-gray-600 mt-1">Comprehensive dashboards for admins and teachers</p>
-              </div>
-            </div>
-          </div>
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="bg-gradient-to-r from-amber-200 to-slate-200 text-slate-900 text-center py-6 mt-auto border-t-4 border-amber-300">
         <p className="font-semibold">© 2025 Course Registration Portal</p>
-        <p className="text-slate-600 text-sm mt-2">Designed for Excellence • Empowering Education</p>
       </footer>
     </div>
   );

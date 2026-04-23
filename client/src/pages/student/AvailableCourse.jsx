@@ -39,7 +39,6 @@ const AvailableCourse = () => {
           { withCredentials: true }
         );
 
-        // Remove duplicate courses by title
         const coursesArray = res.data.courses || [];
         const uniqueCourses = Array.from(
           new Map(
@@ -52,8 +51,12 @@ const AvailableCourse = () => {
 
         setCourses(uniqueCourses);
       } catch (err) {
-        toast.error("Failed to fetch courses");
-        console.error(err);
+        if (err.response?.status === 404) {
+          setCourses([]);
+        } else {
+          toast.error("Failed to fetch courses");
+          console.error(err);
+        }
       } finally {
         setLoading(false);
       }
@@ -117,7 +120,7 @@ const AvailableCourse = () => {
         <div className="max-w-7xl mx-auto">
           <div className="mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-2 text-stone-900">
-              Semester {student.semester} Courses
+              Semester {student.semester} Core Courses
             </h2>
             <p className="text-center text-gray-600 font-medium">
               Department: <span className="text-amber-800 font-semibold">{student.dept}</span>

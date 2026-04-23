@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cd c:\\\\Users\\\\Vikas\\\\Desktop\\\\major-project-2025-26\\\\server ; node -e \"import \\{ PrismaClient \\} from '\\./node_modules/@prisma/client/index\\.js'; const prisma = new PrismaClient\\(\\); const main = async \\(\\) => \\{ const courses = await prisma\\.course\\.findMany\\(\\{ where: \\{ dept: 'CS' \\}, orderBy: \\{ semester: 'asc' \\}, take: 20 \\}\\); console\\.log\\(JSON\\.stringify\\(courses\\.map\\(c => \\(\\{id:c\\.id,code:c\\.code,title:c\\.title,semester:c\\.semester,dept:c\\.dept\\}\\)\\),null,2\\)\\); await prisma\\.\\$disconnect\\(\\); \\}; main\\(\\)\\.catch\\(e => \\{ console\\.error\\(e\\); prisma\\.\\$disconnect\\(\\); process\\.exit\\(1\\); \\}\\);\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

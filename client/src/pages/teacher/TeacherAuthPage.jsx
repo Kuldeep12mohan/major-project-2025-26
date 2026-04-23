@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import { base_url } from "../../utils/utils.js";
 
 export default function TeacherAuthPage() {
@@ -18,6 +19,8 @@ export default function TeacherAuthPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -28,10 +31,35 @@ export default function TeacherAuthPage() {
     setLoading(true);
 
     try {
-      if (!isLogin && form.password !== form.confirmPassword) {
-        setError("Passwords do not match");
-        setLoading(false);
-        return;
+      if (!isLogin) {
+        if (!form.name.trim()) {
+          throw new Error("Full name is required");
+        }
+        if (!isValidEmail(form.email)) {
+          throw new Error("Enter a valid email address");
+        }
+        if (form.password.length < 8) {
+          throw new Error("Password must be at least 8 characters long");
+        }
+        if (form.password !== form.confirmPassword) {
+          throw new Error("Passwords do not match");
+        }
+        if (!form.employeeId.trim()) {
+          throw new Error("Employee ID is required");
+        }
+        if (!form.designation.trim()) {
+          throw new Error("Designation is required");
+        }
+        if (!form.dept.trim()) {
+          throw new Error("Department is required");
+        }
+      } else {
+        if (!isValidEmail(form.email)) {
+          throw new Error("Enter a valid email address");
+        }
+        if (form.password.length < 8) {
+          throw new Error("Password must be at least 8 characters long");
+        }
       }
 
       if (isLogin) {
@@ -50,6 +78,7 @@ export default function TeacherAuthPage() {
           return;
         }
 
+        toast.success("Login successful!");
         navigate("/teacher-dashboard");
       } else {
         await axios.post(
@@ -68,7 +97,7 @@ export default function TeacherAuthPage() {
         navigate("/teacher-dashboard");
       }
     } catch (err) {
-      setError(err.response?.data?.error || "Something went wrong");
+      setError(err.response?.data?.error || err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -77,6 +106,7 @@ export default function TeacherAuthPage() {
   return (
     <div className="min-h-screen bg-stone-50 flex flex-col">
       {/* Navbar */}
+      <Toaster position="top-right" />
       <header className="bg-amber-900 text-white py-3">
         <div className="max-w-6xl mx-auto flex justify-between items-center px-4">
           <h1 className="text-xl font-bold">Teacher Portal</h1>
@@ -206,6 +236,12 @@ export default function TeacherAuthPage() {
                 className="w-full mt-1 p-2 border rounded-md"
               />
             </div>
+
+            {isLogin && (
+              <div className="text-right text-sm text-amber-900 hover:text-amber-700 transition">
+                <button type="button" onClick={() => navigate("/forgot-password")}>Forgot password?</button>
+              </div>
+            )}
 
             {!isLogin && (
               <div>
