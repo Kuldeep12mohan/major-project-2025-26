@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { base_url } from "../../utils/utils.js";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -7,6 +8,7 @@ export const PendingRegistration = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedStudents, setExpandedStudents] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPending = async () => {
@@ -47,12 +49,21 @@ export const PendingRegistration = () => {
     }));
   };
 
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${base_url}/api/auth/logout`, {}, { withCredentials: true });
+      toast.success('Logged out successfully!');
+      setTimeout(() => navigate('/'), 1000);
+    } catch (err) {
+      console.error('Logout error:', err);
+      toast.error('Failed to logout.');
+    }
+  };
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-50 text-gray-800">
-        <h2 className="text-xl font-semibold animate-pulse">
-          Loading pending registrations...
-        </h2>
+      <div className="flex items-center justify-center h-screen bg-gray-100 text-gray-800">
+        <h2 className="text-xl">Loading pending registrations...</h2>
       </div>
     );
   }
@@ -65,88 +76,145 @@ export const PendingRegistration = () => {
     return acc;
   }, {});
 
+  const studentCount = Object.keys(groupedByStudent).length;
+  const registrationCount = pendingRequests.length;
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-stone-50 via-amber-50 to-stone-100">
       <Toaster position="top-right" />
 
-      {/* Title Box - Matches Screenshot */}
-      <div className="border-l-4 border-amber-500 bg-white px-4 py-3 rounded shadow mb-6">
-        <h1 className="text-xl font-bold text-amber-900">
-          Pending Student Registrations
-        </h1>
-        <p className="text-sm text-gray-600">
-          Review and verify course registration requests.
-        </p>
-      </div>
-
-      {Object.keys(groupedByStudent).length === 0 ? (
-        <p className="text-gray-600">No pending registrations at the moment.</p>
-      ) : (
-        <div className="space-y-5">
-          {Object.values(groupedByStudent).map(({ student, registrations }) => (
-            <div
-              key={student.id}
-              className="rounded-lg shadow bg-white border border-amber-800/20"
-            >
-              {/* Header - Similar to Profile Card */}
-              <div
-                onClick={() => toggleStudent(student.id)}
-                className="cursor-pointer flex justify-between items-center px-4 py-3 bg-amber-50 border-b border-amber-800/20 hover:bg-amber-100 transition"
-              >
-                <div>
-                  <p className="font-semibold text-amber-900">
-                    {student.user.name}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Enrollment: {student.enrollmentNo}
-                  </p>
-                </div>
-                <span className="text-lg text-gray-700">
-                  {expandedStudents[student.id] ? "▲" : "▼"}
-                </span>
-              </div>
-
-              {expandedStudents[student.id] && (
-                <table className="w-full text-left">
-                  <thead className="bg-gray-50 text-gray-800 border-b">
-                    <tr>
-                      <th className="py-2 px-4">Course Code</th>
-                      <th className="py-2 px-4">Course Title</th>
-                      <th className="py-2 px-4">Semester</th>
-                      <th className="py-2 px-4 text-center">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {registrations.map((reg) => (
-                      <tr key={reg.id} className="hover:bg-gray-50">
-                        <td className="py-2 px-4 border-b">{reg.course.code}</td>
-                        <td className="py-2 px-4 border-b">{reg.course.title}</td>
-                        <td className="py-2 px-4 border-b">
-                          {reg.course.semester}
-                        </td>
-                        <td className="py-2 px-4 border-b text-center space-x-2">
-                          <button
-                            onClick={() => handleAction(reg.id, "APPROVED")}
-                            className="bg-amber-700 text-white px-3 py-1 rounded hover:bg-amber-800 transition"
-                          >
-                            Approve
-                          </button>
-                          <button
-                            onClick={() => handleAction(reg.id, "REJECTED")}
-                            className="bg-amber-500 text-white px-3 py-1 rounded hover:bg-amber-600 transition"
-                          >
-                            Reject
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
+      {/* Header */}
+      <header className="bg-amber-900 text-white shadow-lg sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+              <span className="text-amber-900 font-bold text-lg">📝</span>
             </div>
-          ))}
+            <h1 className="text-xl font-bold">Pending Registrations</h1>
+          </div>
+          <button
+            className="px-6 py-2 bg-white text-amber-900 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
-      )}
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-grow py-8 px-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Back Button */}
+          <button
+            onClick={() => navigate('/teacher-dashboard')}
+            className="mb-6 flex items-center gap-2 text-amber-800 hover:text-amber-900 font-semibold transition"
+          >
+            ← Back to Dashboard
+          </button>
+
+          {/* Welcome Section */}
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
+              Pending <span className="text-amber-800">Registrations</span> 📝
+            </h1>
+            <p className="text-gray-600">Review and verify course registration requests</p>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white rounded-xl shadow-lg border border-stone-200 p-6 border-l-4 border-l-amber-700">
+              <p className="text-gray-500 text-sm">Pending Requests</p>
+              <p className="text-3xl font-bold text-amber-900">{registrationCount}</p>
+            </div>
+            <div className="bg-white rounded-xl shadow-lg border border-stone-200 p-6 border-l-4 border-l-blue-500">
+              <p className="text-gray-500 text-sm">Students</p>
+              <p className="text-3xl font-bold text-blue-700">{studentCount}</p>
+            </div>
+            <div className="bg-white rounded-xl shadow-lg border border-stone-200 p-6 border-l-4 border-l-green-500">
+              <p className="text-gray-500 text-sm">Total Registrations</p>
+              <p className="text-3xl font-bold text-green-700">{registrationCount}</p>
+            </div>
+          </div>
+
+          {studentCount === 0 ? (
+            <div className="bg-white rounded-xl shadow-lg border border-stone-200 p-8 text-center">
+              <p className="text-gray-500 text-lg">✓ No pending registrations at the moment.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6">
+              {Object.values(groupedByStudent).map(({ student, registrations }) => (
+                <div
+                  key={student.id}
+                  className="bg-white rounded-xl shadow-lg border border-stone-200 p-6 border-l-4 border-l-amber-700 hover:shadow-xl transition"
+                >
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center shadow-md">
+                        <span className="text-amber-700 font-bold text-xl">
+                          {student.name?.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-amber-900 text-lg">{student.name}</h3>
+                        <p className="text-gray-600 text-sm">{student.email}</p>
+                        <p className="text-gray-500 text-xs mt-1">
+                          {registrations.length} course registration(s)
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => toggleStudent(student.id)}
+                      className="px-5 py-2.5 bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200 font-semibold transition"
+                    >
+                      {expandedStudents[student.id] ? "Hide Details" : "View Details"}
+                    </button>
+                  </div>
+                  {expandedStudents[student.id] && (
+                    <div className="mt-5 pt-5 border-t border-stone-200">
+                      <div className="grid gap-4">
+                        {registrations.map((reg) => (
+                          <div
+                            key={reg.id}
+                            className="bg-gradient-to-br from-stone-50 to-amber-50 rounded-lg p-4 flex justify-between items-center border border-stone-200"
+                          >
+                            <div>
+                              <p className="font-medium text-amber-900 text-lg">
+                                📚 {reg.course.name}
+                              </p>
+                              <p className="text-sm text-gray-500 mt-1">
+                                Mode: {reg.mode} • Status: {reg.status}
+                              </p>
+                            </div>
+                            <div className="flex space-x-3">
+                              <button
+                                onClick={() => handleAction(reg.id, "approve")}
+                                className="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2.5 rounded-lg hover:from-green-600 hover:to-green-700 transition flex items-center gap-2 shadow-md"
+                              >
+                                <span>✓</span> Approve
+                              </button>
+                              <button
+                                onClick={() => handleAction(reg.id, "reject")}
+                                className="bg-gradient-to-r from-red-500 to-red-600 text-white px-5 py-2.5 rounded-lg hover:from-red-600 hover:to-red-700 transition flex items-center gap-2 shadow-md"
+                              >
+                                <span>✗</span> Reject
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-stone-900 text-white text-center py-3 text-sm">
+        © 2025 Teacher Dashboard
+      </footer>
     </div>
   );
 };

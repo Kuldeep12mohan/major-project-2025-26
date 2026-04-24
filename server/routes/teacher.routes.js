@@ -127,4 +127,30 @@ router.post("/verify", verifyToken, verifyTeacher, async (req, res) => {
   }
 });
 
+router.get("/courses", verifyToken, verifyTeacher, async (req, res) => {
+  try {
+    const teacher = await prisma.teacherProfile.findUnique({
+      where: { userId: req.user.id },
+      include: {
+        courses: {
+          include: {
+            department: true,
+          },
+        },
+      },
+    });
+
+    if (!teacher) return res.status(404).json({ error: "Teacher not found" });
+
+    res.json({
+      message: "Teacher courses fetched",
+      count: teacher.courses.length,
+      courses: teacher.courses,
+    });
+  } catch (err) {
+    console.error("Error fetching courses:", err);
+    res.status(500).json({ error: "Failed to fetch courses" });
+  }
+});
+
 export default router;
