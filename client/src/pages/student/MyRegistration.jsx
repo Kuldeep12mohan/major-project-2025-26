@@ -8,16 +8,23 @@ const MyRegistration = () => {
   const [tempRegs, setTempRegs] = useState([]);
   const [approvedRegs, setApprovedRegs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [studentId, setStudentId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
+        // Fetch student profile first to get student ID
+        const profileRes = await axios.get(`${base_url}/api/auth/profile`, {
+          withCredentials: true,
+        });
+        setStudentId(profileRes.data.user.studentProfile.id);
+
         const [tempRes, approvedRes] = await Promise.all([
           axios.get(`${base_url}/api/student/temp-registrations`, {
             withCredentials: true,
           }),
-          axios.get(`${base_url}/api/student/registration`, { 
+          axios.get(`${base_url}/api/student/registration`, {
             withCredentials: true,
           }),
         ]);
@@ -27,7 +34,7 @@ const MyRegistration = () => {
       } catch (err) {
         console.error("Error fetching registrations:", err);
         toast.error("Failed to load registration data!");
-        navigate("/"); 
+        navigate("/auth-student");
       } finally {
         setLoading(false);
       }
@@ -45,6 +52,18 @@ const MyRegistration = () => {
       toast.error("Logout failed.");
       console.error(err);
     }
+  };
+
+  const handleDownloadCard = () => {
+    if (!studentId) {
+      toast.error("Student ID not found");
+      return;
+    }
+    if (approvedRegs.length === 0) {
+      toast.error("No approved registrations to generate card");
+      return;
+    }
+    window.open(`${base_url}/api/registration-card/generate/${studentId}`, "_blank");
   };
 
   if (loading) {
@@ -68,12 +87,20 @@ const MyRegistration = () => {
             </div>
             <h1 className="text-xl font-bold">My Registrations</h1>
           </div>
-          <button
-            onClick={handleLogout}
-            className="bg-white text-amber-900 px-6 py-2 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
-          >
-            Logout
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="bg-amber-700 text-white px-6 py-2 rounded-lg hover:bg-amber-800 font-semibold transition transform hover:scale-105 shadow-md"
+            >
+              ← Dashboard
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-white text-amber-900 px-6 py-2 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </header>
 
@@ -101,8 +128,8 @@ const MyRegistration = () => {
                       <th className="py-3 px-4 text-left font-bold text-gray-700">Code</th>
                       <th className="py-3 px-4 text-left font-bold text-gray-700">Course Title</th>
                       <th className="py-3 px-4 text-left font-bold text-gray-700">Credits</th>
-                      <th className="py-3 px-4 text-left font-bold text-gray-700">Sem</th>
-                      <th className="py-3 px-4 text-left font-bold text-gray-700">Dept</th>
+                      <th className="py-3 px-4 text-left font-bold text-gray-700">Type</th>
+                      <th className="py-3 px-4 text-left font-bold text-gray-700">Mode</th>
                       <th className="py-3 px-4 text-left font-bold text-gray-700">Status</th>
                       <th className="py-3 px-4 text-left font-bold text-gray-700">Verifier</th>
                     </tr>
@@ -122,15 +149,17 @@ const MyRegistration = () => {
                             {reg.course.credits}
                           </span>
                         </td>
-                        <td className="py-3 px-4">{reg.course.semester}</td>
-                        <td className="py-3 px-4 font-semibold">{reg.course.dept}</td>
+                        <td className="py-3 px-4 font-semibold">{reg.course.type}</td>
+                        <td className="py-3 px-4">{reg.mode || 'A'}</td>
                         <td className="py-3 px-4">
                           <span
                             className={`px-3 py-1 rounded-full text-sm font-bold ${
                               reg.status === "APPROVED"
-                                ? "bg-amber-100 text-amber-800"
+                                ? "bg-green-100 text-green-800"
                                 : reg.status === "REJECTED"
-                                ? "bg-stone-100 text-stone-800"
+                                ? "bg-red-100 text-red-800"
+                                : reg.status === "VERIFIED"
+                                ? "bg-blue-100 text-blue-800"
                                 : "bg-amber-100 text-amber-800"
                             }`}
                           >
@@ -151,10 +180,20 @@ const MyRegistration = () => {
         <section className="bg-white rounded-2xl shadow-lg overflow-hidden border border-stone-200">
           <div className="h-1 bg-gradient-to-r from-amber-300 to-amber-500"></div>
           <div className="p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-              <span className="text-3xl mr-3">✅</span>
-              Approved Registrations
-            </h2>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+                <span className="text-3xl mr-3">✅</span>
+                Approved Registrations
+              </h2>
+              {approvedRegs.length > 0 && (
+                <button
+                  onClick={handleDownloadCard}
+                  className="bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-2.5 rounded-lg hover:from-green-700 hover:to-green-800 font-semibold transition transform hover:scale-105 shadow-md flex items-center gap-2"
+                >
+                  <span>📄</span> Download Registration Card
+                </button>
+              )}
+            </div>
 
             {approvedRegs.length === 0 ? (
               <div className="text-center py-8">
@@ -192,22 +231,23 @@ const MyRegistration = () => {
                         </p>
                       </div>
                       <div className="bg-white rounded-lg p-3">
-                        <p className="text-xs text-gray-600">Semester</p>
+                        <p className="text-xs text-gray-600">Mode</p>
                         <p className="text-lg font-bold text-amber-700">
-                          {reg.course.semester}
+                          {reg.mode || 'A'}
                         </p>
                       </div>
                       <div className="bg-white rounded-lg p-3">
-                        <p className="text-xs text-gray-600">Department</p>
-                        <p className="text-lg font-bold text-amber-700">
-                          {reg.course.dept}
+                        <p className="text-xs text-gray-600">Status</p>
+                        <p className="text-lg font-bold text-green-600">
+                          {reg.status}
                         </p>
                       </div>
                     </div>
 
-                    <button className="w-full bg-gradient-to-r from-amber-700 to-amber-800 text-white py-2 rounded-lg font-semibold hover:from-amber-800 hover:to-amber-900 transition">
-                      View Details
-                    </button>
+                    <div className="text-sm text-gray-600">
+                      <p><span className="font-semibold">Semester:</span> {reg.semester}</p>
+                      <p><span className="font-semibold">Year:</span> {reg.year}</p>
+                    </div>
                   </div>
                 ))}
               </div>

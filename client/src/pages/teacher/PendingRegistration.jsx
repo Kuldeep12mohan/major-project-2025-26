@@ -92,12 +92,20 @@ export const PendingRegistration = () => {
             </div>
             <h1 className="text-xl font-bold">Pending Registrations</h1>
           </div>
-          <button
-            className="px-6 py-2 bg-white text-amber-900 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate("/teacher-dashboard")}
+              className="bg-amber-700 text-white px-6 py-2 rounded-lg hover:bg-amber-800 font-semibold transition transform hover:scale-105 shadow-md"
+            >
+              ← Dashboard
+            </button>
+            <button
+              className="px-6 py-2 bg-white text-amber-900 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </header>
 
@@ -179,21 +187,21 @@ export const PendingRegistration = () => {
                           >
                             <div>
                               <p className="font-medium text-amber-900 text-lg">
-                                📚 {reg.course.name}
+                                📚 {reg.course.title}
                               </p>
                               <p className="text-sm text-gray-500 mt-1">
-                                Mode: {reg.mode} • Status: {reg.status}
+                                Code: {reg.course.code} • Mode: {reg.mode} • Status: {reg.status}
                               </p>
                             </div>
                             <div className="flex space-x-3">
                               <button
-                                onClick={() => handleAction(reg.id, "approve")}
+                                onClick={() => handleAction(reg.id, "APPROVED")}
                                 className="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2.5 rounded-lg hover:from-green-600 hover:to-green-700 transition flex items-center gap-2 shadow-md"
                               >
                                 <span>✓</span> Approve
                               </button>
                               <button
-                                onClick={() => handleAction(reg.id, "reject")}
+                                onClick={() => handleAction(reg.id, "REJECTED")}
                                 className="bg-gradient-to-r from-red-500 to-red-600 text-white px-5 py-2.5 rounded-lg hover:from-red-600 hover:to-red-700 transition flex items-center gap-2 shadow-md"
                               >
                                 <span>✗</span> Reject

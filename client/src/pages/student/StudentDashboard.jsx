@@ -32,7 +32,7 @@ const StudentDashboard = () => {
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
         toast.error("Session expired. Please login again.");
-        navigate("/");
+        navigate("/auth-student");
       } finally {
         setLoading(false);
       }

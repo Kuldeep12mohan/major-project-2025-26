@@ -59,12 +59,20 @@ const MyCourses = () => {
             </div>
             <h1 className="text-xl font-bold">My Courses</h1>
           </div>
-          <button
-            className="px-6 py-2 bg-white text-amber-900 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate("/teacher-dashboard")}
+              className="bg-amber-700 text-white px-6 py-2 rounded-lg hover:bg-amber-800 font-semibold transition transform hover:scale-105 shadow-md"
+            >
+              ← Dashboard
+            </button>
+            <button
+              className="px-6 py-2 bg-white text-amber-900 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </header>
 

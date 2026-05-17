@@ -112,7 +112,9 @@ router.get("/teachers", verifyAdmin, async (req, res) => {
       include: {
         user: { select: { id: true, name: true, email: true } },
         courses: {
-          select: { id: true, code: true, title: true, semester: true },
+          include: {
+            departments: true,
+          },
         },
       },
       orderBy: { id: "asc" },
@@ -223,7 +225,9 @@ router.get("/verifications", verifyAdmin, async (req, res) => {
           include: { user: { select: { name: true, email: true } } },
         },
         course: {
-          select: { code: true, title: true, semester: true, credits: true },
+          include: {
+            departments: true,
+          },
         },
         verifier: {
           include: { user: { select: { name: true } } },
@@ -268,15 +272,31 @@ router.post("/verify", verifyAdmin, async (req, res) => {
     });
 
     if (status === "APPROVED") {
-      await prisma.registration.create({
-        data: {
+      const studentProfile = await prisma.studentProfile.findUnique({
+        where: { id: registration.studentId },
+      });
+      const semester = studentProfile.semester;
+      const year = Math.ceil(semester / 2);
+
+      // Check if registration already exists to prevent duplicates
+      const existing = await prisma.registration.findFirst({
+        where: {
           studentId: registration.studentId,
           courseId: registration.courseId,
-          mode: registration.mode,
-          semester: 0, // You might want to fetch this from student or course, or pass it in
-          year: new Date().getFullYear(),
         },
       });
+
+      if (!existing) {
+        await prisma.registration.create({
+          data: {
+            studentId: registration.studentId,
+            courseId: registration.courseId,
+            mode: registration.mode,
+            semester,
+            year,
+          },
+        });
+      }
     }
 
     res.json({

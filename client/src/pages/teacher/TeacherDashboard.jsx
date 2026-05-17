@@ -21,7 +21,7 @@ export default function TeacherDashboard() {
         setTeacher(res.data.teacher);
       } catch (err) {
         toast.error("Session expired. Please login again.");
-        navigate("/");
+        navigate("/auth-teacher");
       } finally {
         setLoading(false);
       }

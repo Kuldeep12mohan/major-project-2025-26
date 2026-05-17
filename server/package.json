@@ -16,7 +16,9 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^8.0.5",
-    "prisma": "^6.19.1"
+    "pdfkit": "^0.18.0",
+    "prisma": "^6.19.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "nodemon": "^3.0.0"

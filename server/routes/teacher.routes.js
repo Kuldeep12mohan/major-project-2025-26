@@ -99,7 +99,10 @@ router.post("/verify", verifyToken, verifyTeacher, async (req, res) => {
         result: rejected,
       });
     }
-    const semester = temp.course.semester;
+    const studentProfile = await prisma.studentProfile.findUnique({
+      where: { id: temp.studentId },
+    });
+    const semester = studentProfile.semester;
     const year = Math.ceil(semester / 2);
 
     const registration = await prisma.registration.create({
@@ -134,7 +137,7 @@ router.get("/courses", verifyToken, verifyTeacher, async (req, res) => {
       include: {
         courses: {
           include: {
-            department: true,
+            departments: true,
           },
         },
       },

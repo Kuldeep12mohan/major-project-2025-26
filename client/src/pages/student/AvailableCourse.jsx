@@ -107,12 +107,20 @@ const AvailableCourse = () => {
             </div>
             <h1 className="text-xl font-bold">Available Courses</h1>
           </div>
-          <button
-            onClick={logout}
-            className="bg-white text-amber-900 px-6 py-2 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
-          >
-            Logout
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="bg-amber-700 text-white px-6 py-2 rounded-lg hover:bg-amber-800 font-semibold transition transform hover:scale-105 shadow-md"
+            >
+              ← Dashboard
+            </button>
+            <button
+              onClick={logout}
+              className="bg-white text-amber-900 px-6 py-2 rounded-lg hover:bg-amber-50 font-semibold transition transform hover:scale-105 shadow-md"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </header>
 

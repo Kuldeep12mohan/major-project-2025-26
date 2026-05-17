@@ -27,7 +27,7 @@ export default function AdminDashboard() {
   const [selectedTeacher, setSelectedTeacher] = useState("");
   const [expandedTeacher, setExpandedTeacher] = useState(null);
 
-  const DEPARTMENTS = ["CS", "AI", "ECE", "ME", "EE", "AE", "CHE", "PTK", "FTB", "CE"];
+  const DEPARTMENTS = ["CO", "AI", "ECE", "ME", "EE", "AE", "CH", "PK", "FT", "CE"];
 
   const Loader = () => (
     <div className="w-full flex justify-center py-10">

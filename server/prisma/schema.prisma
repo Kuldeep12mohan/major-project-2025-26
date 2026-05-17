@@ -94,6 +94,8 @@ model Registration {
   mode      Mode           @default(A)
   course    Course         @relation(fields: [courseId], references: [id])
   student   StudentProfile @relation(fields: [studentId], references: [id])
+
+  @@unique([studentId, courseId])
 }
 
 model RegistrationStatus {

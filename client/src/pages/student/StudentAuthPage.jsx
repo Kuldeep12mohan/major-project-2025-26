@@ -10,7 +10,7 @@ export default function StudentAuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const DEPARTMENTS = ["CS", "AI", "ECE", "ME", "EE", "AE", "CE", "CHE", "PTK", "FTB"];
+  const DEPARTMENTS = ["CO", "AI", "ECE", "ME", "EE", "AE", "CE", "CH", "PK", "FT"];
 
   const [form, setForm] = useState({
     name: "",

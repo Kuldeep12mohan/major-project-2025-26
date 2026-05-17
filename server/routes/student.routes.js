@@ -72,7 +72,10 @@ router.get("/temp-registrations", verifyStudent, async (req, res) => {
     if (!student) return res.status(404).json({ error: "Student not found" });
 
     const tempRegs = await prisma.tempRegistration.findMany({
-      where: { studentId: student.id },
+      where: {
+        studentId: student.id,
+        status: { in: [RegStatus.PENDING, RegStatus.VERIFIED, RegStatus.REJECTED] }
+      },
       include: {
         course: true,
         verifier: { include: { user: true } },
@@ -95,22 +98,20 @@ router.get("/registration", verifyStudent, async (req, res) => {
 
     if (!student) return res.status(404).json({ error: "Student not found" });
 
-    const verifiedRegs = await prisma.tempRegistration.findMany({
+    const approvedRegs = await prisma.registration.findMany({
       where: {
         studentId: student.id,
-        status: RegStatus.APPROVED,
       },
       include: {
         course: true,
-        verifier: { include: { user: true } },
       },
       orderBy: { createdAt: "desc" },
     });
 
-    res.json({ message: "Verified registrations fetched", registrations: verifiedRegs });
+    res.json({ message: "Approved registrations fetched", registrations: approvedRegs });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to fetch verified registrations" });
+    res.status(500).json({ error: "Failed to fetch approved registrations" });
   }
 });
 
@@ -121,7 +122,23 @@ router.get("/:semester/:dept", async (req, res) => {
     const deptFilter = String(dept || "").trim().toUpperCase();
 
     const courses = await prisma.course.findMany({
-      where: { semester: semesterNumber, dept: deptFilter, type: "CORE" },
+      where: {
+        departments: {
+          some: {
+            dept: deptFilter,
+            semester: semesterNumber,
+          },
+        },
+        type: "DC",
+        active: true,
+      },
+      include: {
+        departments: {
+          where: {
+            dept: deptFilter,
+          },
+        },
+      },
       orderBy: { title: "asc" },
     });
 
